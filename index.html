@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RailExam — Temir Yo'l Imtihon Tizimi</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Supabase Client Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="style.css?v=6">
+</head>
+
+<body>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-train">
+      <svg width="130" height="44" viewBox="0 0 130 44" fill="none">
+        <rect x="2" y="7" width="120" height="25" rx="5" fill="#1a3d7a" />
+        <rect x="2" y="7" width="120" height="7" rx="5" fill="#2060a8" />
+        <polygon points="2,32 2,7 28,7 36,32" fill="#122e60" />
+        <rect x="40" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".65" />
+        <rect x="60" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".55" />
+        <rect x="80" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".45" />
+        <rect x="100" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".35" />
+        <ellipse cx="28" cy="37" rx="5" ry="5" fill="#0a1628" stroke="#1e6fc0" stroke-width="2" />
+        <ellipse cx="28" cy="37" rx="2.2" ry="2.2" fill="#1e6fc0" />
+        <ellipse cx="95" cy="37" rx="5" ry="5" fill="#0a1628" stroke="#1e6fc0" stroke-width="2" />
+        <ellipse cx="95" cy="37" rx="2.2" ry="2.2" fill="#1e6fc0" />
+        <circle cx="6" cy="19" r="3" fill="#fffde7" opacity=".9" />
+      </svg>
+    </div>
+    <div class="loader-bar">
+      <div class="loader-fill"></div>
+    </div>
+    <p style="color:var(--text3);font-size:13px;letter-spacing:1px;">RailExam yuklanmoqda...</p>
+  </div>
+  <div class="glow1"></div>
+  <div class="glow2"></div>
+
+  <!-- ===== TIL SAHIFASI ===== -->
+  <div id="pg-lang" class="page rail-bg"
+    style="align-items:center;justify-content:center;padding:24px;position:relative;">
+    <button onclick="showPage('pg-admin-login')"
+      style="position:absolute;top:20px;right:24px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;background:rgba(15,23,42,0.4);backdrop-filter:blur(8px);border:1.5px solid var(--border);padding:8px 16px;border-radius:10px;transition:all .3s;display:flex;align-items:center;gap:6px;z-index:10;"
+      onmouseover="this.style.color='var(--blue-light)';this.style.borderColor='var(--blue-light)';this.style.background='rgba(37,99,235,0.1)';this.style.transform='translateY(-2px)';"
+      onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)';this.style.background='rgba(15,23,42,0.4)';this.style.transform='translateY(0)';">
+      🔐 Admin panel
+    </button>
+    <div style="width:100%;max-width:420px;position:relative;z-index:1;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div id="main-logo" onclick="showPage('pg-lang')"
+          style="display:inline-flex;align-items:center;justify-content:center;width:86px;height:86px;background:linear-gradient(135deg,#0d2a5e,#1e6fc0);border:2px solid rgba(91,179,245,.25);border-radius:22px;margin-bottom:14px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;box-shadow:0 4px 24px rgba(30,111,192,.25);"
+          onmouseover="this.style.transform='scale(1.08) translateY(-3px)';this.style.boxShadow='0 10px 40px rgba(30,111,192,.55)';this.style.borderColor='rgba(91,179,245,.6)'"
+          onmouseout="this.style.transform='scale(1) translateY(0)';this.style.boxShadow='0 4px 24px rgba(30,111,192,.25)';this.style.borderColor='rgba(91,179,245,.25)'">
+          <img src="img/Uzbek_Railways.svg.png" alt="O'zbekiston Temir Yo'llari"
+            style="width: 52px; height: 52px; object-fit: contain;">
+        </div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:800;margin-bottom:5px;">Rail<span
+            style="color:var(--blue-light);">Exam</span></h1>
+        <p style="color:var(--text3);font-size:13px;">O'zbekiston Temir Yo'llari | Ta'lim Markazi</p>
+        <div
+          style="width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);margin:12px auto;">
+        </div>
+      </div>
+      <p
+        style="text-align:center;color:var(--text2);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:13px;">
+        Tilni tanlang / Выберите язык</p>
+      <div style="display:flex;flex-direction:column;gap:10px;" id="langList"></div>
+    </div>
+  </div>
+
+  <!-- ===== RO'YXATDAN O'TISH ===== -->
+  <div id="pg-register" class="page rail-bg"
+    style="align-items:center;justify-content:center;padding:24px;padding-top:30px;">
+    <div style="width:100%;max-width:500px;position:relative;z-index:1;">
+      <div style="text-align:center;margin-bottom:22px;">
+        <button onclick="showPage('pg-lang')"
+          style="color:var(--text3);font-size:13px;cursor:pointer;background:none;border:none;margin-bottom:10px;display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;transition:color .2s;"
+          onmouseover="this.style.color='var(--blue-light)'" onmouseout="this.style.color='var(--text3)'">← <span
+            id="txt-back-lang">Tilni o'zgartirish</span></button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:9px;">
+          <img src="img/Uzbek_Railways.svg.png" alt="O'zbekiston Temir Yo'llari"
+            style="width: 30px; height: 30px; object-fit: contain;">
+          <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;" id="txt-register-title">Ro'yxatdan
+            o'tish</h2>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;" id="stepBar"></div>
+      </div>
+      <!-- STEP 1 -->
+      <div id="step1" class="card">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;font-size:16px;">1. Shaxsiy
+          ma'lumotlar</h3>
+        <div style="display:flex;flex-direction:column;gap:13px;">
+          <div><label class="lbl" id="lbl-name">F.I.Sh (To'liq ism)</label><input class="inp" id="inp-name"
+              placeholder="Karimov Jasur Alievich" type="text" autocomplete="name" /></div>
+          <div><label class="lbl" id="lbl-pos">Lavozim</label><input class="inp" id="inp-pos"
+              placeholder="Lokomotiv haydovchisi" type="text" /></div>
+          <div>
+            <label class="lbl" id="lbl-jshir">JSHSHIR (14 raqam)</label>
+            <div class="jshir-wrap">
+              <input class="inp" id="inp-jshir" placeholder="00000000000000" type="text" inputmode="numeric"
+                maxlength="14" autocomplete="off"
+                oninput="this.value=this.value.replace(/\D/g,'').slice(0,14);var c=document.getElementById('jshir-cnt');if(c)c.textContent=this.value.length+'/14';"
+                style="letter-spacing:2px;padding-right:56px;" />
+              <span class="jshir-counter" id="jshir-cnt">0/14</span>
+            </div>
+          </div>
+          <div><label class="lbl" id="lbl-phone">Telefon</label><input class="inp" id="inp-phone"
+              placeholder="+998 90 123 45 67" type="tel" autocomplete="tel" /></div>
+          <button class="btn btn-primary" onclick="goStep2()" style="width:100%;margin-top:3px;"><span
+              id="txt-continue">Davom etish</span> →</button>
+        </div>
+      </div>
+      <!-- STEP 2 KAMERA -->
+      <div id="step2" style="display:none;" class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <button onclick="showStep(1)"
+            style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text2);font-size:13px;cursor:pointer;padding:6px 12px;border-radius:9px;transition:all .2s;"
+            onmouseover="this.style.background='rgba(30,111,192,.2)';this.style.color='white'"
+            onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='var(--text2)'">← Ortga</button>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;" id="txt-cam-title">2. Kamera</h3>
+        </div>
+        <p style="color:var(--text2);font-size:14px;margin-bottom:13px;" id="txt-cam-desc">Imtihon uchun rasm oling</p>
+        <div class="cam-wrap" id="camWrap" style="height:220px;background:#0a1628;">
+          <video id="camVideo" autoplay playsinline muted
+            style="display:none;width:100%;height:220px;object-fit:cover;"></video>
+          <canvas id="camCanvas" style="display:none;width:100%;height:220px;object-fit:cover;"></canvas>
+          <div class="cam-overlay" id="camOverlay" style="height:220px;">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              opacity=".4">
+              <path d="M23 7l-7 5 7 5V7z" />
+              <rect x="1" y="5" width="15" height="14" rx="2" />
+            </svg>
+            <p style="font-size:13px;" id="txt-cam-loading">Kamera yuklanmoqda...</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:11px;">
+          <button class="btn btn-primary" id="btn-capture" onclick="capturePhoto()" style="flex:1;" disabled>📸 <span
+              id="txt-capture">Rasm olish</span></button>
+          <button class="btn btn-secondary" id="btn-retake" onclick="retakePhoto()" style="flex:1;display:none;">🔄
+            <span id="txt-retake-cam">Qayta</span></button>
+          <button class="btn btn-green" id="btn-cam-ok" onclick="goStep3()" style="flex:1;display:none;">✓ <span
+              id="txt-cam-ok">Tasdiqlash</span></button>
+        </div>
+        <button onclick="goStep3()"
+          style="width:100%;margin-top:8px;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;padding:7px;border-radius:8px;transition:color .2s;"
+          onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text3)'"><span
+            id="txt-skip-cam">Kamerasiz davom etish →</span></button>
+      </div>
+      <!-- STEP 3 YO'NALISH -->
+      <div id="step3" style="display:none;" class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <button onclick="showStep(2)"
+            style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text2);font-size:13px;cursor:pointer;padding:6px 12px;border-radius:9px;transition:all .2s;"
+            onmouseover="this.style.background='rgba(30,111,192,.2)';this.style.color='white'"
+            onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='var(--text2)'">← Ortga</button>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;" id="txt-dir-title">3. Yo'nalishni
+            tanlang</h3>
+        </div>
+        <p style="color:var(--text2);font-size:14px;margin-bottom:12px;" id="txt-dir-desc">Imtihon yo'nalishini
+          belgilang</p>
+        <div
+          style="display:flex;flex-direction:column;gap:6px;max-height:330px;overflow-y:auto;padding-right:4px;margin-bottom:13px;-webkit-overflow-scrolling:touch;"
+          id="dirList"></div>
+        <button class="btn btn-primary" onclick="goStep4()" style="width:100%;font-size:16px;padding:14px;">→ <span
+            id="txt-start-btn">Davom etish</span></button>
+      </div>
+      <!-- STEP 4 SUBDIR / BOSHLASH -->
+      <div id="step4" style="display:none;" class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <button onclick="showStep(3)"
+            style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text2);font-size:13px;cursor:pointer;padding:6px 12px;border-radius:9px;transition:all .2s;"
+            onmouseover="this.style.background='rgba(30,111,192,.2)';this.style.color='white'"
+            onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.color='var(--text2)'">← Ortga</button>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;" id="txt-subdir-title">4.
+            Mutaxassislikni tanlang</h3>
+        </div>
+        <p style="color:var(--text2);font-size:14px;margin-bottom:12px;" id="txt-subdir-desc">Yo'nalish bo'limini
+          belgilang</p>
+        <div
+          style="display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;padding-right:4px;margin-bottom:13px;-webkit-overflow-scrolling:touch;"
+          id="subDirList"></div>
+        <!-- TOIFA TANLASH - faqat Yo'l ta'mirlovchi uchun -->
+        <div id="toifaSection" style="display:none;margin-bottom:13px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="width:3px;height:20px;background:var(--amber);border-radius:2px;flex-shrink:0;"></div>
+            <h4 style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#f59e0b;">Toifani tanlang</h4>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;" id="toifaList"></div>
+        </div>
+        <button class="btn btn-primary" onclick="startExam()" style="width:100%;font-size:16px;padding:14px;">🚄 <span
+            id="txt-start-btn2">Imtihonni boshlash</span></button>
+      </div>
+    </div>
+  </div>
+  <!-- ===== IMTIHON SAHIFASI ===== -->
+  <div id="pg-exam" class="page rail-bg">
+    <div
+      style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(7,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 16px;">
+      <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <img src="img/Uzbek_Railways.svg.png" alt="O'zbekiston Temir Yo'llari"
+          style="width: 26px; height: 26px; object-fit: contain; flex-shrink: 0;">
+        <div style="flex:1;min-width:150px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:4px;">
+            <span id="exam-ans-count">0/36</span><span id="exam-q-label">1/36</span>
+          </div>
+          <div class="pbar">
+            <div class="pbar-fill" id="examPbar" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="timer" id="examTimer" style="font-size:18px;padding:8px 14px;">36:00</div>
+        <div id="tab-warn-badge" style="display:none;" class="badge badge-red"><span class="dot"></span><span
+            id="tab-count-txt">0</span></div>
+      </div>
+    </div>
+    <div style="max-width:900px;margin:0 auto;padding:74px 16px 108px;width:100%;">
+      <div class="qnav" id="qnav" style="margin-bottom:14px;"></div>
+      <div class="card" id="qCard" style="margin-bottom:13px;">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px;">
+          <div
+            style="width:36px;height:36px;border-radius:10px;background:rgba(30,111,192,.15);border:1px solid rgba(30,111,192,.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;color:var(--blue-light);font-size:14px;flex-shrink:0;"
+            id="qNumBadge">01</div>
+          <span style="font-size:12px;color:var(--text3);" id="qDirLabel"></span>
+        </div>
+        <p style="font-size:17px;font-weight:600;line-height:1.65;color:var(--text);margin-bottom:18px;" id="qText">...
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;" id="optGrid"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+        <button class="btn btn-secondary" id="btn-prev" onclick="prevQ()" disabled style="padding:10px 16px;">← <span
+            id="txt-prev">Oldingi</span></button>
+        <button class="btn btn-green" onclick="showFinishModal()"
+          style="padding:10px 18px;font-size:13px;font-weight:600;">🏁 <span
+            id="txt-finish-mid">Tugatish</span></button>
+        <button class="btn btn-primary" id="btn-next" onclick="nextQ()" style="padding:10px 16px;"><span
+            id="txt-next">Keyingisi</span> →</button>
+      </div>
+    </div>
+    <!-- PASTDAGI TUGATISH PANELI - yashirilgan (display:none) -->
+    <div style="display:none;">
+      <span id="bot-ans">0</span>
+      <span id="bot-total">36</span>
+      <span id="txt-ans-given">javob</span>
+      <span id="txt-fin2">Imtihonni tugatish</span>
+    </div>
+  </div>
+
+  <!-- ===== NATIJA SAHIFASI ===== -->
+  <div id="pg-result" class="page rail-bg"
+    style="align-items:center;justify-content:center;padding:24px 16px;padding-top:36px;">
+    <div style="width:100%;max-width:630px;">
+      <div id="resultCard"></div>
+      <div style="display:flex;justify-content:center;gap:11px;margin-top:13px;flex-wrap:wrap;">
+        <!-- <button class="btn btn-primary" onclick="showPage('pg-register');initRegister();"
+          style="flex:1;min-width:130px;">🔄 <span id="txt-retake">Qayta topshirish</span></button> -->
+        <button class="btn btn-secondary" onclick="showPage('pg-lang')" style="min-width:200px;">🏠 <span
+            id="txt-home">Bosh sahifa</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN LOGIN ===== -->
+  <div id="pg-admin-login" class="page rail-bg" style="align-items:center;justify-content:center;padding:24px;">
+    <div style="width:100%;max-width:420px;position:relative;z-index:1;">
+      <div style="text-align:center;margin-bottom:26px;">
+        <div
+          style="display:inline-flex;align-items:center;justify-content:center;width:70px;height:70px;background:var(--surface);border:1px solid var(--border2);border-radius:17px;margin-bottom:13px;">
+          <img src="img/Uzbek_Railways.svg.png" alt="O'zbekiston Temir Yo'llari"
+            style="width: 36px; height: 36px; object-fit: contain;">
+        </div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;">Admin Panel</h1>
+        <p style="color:var(--text3);font-size:13px;margin-top:4px;">RailExam Boshqaruv Tizimi</p>
+      </div>
+      <div class="card" style="padding:26px;">
+        <div style="margin-bottom:14px;"><label class="lbl">Email</label><input class="inp" id="admin-email" value=""
+            type="email" /></div>
+        <div style="margin-bottom:18px;"><label class="lbl">Parol</label><input class="inp" id="admin-pass" value=""
+            type="password" /></div>
+        <button class="btn btn-primary" onclick="adminLogin()" style="width:100%;font-size:15px;padding:13px;">🔑
+          Kirish</button>
+        <button onclick="showPage('pg-lang')"
+          style="width:100%;margin-top:9px;background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;padding:6px;"
+          onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text3)'">← Imtihon
+          sahifasiga</button>
+      </div>
+      <div
+        style="display:none;margin-top:11px;padding:11px 15px;background:rgba(30,111,192,.08);border:1px solid rgba(30,111,192,.2);border-radius:11px;font-size:12px;color:var(--blue-light);">
+        🔑 <strong>admin@railexam.uz</strong> / <strong>Admin@12345</strong></div>
+      <div id="admin-login-err"
+        style="display:none;margin-top:9px;padding:11px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:10px;font-size:13px;color:var(--red);text-align:center;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN PANEL ===== -->
+  <div id="pg-admin" class="page" style="flex-direction:row;">
+    <div class="sidebar" id="adminSidebar">
+      <div class="sidebar-logo" onclick="showPage('pg-lang')" style="cursor:pointer;" title="Bosh sahifaga qaytish">
+        <div style="display:flex;align-items:center;gap:9px;">
+          <img src="img/Uzbek_Railways.svg.png" alt="O'zbekiston Temir Yo'llari"
+            style="width: 32px; height: 32px; object-fit: contain;">
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;">RailExam</div>
+            <div style="color:var(--text3);font-size:11px;">Admin Panel</div>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" id="nav-dash" onclick="adminTab('dash')">📊 Dashboard</button>
+        <button class="nav-item" id="nav-results" onclick="adminTab('results')">📋 Natijalar</button>
+        <button class="nav-item" id="nav-questions" onclick="adminTab('questions')">❓ Savollar</button>
+      </nav>
+      <div style="padding:13px 10px;border-top:1px solid var(--border);">
+        <div
+          style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--surface);border-radius:10px;margin-bottom:7px;">
+          <div
+            style="width:32px;height:32px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">
+            A</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;">Administrator</div>
+            <div style="font-size:11px;color:var(--text3);">admin@railexam.uz</div>
+          </div>
+        </div>
+        <button class="nav-item" onclick="adminLogout()" style="color:var(--red);">🚪 Chiqish</button>
+      </div>
+    </div>
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <button
+            onclick="if(window.innerWidth > 900) { document.getElementById('adminSidebar').classList.toggle('closed'); document.querySelector('.admin-main').classList.toggle('expanded'); } else { document.getElementById('adminSidebar').classList.toggle('open'); }"
+            style="background:none;border:none;color:var(--text2);cursor:pointer;font-size:22px;"
+            id="sideToggle">☰</button>
+          <h1 style="font-family:'Syne',sans-serif;font-size:19px;font-weight:700;" id="admin-page-title">📊 Dashboard
+          </h1>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);">
+          <div style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;">
+          </div>Test rejimi
+        </div>
+      </div>
+      <div class="admin-content" id="adminContent"></div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="finishModal" style="display:none;">
+    <div class="modal">
+      <div style="text-align:center;font-size:46px;margin-bottom:11px;">🏁</div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:19px;font-weight:700;text-align:center;margin-bottom:7px;"
+        id="txt-finish-q">Imtihonni tugatishni tasdiqlaysizmi?</h3>
+      <p id="unanswered-warn" style="text-align:center;color:var(--amber);font-size:14px;margin-bottom:18px;"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
+        <button class="btn btn-secondary" onclick="closeModal('finishModal')" id="txt-cancel-btn">Bekor qilish</button>
+        <button class="btn btn-green" onclick="submitExam()" id="txt-yes-finish">Ha, tugatish</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="tabModal" style="display:none;">
+    <div class="modal" style="border-color:rgba(239,68,68,.4);">
+      <div style="text-align:center;font-size:46px;margin-bottom:11px;">⚠️</div>
+      <h3
+        style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;text-align:center;color:var(--red);margin-bottom:7px;"
+        id="tab-modal-txt">Boshqa tabga o'tdingiz!</h3>
+      <p style="text-align:center;color:var(--text2);font-size:14px;margin-bottom:18px;">Bu holat qayd etildi.</p>
+      <button class="btn btn-red" onclick="closeModal('tabModal')" style="width:100%;">Imtihonga qaytish</button>
+    </div>
+  </div>
+  <div id="toast"
+    style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e3a5f;border:1px solid var(--border2);color:white;padding:11px 18px;border-radius:11px;font-size:14px;z-index:9000;opacity:0;transition:opacity .3s;pointer-events:none;max-width:88vw;text-align:center;">
+  </div>
+
+  <div
+    style="position:fixed;bottom:20px;left:0;width:100%;color:rgba(251,191,36,0.5);font-size:22px;font-weight:800;z-index:0;pointer-events:none;text-transform:uppercase;letter-spacing:3px;">
+    <marquee behavior="scroll" direction="left" scrollamount="4">
+      🚧 Sayt hozir test rejimida. Ayrim funksiyalar vaqtincha cheklangan bo‘lishi mumkin. 🚧
+    </marquee>
+  </div>
+
+  <script src="results.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-integration.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
