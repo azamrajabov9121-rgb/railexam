@@ -2150,7 +2150,7 @@ function openPhase2Modal(envIndex) {
   document.body.appendChild(el);
 }
 
-function savePhase2Question(envIndex) {
+async function savePhase2Question(envIndex) {
   const text = $('p2q-text').value.trim();
   if (!text) { toast("Savol matnini kiriting!", "var(--red)"); return; }
 
@@ -2159,7 +2159,19 @@ function savePhase2Question(envIndex) {
     return;
   }
 
-  const q = { id: 'p2_' + Date.now(), env: envIndex, text: text, dept: S.phase2AdminDept, dir: S.phase2AdminDir };
+  const payload = { env: envIndex, dept: S.phase2AdminDept, dir: S.phase2AdminDir, text: text };
+  let q = { id: 'p2_' + Date.now(), ...payload };
+
+  // Supabase'ga saqlaymiz - shunda boshqa qurilmalarda ham ko'rinadi
+  if (window.addPhase2QuestionToSupabase) {
+    const result = await addPhase2QuestionToSupabase(payload);
+    if (result.success && result.data) {
+      q = { id: result.data.id, env: result.data.envelope, dept: result.data.department, dir: result.data.direction, text: result.data.question_text };
+    } else {
+      toast("Diqqat: Supabase'ga saqlanmadi, faqat shu qurilmada ko'rinadi!", "var(--amber)");
+    }
+  }
+
   if (!S.phase2Questions) S.phase2Questions = [];
   S.phase2Questions.push(q);
   localStorage.setItem('re_phase2_questions', JSON.stringify(S.phase2Questions));
@@ -2169,10 +2181,16 @@ function savePhase2Question(envIndex) {
   renderAdminPhase2();
 }
 
-function deletePhase2Question(id) {
+async function deletePhase2Question(id) {
   if (!confirm("Savolni o'chirasizmi?")) return;
-  S.phase2Questions = S.phase2Questions.filter(q => q.id !== id);
+  S.phase2Questions = S.phase2Questions.filter(q => String(q.id) !== String(id));
   localStorage.setItem('re_phase2_questions', JSON.stringify(S.phase2Questions));
+
+  // Supabase'da ham o'chiramiz (faqat Supabase'dan kelgan, raqamli id'lar uchun - lokal id'lar 'p2_' bilan boshlanadi)
+  if (window.deletePhase2QuestionFromSupabase && !String(id).startsWith('p2_')) {
+    await deletePhase2QuestionFromSupabase(Number(id));
+  }
+
   toast("O'chirildi", "var(--green)");
   renderAdminPhase2();
 }
@@ -2246,9 +2264,12 @@ function renderPhase2Exam(questions, visualNum) {
   if (header) header.innerHTML = `✉️ ${visualNum}-Kanvert Savollari`;
 
   container.innerHTML = questions.map((q, i) => `
-    <div class="phase2-q-card">
-      <div class="phase2-q-badge">SAVOL ${i + 1}</div>
-      <div style="font-size:20px;color:var(--text);line-height:1.6;font-weight:500;">${q.text}</div>
+    <div class="phase2-q-card" data-num="${String(i + 1).padStart(2, '0')}">
+      <div class="phase2-q-badge">
+        <span class="num-dot">${i + 1}</span>
+        <span class="num-label">Savol</span>
+      </div>
+      <div class="phase2-q-text" style="font-size:19px;color:var(--text);line-height:1.65;font-weight:500;">${q.text}</div>
     </div>
   `).join('');
 

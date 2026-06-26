@@ -88,7 +88,25 @@ CREATE INDEX idx_exam_results_exam_date ON exam_results(exam_date DESC);
 CREATE INDEX idx_exam_results_jshir ON exam_results(jshir);
 ```
 
-### 2.4. Row Level Security (RLS) sozlamalari
+### 2.4. Phase 2 Questions (2-bosqich ochiq savollari) jadvali
+
+```sql
+-- 2-bosqich (kanvert) ochiq savollari jadvali
+CREATE TABLE phase2_questions (
+  id BIGSERIAL PRIMARY KEY,
+  envelope INTEGER NOT NULL,
+  department TEXT NOT NULL,
+  direction TEXT NOT NULL,
+  question_text TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Index qo'shish
+CREATE INDEX idx_phase2_questions_dept_dir ON phase2_questions(department, direction);
+CREATE INDEX idx_phase2_questions_envelope ON phase2_questions(envelope);
+```
+
+### 2.5. Row Level Security (RLS) sozlamalari
 
 ```sql
 -- Users jadvali uchun RLS
@@ -134,6 +152,21 @@ CREATE POLICY "Exam results can be inserted by everyone"
 
 CREATE POLICY "Exam results can be deleted by everyone" 
   ON exam_results FOR DELETE 
+  USING (true);
+
+-- Phase2 Questions jadvali uchun RLS
+ALTER TABLE phase2_questions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Phase2 questions are viewable by everyone" 
+  ON phase2_questions FOR SELECT 
+  USING (true);
+
+CREATE POLICY "Phase2 questions can be inserted by everyone" 
+  ON phase2_questions FOR INSERT 
+  WITH CHECK (true);
+
+CREATE POLICY "Phase2 questions can be deleted by everyone" 
+  ON phase2_questions FOR DELETE 
   USING (true);
 ```
 

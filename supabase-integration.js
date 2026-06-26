@@ -300,6 +300,101 @@ async function deletePhase2ResultFromSupabase(id) {
   }
 }
 
+// ===== 2-BOSQICH SAVOLLARINI YUKLASH =====
+async function loadPhase2QuestionsFromSupabase() {
+  if (!window.DB) {
+    console.warn('Supabase ulanmagan, localStorage dan yuklanmoqda');
+    return { success: false, data: [] };
+  }
+
+  try {
+    const result = await DB.getAllPhase2Questions();
+
+    if (result.success && result.data) {
+      const formatted = result.data.map(q => ({
+        id: q.id,
+        env: q.envelope,
+        dept: q.department,
+        dir: q.direction,
+        text: q.question_text
+      }));
+
+      console.log(`✅ ${formatted.length} ta 2-bosqich savoli Supabase dan yuklandi`);
+      return { success: true, data: formatted };
+    }
+
+    return result;
+  } catch (error) {
+    console.error('❌ 2-bosqich savollarini yuklashda xato:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// ===== 2-BOSQICH SAVOL QO'SHISH =====
+async function addPhase2QuestionToSupabase(questionData) {
+  if (!window.DB) {
+    console.warn('Supabase ulanmagan');
+    return { success: false, error: 'Supabase not connected' };
+  }
+
+  try {
+    const result = await DB.createPhase2Question(questionData);
+    if (result.success) {
+      console.log('✅ 2-bosqich savoli Supabase ga qo\'shildi:', result.data);
+    }
+    return result;
+  } catch (error) {
+    console.error('❌ 2-bosqich savol qo\'shishda xato:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// ===== 2-BOSQICH SAVOLNI O'CHIRISH =====
+async function deletePhase2QuestionFromSupabase(id) {
+  if (!window.DB) {
+    console.warn('Supabase ulanmagan');
+    return { success: false, error: 'Supabase not connected' };
+  }
+
+  try {
+    const result = await DB.deletePhase2Question(id);
+    if (result.success) {
+      console.log('✅ 2-bosqich savoli Supabase dan o\'chirildi');
+    }
+    return result;
+  } catch (error) {
+    console.error('❌ 2-bosqich savolni o\'chirishda xato:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// ===== BIR MARTALIK MIGRATSIYA: shu brauzerdagi lokal 2-bosqich savollarini Supabase'ga ko'chirish =====
+// Faqat Supabase jadvali hali bo'sh bo'lganda ishlaydi (initializeSupabaseData ichida chaqiriladi)
+async function migratePhase2QuestionsToSupabase(localQuestions) {
+  if (!window.DB || !localQuestions || localQuestions.length === 0) return;
+
+  console.log(`🔄 ${localQuestions.length} ta lokal 2-bosqich savoli Supabase'ga ko'chirilmoqda...`);
+  const migrated = [];
+  for (const q of localQuestions) {
+    const result = await DB.createPhase2Question({ env: q.env, dept: q.dept, dir: q.dir, text: q.text });
+    if (result.success && result.data) {
+      migrated.push({
+        id: result.data.id,
+        env: result.data.envelope,
+        dept: result.data.department,
+        dir: result.data.direction,
+        text: result.data.question_text
+      });
+    }
+  }
+
+  if (migrated.length > 0) {
+    if (window.S) window.S.phase2Questions = migrated;
+    localStorage.setItem('re_phase2_questions', JSON.stringify(migrated));
+    console.log(`✅ ${migrated.length} ta 2-bosqich savoli muvaffaqiyatli ko'chirildi`);
+  }
+}
+
 // ===== INITIALIZATION =====
 async function initializeSupabaseData() {
   console.log('🔄 Supabase dan ma\'lumotlar yuklanmoqda...');
@@ -329,6 +424,19 @@ async function initializeSupabaseData() {
     }
   }
 
+  const phase2QResult = await loadPhase2QuestionsFromSupabase();
+  if (phase2QResult.success && phase2QResult.data && phase2QResult.data.length > 0) {
+    // Supabase markaziy manba - barcha qurilmalar shu yerdan o'qiydi
+    if (window.S) window.S.phase2Questions = phase2QResult.data;
+    localStorage.setItem('re_phase2_questions', JSON.stringify(phase2QResult.data));
+  } else if (phase2QResult.success) {
+    // Supabase jadvali hali bo'sh - shu brauzerda lokal saqlangan savollar bo'lsa, bir martalik ko'chirib qo'yamiz
+    const localQs = JSON.parse(localStorage.getItem('re_phase2_questions') || '[]');
+    if (localQs.length > 0) {
+      await migratePhase2QuestionsToSupabase(localQs);
+    }
+  }
+
   console.log('✅ Supabase ma\'lumotlari yuklandi');
 }
 
@@ -343,4 +451,8 @@ window.deleteResultFromSupabase = deleteResultFromSupabase;
 window.loadPhase2ResultsFromSupabase = loadPhase2ResultsFromSupabase;
 window.savePhase2ResultToSupabase = savePhase2ResultToSupabase;
 window.deletePhase2ResultFromSupabase = deletePhase2ResultFromSupabase;
+window.loadPhase2QuestionsFromSupabase = loadPhase2QuestionsFromSupabase;
+window.addPhase2QuestionToSupabase = addPhase2QuestionToSupabase;
+window.deletePhase2QuestionFromSupabase = deletePhase2QuestionFromSupabase;
+window.migratePhase2QuestionsToSupabase = migratePhase2QuestionsToSupabase;
 window.initializeSupabaseData = initializeSupabaseData;

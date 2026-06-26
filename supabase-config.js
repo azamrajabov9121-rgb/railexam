@@ -314,6 +314,58 @@ const DB = {
     }
   },
 
+  // ===== PHASE 2 QUESTIONS (2-bosqich ochiq savollari) =====
+  async getAllPhase2Questions() {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('phase2_questions')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('2-bosqich savollarini olishda xato:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async createPhase2Question(questionData) {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('phase2_questions')
+        .insert([{
+          envelope: questionData.env,
+          department: questionData.dept,
+          direction: questionData.dir,
+          question_text: questionData.text
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('2-bosqich savol qo\'shishda xato:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async deletePhase2Question(id) {
+    try {
+      const { error } = await window.supabaseClient
+        .from('phase2_questions')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      console.error('2-bosqich savolni o\'chirishda xato:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
   // ===== STATISTICS =====
   async getStatistics() {
     try {
