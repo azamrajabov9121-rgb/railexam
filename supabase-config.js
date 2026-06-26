@@ -5,8 +5,8 @@
 // MUHIM: Quyidagi qiymatlarni o'zingizning Supabase loyihangiz ma'lumotlari bilan almashtiring
 // Supabase Dashboard → Settings → API dan oling
 
-const SUPABASE_URL = 'https://wnovsymxrbgcupuubdnt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indub3ZzeW14cmJnY3VwdXViZG50Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NTIxMjIsImV4cCI6MjA5NDIyODEyMn0.g-jINUESL12XwjdWhTtG4QmKqWehT-9V1juOskU1a7I';
+const SUPABASE_URL = 'https://cofujrsfopvoduryfrmp.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_5xSA1hNGfztxPjTg7iXnsQ_vA2M6QA1';
 
 // Supabase client yaratish (global window obyektida)
 if (!window.supabaseClient && window.supabase) {
