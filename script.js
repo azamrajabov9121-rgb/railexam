@@ -920,8 +920,27 @@ async function submitExam() {
 }
 
 // ===== NATIJA =====
+function launchConfetti() {
+  const colors = ['#2563eb', '#60a5fa', '#10b981', '#f59e0b', '#f472b6'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 6 + Math.random() * 6;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.width = size + 'px';
+    el.style.height = size * (Math.random() > .5 ? 1 : 2.2) + 'px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+    el.style.setProperty('--rot', (360 + Math.random() * 360) + 'deg');
+    el.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
 function showResult(r) {
   showPage('pg-result');
+  if (r.passed) setTimeout(launchConfetti, 250);
   if ($('txt-retake')) $('txt-retake').textContent = t('retake');
   if ($('txt-home')) $('txt-home').textContent = t('home');
   const circ = 2 * Math.PI * 54, dash = circ - (r.pct / 100) * circ, color = r.passed ? '#22c55e' : '#ef4444';
@@ -1646,17 +1665,20 @@ function downloadPDF(id) {
   const html = `<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8">
 <title>RailExam - ${r.name}</title><style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;}
+body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;position:relative;}
 @page{size:A4 portrait;margin:8mm 10mm;}
 @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.no-print{display:none!important;}}
-.hdr{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #1e3a8a;padding-bottom:7px;margin-bottom:7px;}
-.logo{width:38px;height:38px;background:#1e3a8a;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;}
+.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-32deg);font-size:62px;font-weight:900;color:rgba(30,58,138,.05);letter-spacing:4px;white-space:nowrap;z-index:0;font-family:Arial,sans-serif;pointer-events:none;}
+.sheet{position:relative;z-index:1;}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;margin-bottom:8px;position:relative;}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1e3a8a,#3b82f6,#93c5fd);border-radius:2px;}
+.logo{width:40px;height:40px;background:linear-gradient(135deg,#1e3a8a,#2563eb);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:900;box-shadow:0 3px 8px rgba(30,58,138,.35);}
 .info{display:flex;gap:9px;align-items:flex-start;padding:6px 9px;border:1.5px solid #e5e7eb;border-radius:8px;background:#f9fafb;margin-bottom:7px;}
 .itbl{flex:1;border-collapse:collapse;}
 .itbl td{padding:1.5px 4px;font-size:9.5px;}
 .lbl{color:#6b7280;width:85px;}
 .val{font-weight:600;}
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;color:${sc};background:${sb};border:1.5px solid ${sc};}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;color:${sc};background:${sb};border:1.5px solid ${sc};box-shadow:0 2px 6px rgba(0,0,0,.08);}
 .stats{display:flex;gap:5px;margin-bottom:7px;}
 .sbox{flex:1;text-align:center;padding:4px 3px;border-radius:6px;border:1px solid #e5e7eb;}
 .snum{font-size:16px;font-weight:800;}
@@ -1669,7 +1691,9 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;}
 .ftr{margin-top:7px;padding-top:5px;border-top:1px solid #e5e7eb;display:flex;justify-content:space-between;font-size:7.5px;color:#9ca3af;}
 .pbtn{position:fixed;bottom:18px;right:18px;background:#1e3a8a;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3);}
 </style></head><body>
+<div class="watermark">O'ZBEKISTON TEMIR YO'LLARI</div>
 <button class="pbtn no-print" onclick="window.print()">🖨️ Chop etish</button>
+<div class="sheet">
 <div class="hdr">
   <div style="display:flex;align-items:center;gap:8px;">
     <div class="logo">🚄</div>
@@ -1713,6 +1737,7 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;}
 <div class="ftr">
   <span>RailExam © O'zbekiston Temir Yo'llari</span>
   <span>Avtomatik yaratilgan: ${new Date().toLocaleString('uz-UZ')}</span>
+</div>
 </div>
 </body></html>`;
   win.document.write(html);
@@ -2236,7 +2261,7 @@ function startPhase2Envelopes() {
   grid.innerHTML = actualEnvelopes.map((actualNum, idx) => {
     let visualNum = idx + 1;
     return `
-    <div class="envelope-card" onclick="openEnvelope(this, ${visualNum}, ${actualNum})">
+    <div class="envelope-card" style="--i:${idx}" onclick="openEnvelope(this, ${visualNum}, ${actualNum})">
       <div class="env-flap"></div>
       <div class="env-body"></div>
       <div class="env-number">${visualNum}</div>
