@@ -251,6 +251,7 @@ async function loadPhase2ResultsFromSupabase() {
         passed: r.passed,
         attachment_data: r.attachment_data,
         attachment_name: r.attachment_name,
+        envelope: r.envelope,
         date: new Date(r.exam_date).toLocaleString('uz-UZ')
       }));
       return { success: true, data: formatted };

@@ -1,6 +1,6 @@
 -- ============================================================
 -- RAILEXAM — to'liq baza sxemasi
--- Xavfsiz (idempotent): mavjud jadval/policy bo'lsa xato bermay o'tkazib yuboradi
+-- Xavfsiz (idempotent): mavjud jadval/policy/ustun bo'lsa xato bermay o'tkazib yuboradi
 -- Supabase Dashboard -> SQL Editor -> New query ga joylashtirib Run qiling
 -- ============================================================
 
@@ -84,10 +84,14 @@ CREATE TABLE IF NOT EXISTS phase2_results (
   passed BOOLEAN NOT NULL,
   attachment_data TEXT,
   attachment_name TEXT,
+  envelope INTEGER,
   exam_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS idx_phase2_results_jshir ON phase2_results(jshir);
 CREATE INDEX IF NOT EXISTS idx_phase2_results_exam_date ON phase2_results(exam_date DESC);
+
+-- Eski jadvalda bo'lsa ham, "envelope" ustuni yo'q bo'lsa qo'shib qo'yamiz
+ALTER TABLE phase2_results ADD COLUMN IF NOT EXISTS envelope INTEGER;
 
 -- ============================================================
 -- Row Level Security (RLS) — xavfsiz qayta ishlatish uchun avval eski policy o'chiriladi
@@ -130,5 +134,7 @@ DROP POLICY IF EXISTS "Phase2 results are viewable by everyone" ON phase2_result
 CREATE POLICY "Phase2 results are viewable by everyone" ON phase2_results FOR SELECT USING (true);
 DROP POLICY IF EXISTS "Phase2 results can be inserted by everyone" ON phase2_results;
 CREATE POLICY "Phase2 results can be inserted by everyone" ON phase2_results FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Phase2 results can be updated by everyone" ON phase2_results;
+CREATE POLICY "Phase2 results can be updated by everyone" ON phase2_results FOR UPDATE USING (true);
 DROP POLICY IF EXISTS "Phase2 results can be deleted by everyone" ON phase2_results;
 CREATE POLICY "Phase2 results can be deleted by everyone" ON phase2_results FOR DELETE USING (true);

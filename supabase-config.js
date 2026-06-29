@@ -286,7 +286,8 @@ const DB = {
           percentage: resultData.percentage,
           passed: resultData.passed,
           attachment_data: resultData.attachment_data || null,
-          attachment_name: resultData.attachment_name || null
+          attachment_name: resultData.attachment_name || null,
+          envelope: resultData.envelope || null
         }])
         .select()
         .single();
