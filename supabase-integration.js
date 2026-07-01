@@ -403,10 +403,35 @@ async function initializeSupabaseData() {
   const questionsResult = await loadQuestionsFromSupabase();
   if (questionsResult.success && questionsResult.data.length > 0) {
     window.DB_QUESTIONS = questionsResult.data;
-    // S allaqachon yaratilgan, shuning uchun to'g'ridan-to'g'ri yangilaymiz
     if (window.S) {
       window.S.questions = questionsResult.data;
       console.log(`✅ S.questions yangilandi: ${window.S.questions.length} ta savol`);
+    }
+
+    // Supabase savollardagi yo'nalishlarni SUBDIRS ga sinxronlash.
+    // Admin bir kompyuterda yangi xo'jalik/yo'nalish qo'shganda faqat u kompyuterning
+    // localStorage'ida saqlanadi. Bu kod barcha qurilmalarda savollar orqali
+    // yo'nalishlarni avtomatik tiklaydi — boshqa kompyuterlarda ham ko'rinishi uchun.
+    if (typeof SUBDIRS !== 'undefined') {
+      const knownDirs = new Set([
+        ...Object.keys(SUBDIRS),
+        ...Object.values(SUBDIRS).flat()
+      ]);
+      const customFromLS = JSON.parse(localStorage.getItem('railexam_custom_dirs') || '{}');
+      let lsUpdated = false;
+
+      questionsResult.data.forEach(q => {
+        if (q.dir && !knownDirs.has(q.dir)) {
+          if (!SUBDIRS[q.dir]) SUBDIRS[q.dir] = [];
+          knownDirs.add(q.dir);
+          if (!customFromLS[q.dir]) { customFromLS[q.dir] = []; lsUpdated = true; }
+        }
+      });
+
+      if (lsUpdated) {
+        localStorage.setItem('railexam_custom_dirs', JSON.stringify(customFromLS));
+        console.log('✅ Yangi yo\'nalishlar Supabase dan sinxronlandi');
+      }
     }
   }
 
