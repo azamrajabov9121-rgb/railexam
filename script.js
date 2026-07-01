@@ -196,6 +196,14 @@ function toCyrillic(text) {
   return finalRes;
 }
 
+// Yo'nalish (dir) bo'yicha uning ota-xo'jaligini topadi
+function findDeptForDir(dir) {
+  for (const [dept, subs] of Object.entries(SUBDIRS)) {
+    if (subs && subs.includes(dir)) return dept;
+  }
+  return null; // dir o'zi top-level xo'jalik
+}
+
 function translateDirection(d) {
   if (!d) return '';
   const lang = S.lang;
@@ -981,7 +989,18 @@ function showResult(r) {
     </div>
     <div class="card" style="padding:13px;margin-bottom:11px;font-size:13px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-        ${[['👤', r.name], ['💼', r.pos], ['🪪', 'JSHSHIR: ' + (r.jshir || '—')], ['📞', r.phone], ['🎯', translateDirection(r.dir)], ['📅', r.date], ['⏱', Math.floor(r.duration / 60) + 'd ' + r.duration % 60 + 's'], ['⚠️', 'Tab: ' + r.tabs]].map(([i, v]) => `<div style="display:flex;gap:5px;align-items:start;"><span>${i}</span><span style="color:var(--text2);font-size:12px;">${v || '—'}</span></div>`).join('')}
+        ${(() => {
+          const pd = findDeptForDir(r.dir);
+          const xojalik = pd || translateDirection(r.dir);
+          const yonalish = pd ? translateDirection(r.dir) : null;
+          return [
+            ['👤', r.name], ['💼', r.pos + ' (hozirda)'],
+            ['🪪', 'JSHSHIR: ' + (r.jshir || '—')], ['📞', r.phone],
+            ['🏢', 'Xo\'jalik: ' + (xojalik || '—')],
+            ...(yonalish ? [['🎯', 'Yo\'nalish: ' + yonalish]] : []),
+            ['📅', r.date], ['⏱', Math.floor(r.duration / 60) + 'd ' + r.duration % 60 + 's'], ['⚠️', 'Tab: ' + r.tabs]
+          ].map(([i, v]) => `<div style="display:flex;gap:5px;align-items:start;"><span>${i}</span><span style="color:var(--text2);font-size:12px;">${v || '—'}</span></div>`).join('');
+        })()}
       </div>
     </div>
     <details>
@@ -1731,13 +1750,18 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
 </div>
 <div class="info">
   ${ph}
-  <table class="itbl">
+  <table class="itbl">${(() => {
+    const parentDept = findDeptForDir(r.dir);
+    const xojalik = parentDept || translateDirection(r.dir) || r.dir || '—';
+    const yonalish = parentDept ? (translateDirection(r.dir) || r.dir) : null;
+    return `
     <tr><td class="lbl">F.I.Sh:</td><td class="val" style="font-size:11px;">${r.name || '—'}</td></tr>
-    <tr><td class="lbl">Lavozim:</td><td class="val">${r.pos || '—'}</td></tr>
+    <tr><td class="lbl">Lavozim:</td><td class="val">${r.pos || '—'}<div style="font-size:8px;color:#9ca3af;">(hozirda ishlab turgan lavozimi)</div></td></tr>
     <tr><td class="lbl">JSHSHIR:</td><td class="val" style="letter-spacing:1px;">${r.jshir || '—'}</td></tr>
     <tr><td class="lbl">Telefon:</td><td class="val">${r.phone || '—'}</td></tr>
-    <tr><td class="lbl">Yo'nalish:</td><td class="val">${translateDirection(r.dir) || '—'}</td></tr>
-  </table>
+    <tr><td class="lbl">Xo'jalik:</td><td class="val">${xojalik}</td></tr>
+    ${yonalish ? `<tr><td class="lbl">Yo'nalish:</td><td class="val">${yonalish}<div style="font-size:8px;color:#9ca3af;">(imtihon topshiradigan yo'nalish)</div></td></tr>` : ''}`;
+  })()}</table>
   <div style="text-align:center;min-width:75px;">
     <div class="badge">${st}</div>
     <div style="margin-top:5px;font-size:20px;font-weight:800;color:${sc};">${r.pct}%</div>
