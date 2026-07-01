@@ -198,15 +198,33 @@ const DB = {
 
   async getAllResults() {
     try {
+      // photo va detailed_answers JUDA og'ir (base64 rasm + 36 savollik JSONB) —
+      // ro'yxat uchun ular kerak emas, faqat batafsil ko'rishda yuklanadi.
       const { data, error } = await window.supabaseClient
         .from('exam_results')
-        .select('*')
+        .select('id, user_id, name, position, jshir, phone, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
         .order('exam_date', { ascending: false });
 
       if (error) throw error;
       return { success: true, data };
     } catch (error) {
       console.error('Natijalarni olishda xato:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getResultById(id) {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('exam_results')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      console.error('Natijani olishda xato:', error);
       return { success: false, error: error.message };
     }
   },

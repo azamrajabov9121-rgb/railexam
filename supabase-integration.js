@@ -84,7 +84,7 @@ async function loadResultsFromSupabase() {
         pos: r.position,
         jshir: r.jshir,
         phone: r.phone,
-        photo: r.photo,
+        photo: null,       // ro'yxatda kerak emas — batafsil ko'rishda yuklanadi
         dir: r.direction,
         lang: r.language,
         total: r.total_questions,
@@ -95,7 +95,7 @@ async function loadResultsFromSupabase() {
         tabs: r.tab_switches,
         duration: r.duration_seconds,
         date: new Date(r.exam_date).toLocaleString('uz-UZ'),
-        detailed: r.detailed_answers || []
+        detailed: []       // ro'yxatda kerak emas — batafsil ko'rishda yuklanadi
       }));
 
       console.log(`✅ ${formattedResults.length} ta natija Supabase dan yuklandi`);
@@ -106,6 +106,32 @@ async function loadResultsFromSupabase() {
   } catch (error) {
     console.error('❌ Natijalarni yuklashda xato:', error);
     return { success: false, error: error.message };
+  }
+}
+
+// ===== BITTA NATIJANI TO'LIQ YUKLASH (photo + detailed_answers bilan) =====
+async function loadFullResultFromSupabase(id) {
+  if (!window.DB || !DB.getResultById) return { success: false };
+  try {
+    const result = await DB.getResultById(id);
+    if (result.success && result.data) {
+      const r = result.data;
+      return {
+        success: true,
+        data: {
+          id: r.id, user_id: r.user_id, name: r.name, pos: r.position,
+          jshir: r.jshir, phone: r.phone, photo: r.photo,
+          dir: r.direction, lang: r.language, total: r.total_questions,
+          correct: r.correct_answers, wrong: r.wrong_answers, pct: r.percentage,
+          passed: r.passed, tabs: r.tab_switches, duration: r.duration_seconds,
+          date: new Date(r.exam_date).toLocaleString('uz-UZ'),
+          detailed: r.detailed_answers || []
+        }
+      };
+    }
+    return { success: false };
+  } catch (e) {
+    return { success: false };
   }
 }
 
@@ -469,6 +495,7 @@ async function initializeSupabaseData() {
 // Global scope ga export
 window.saveExamResultToSupabase = saveExamResultToSupabase;
 window.loadResultsFromSupabase = loadResultsFromSupabase;
+window.loadFullResultFromSupabase = loadFullResultFromSupabase;
 window.loadQuestionsFromSupabase = loadQuestionsFromSupabase;
 window.addQuestionToSupabase = addQuestionToSupabase;
 window.updateQuestionInSupabase = updateQuestionInSupabase;

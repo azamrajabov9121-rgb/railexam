@@ -1040,10 +1040,10 @@ async function adminTab(tab) {
   // Darhol skeleton ko'rsat
   showAdminLoader('Ma\'lumotlar yuklanmoqda...');
 
-  // Ma'lumotlarni orqa fonda yuklaymiz
+  // Ma'lumotlarni orqa fonda yuklaymiz (faqat hali yuklanmagan bo'lsa)
   if (tab === 'dash' || tab === 'results') {
     try {
-      if (window.loadResultsFromSupabase) {
+      if (window.loadResultsFromSupabase && S.results.length === 0) {
         const resultsData = await loadResultsFromSupabase();
         if (resultsData && resultsData.success && resultsData.data && resultsData.data.length > 0) {
           S.results = resultsData.data;
@@ -1057,7 +1057,7 @@ async function adminTab(tab) {
 
   if (tab === 'phase2-results') {
     try {
-      if (window.loadResultsFromSupabase) {
+      if (window.loadResultsFromSupabase && S.results.length === 0) {
         const resultsData = await loadResultsFromSupabase();
         if (resultsData && resultsData.success && resultsData.data) {
           S.results = resultsData.data;
@@ -1590,8 +1590,15 @@ async function deletePhase2Result(id) {
   }
 }
 
-function showDetail(id) {
-  const r = S.results.find(x => x.id === id); if (!r) return;
+async function showDetail(id) {
+  let r = S.results.find(x => x.id === id); if (!r) return;
+  // Agar batafsil ma'lumot (photo, detailed) yuklanmagan bo'lsa — hozir yuklaymiz
+  if ((!r.detailed || r.detailed.length === 0) && window.loadFullResultFromSupabase) {
+    const full = await loadFullResultFromSupabase(id);
+    if (full.success) {
+      Object.assign(r, full.data); // keshni yangilash
+    }
+  }
   const el = document.createElement('div'); el.className = 'modal-overlay';
   el.innerHTML = `<div class="modal" style="max-width:850px;width:92%;max-height:90vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
@@ -1640,8 +1647,12 @@ function showDetail(id) {
 }
 
 // ===== PDF GENERATSIYA (A4) =====
-function downloadPDF(id) {
-  const r = S.results.find(x => x.id === id); if (!r) return;
+async function downloadPDF(id) {
+  let r = S.results.find(x => x.id === id); if (!r) return;
+  if ((!r.detailed || r.detailed.length === 0) && window.loadFullResultFromSupabase) {
+    const full = await loadFullResultFromSupabase(id);
+    if (full.success) Object.assign(r, full.data);
+  }
   const win = window.open('', '_blank', 'width=900,height=700');
   if (!win) { toast('Popup bloklangan! Ruxsat bering.', 'var(--red)'); return; }
   const sc = r.passed ? '#16a34a' : '#dc2626';
