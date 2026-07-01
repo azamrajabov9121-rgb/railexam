@@ -1818,6 +1818,7 @@ function renderQuestions() {
         <span style="color:var(--text3);font-size:13px;">Jami: <strong style="color:var(--text);">${total}</strong></span>
       </div>
       <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" onclick="showManageDirections()">🗂 Yo'nalishlar</button>
         <button class="btn btn-secondary btn-sm" onclick="showAddDirection()">+ Yo'nalish qo'shish</button>
         <button class="btn btn-primary btn-sm" onclick="showAddQ(null)">+ Savol qo'shish</button>
       </div>
@@ -2034,6 +2035,86 @@ function exportCSV() {
 }
 
 // Yangi yo'nalish qo'shish funksiyalari
+function showManageDirections() {
+  const custom = JSON.parse(localStorage.getItem('railexam_custom_dirs') || '{}');
+  const rows = [];
+
+  // Hardcoded SUBDIRS ni olish (script.js da aniqlangan, o'chirish mumkin emas)
+  const hardcodedKeys = new Set(Object.keys(SUBDIRS).filter(k => !custom[k]));
+
+  // Barcha yo'nalishlarni ko'rsatish: avval hardcoded, keyin custom
+  Object.keys(SUBDIRS).forEach(dept => {
+    const isCustom = !!custom[dept];
+    const subs = SUBDIRS[dept] || [];
+    if (subs.length === 0) {
+      rows.push({ dept, sub: null, isCustom });
+    } else {
+      subs.forEach(sub => rows.push({ dept, sub, isCustom: isCustom || (custom[dept] && custom[dept].includes(sub)) }));
+    }
+  });
+
+  const el = document.createElement('div'); el.className = 'modal-overlay';
+  el.innerHTML = `<div class="modal" style="max-width:680px;width:95%;max-height:85vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;">🗂 Yo'nalishlarni boshqarish</h3>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">🔒 Tizim yo'nalishlari o'chirib bo'lmaydi. Faqat admin qo'shgan yo'nalishlar o'chirilishi mumkin.</p>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${rows.map((r, i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;gap:10px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.dept}</div>
+            ${r.sub ? `<div style="font-size:11px;color:var(--text3);">↳ ${r.sub}</div>` : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:7px;flex-shrink:0;">
+            ${r.isCustom
+              ? `<button onclick="deleteDirection('${r.dept.replace(/'/g,"\\'")}', ${r.sub ? `'${r.sub.replace(/'/g,"\\'")}' ` : 'null'}, this)" class="btn btn-red btn-sm" style="padding:4px 10px;font-size:11px;">🗑 O'chirish</button>`
+              : `<span style="font-size:10px;color:var(--text3);padding:4px 10px;border:1px solid var(--border);border-radius:7px;">Tizim</span>`}
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+      <button class="btn btn-secondary btn-sm" onclick="this.closest('.modal-overlay').remove();showAddDirection()">+ Yangi yo'nalish qo'shish</button>
+    </div>
+  </div>`;
+  el.onclick = e => { if (e.target === el) el.remove(); };
+  document.body.appendChild(el);
+}
+
+async function deleteDirection(dept, sub, btn) {
+  if (!confirm(`"${dept}${sub ? ' → ' + sub : ''}" yo'nalishini o'chirasizmi?\nBu yo'nalish uchun qo'shilgan savollar o'chib ketmaydi.`)) return;
+
+  btn.disabled = true; btn.textContent = '...';
+
+  // SUBDIRS dan o'chirish
+  if (sub) {
+    if (SUBDIRS[dept]) SUBDIRS[dept] = SUBDIRS[dept].filter(s => s !== sub);
+    if (SUBDIRS[dept] && SUBDIRS[dept].length === 0) delete SUBDIRS[dept];
+  } else {
+    delete SUBDIRS[dept];
+  }
+
+  // LocalStorage dan o'chirish
+  const custom = JSON.parse(localStorage.getItem('railexam_custom_dirs') || '{}');
+  if (sub && custom[dept]) {
+    custom[dept] = custom[dept].filter(s => s !== sub);
+    if (custom[dept].length === 0) delete custom[dept];
+  } else {
+    delete custom[dept];
+  }
+  localStorage.setItem('railexam_custom_dirs', JSON.stringify(custom));
+
+  // Supabase dan o'chirish
+  if (window.deleteCustomDirectionFromSupabase) {
+    await deleteCustomDirectionFromSupabase(dept, sub || null);
+  }
+
+  toast(`"${dept}${sub ? ' → ' + sub : ''}" o'chirildi`, 'var(--green)');
+  document.querySelector('.modal-overlay')?.remove();
+  renderQuestions();
+}
+
 function showAddDirection() {
   const el = document.createElement('div'); el.className = 'modal-overlay';
   el.innerHTML = `<div class="modal" style="max-width:400px;">

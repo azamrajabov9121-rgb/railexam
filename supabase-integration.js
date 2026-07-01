@@ -515,6 +515,10 @@ window.saveExamResultToSupabase = saveExamResultToSupabase;
 window.loadResultsFromSupabase = loadResultsFromSupabase;
 window.loadFullResultFromSupabase = loadFullResultFromSupabase;
 window.saveCustomDirectionToSupabase = saveCustomDirectionToSupabase;
+window.deleteCustomDirectionFromSupabase = async (dept, sub) => {
+  if (!window.DB || !DB.deleteCustomDirection) return;
+  try { await DB.deleteCustomDirection(dept, sub); } catch(e) {}
+};
 window.loadQuestionsFromSupabase = loadQuestionsFromSupabase;
 window.addQuestionToSupabase = addQuestionToSupabase;
 window.updateQuestionInSupabase = updateQuestionInSupabase;

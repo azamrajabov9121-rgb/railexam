@@ -303,6 +303,22 @@ const DB = {
     }
   },
 
+  async deleteCustomDirection(dept, sub) {
+    try {
+      let query = window.supabaseClient
+        .from('custom_directions')
+        .delete()
+        .eq('department', dept);
+      if (sub) query = query.eq('sub_direction', sub);
+      else query = query.is('sub_direction', null);
+      const { error } = await query;
+      if (error) throw error;
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
   // ===== PHASE 2 RESULTS =====
   async getAllPhase2Results() {
     try {
