@@ -2075,6 +2075,11 @@ function saveDirection() {
   if (sub && !custom[dept].includes(sub)) custom[dept].push(sub);
   localStorage.setItem('railexam_custom_dirs', JSON.stringify(custom));
 
+  // Supabase ga ham saqlash — boshqa kompyuterlarda ham ko'rinishi uchun
+  if (window.saveCustomDirectionToSupabase) {
+    saveCustomDirectionToSupabase(dept, sub || null);
+  }
+
   document.querySelector('.modal-overlay')?.remove();
   toast("Yo'nalish muvaffaqiyatli qo'shildi!", "var(--green)");
 

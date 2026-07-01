@@ -109,6 +109,46 @@ async function loadResultsFromSupabase() {
   }
 }
 
+// ===== XO'JALIK/YO'NALISH IYERARXIYASINI SUPABASE DAN YUKLASH =====
+async function loadCustomDirectionsFromSupabase() {
+  if (!window.DB || !DB.getAllCustomDirections) return;
+  try {
+    const result = await DB.getAllCustomDirections();
+    if (!result.success || !result.data) return;
+
+    if (typeof SUBDIRS === 'undefined') return;
+
+    const customFromLS = JSON.parse(localStorage.getItem('railexam_custom_dirs') || '{}');
+    let updated = false;
+
+    result.data.forEach(row => {
+      const dept = row.department;
+      const sub = row.sub_direction;
+      if (!SUBDIRS[dept]) { SUBDIRS[dept] = []; }
+      if (sub && !SUBDIRS[dept].includes(sub)) { SUBDIRS[dept].push(sub); }
+      if (!customFromLS[dept]) { customFromLS[dept] = []; updated = true; }
+      if (sub && !customFromLS[dept].includes(sub)) { customFromLS[dept].push(sub); updated = true; }
+    });
+
+    if (updated) {
+      localStorage.setItem('railexam_custom_dirs', JSON.stringify(customFromLS));
+      console.log('✅ Xo\'jalik/yo\'nalishlar Supabase dan sinxronlandi');
+    }
+  } catch (e) {
+    console.warn('custom_directions yuklanmadi:', e);
+  }
+}
+
+async function saveCustomDirectionToSupabase(dept, sub) {
+  if (!window.DB || !DB.saveCustomDirection) return;
+  try {
+    await DB.saveCustomDirection(dept, sub);
+    console.log(`✅ Yo'nalish Supabase ga saqlandi: ${dept} / ${sub || '—'}`);
+  } catch (e) {
+    console.warn('Yo\'nalishni saqlashda xato:', e);
+  }
+}
+
 // ===== BITTA NATIJANI TO'LIQ YUKLASH (photo + detailed_answers bilan) =====
 async function loadFullResultFromSupabase(id) {
   if (!window.DB || !DB.getResultById) return { success: false };
@@ -434,31 +474,6 @@ async function initializeSupabaseData() {
       console.log(`✅ S.questions yangilandi: ${window.S.questions.length} ta savol`);
     }
 
-    // Supabase savollardagi yo'nalishlarni SUBDIRS ga sinxronlash.
-    // Admin bir kompyuterda yangi xo'jalik/yo'nalish qo'shganda faqat u kompyuterning
-    // localStorage'ida saqlanadi. Bu kod barcha qurilmalarda savollar orqali
-    // yo'nalishlarni avtomatik tiklaydi — boshqa kompyuterlarda ham ko'rinishi uchun.
-    if (typeof SUBDIRS !== 'undefined') {
-      const knownDirs = new Set([
-        ...Object.keys(SUBDIRS),
-        ...Object.values(SUBDIRS).flat()
-      ]);
-      const customFromLS = JSON.parse(localStorage.getItem('railexam_custom_dirs') || '{}');
-      let lsUpdated = false;
-
-      questionsResult.data.forEach(q => {
-        if (q.dir && !knownDirs.has(q.dir)) {
-          if (!SUBDIRS[q.dir]) SUBDIRS[q.dir] = [];
-          knownDirs.add(q.dir);
-          if (!customFromLS[q.dir]) { customFromLS[q.dir] = []; lsUpdated = true; }
-        }
-      });
-
-      if (lsUpdated) {
-        localStorage.setItem('railexam_custom_dirs', JSON.stringify(customFromLS));
-        console.log('✅ Yangi yo\'nalishlar Supabase dan sinxronlandi');
-      }
-    }
   }
 
   const resultsResult = await loadResultsFromSupabase();
@@ -489,6 +504,9 @@ async function initializeSupabaseData() {
     }
   }
 
+  // Xo'jalik/yo'nalish iyerarxiyasini yuklash (barcha qurilmalarda bir xil ko'rinishi uchun)
+  await loadCustomDirectionsFromSupabase();
+
   console.log('✅ Supabase ma\'lumotlari yuklandi');
 }
 
@@ -496,6 +514,7 @@ async function initializeSupabaseData() {
 window.saveExamResultToSupabase = saveExamResultToSupabase;
 window.loadResultsFromSupabase = loadResultsFromSupabase;
 window.loadFullResultFromSupabase = loadFullResultFromSupabase;
+window.saveCustomDirectionToSupabase = saveCustomDirectionToSupabase;
 window.loadQuestionsFromSupabase = loadQuestionsFromSupabase;
 window.addQuestionToSupabase = addQuestionToSupabase;
 window.updateQuestionInSupabase = updateQuestionInSupabase;

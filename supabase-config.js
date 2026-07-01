@@ -276,6 +276,33 @@ const DB = {
     }
   },
 
+  // ===== CUSTOM DIRECTIONS (xo'jalik/yo'nalish iyerarxiyasi) =====
+  async getAllCustomDirections() {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('custom_directions')
+        .select('department, sub_direction')
+        .order('created_at', { ascending: true });
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  async saveCustomDirection(dept, sub) {
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('custom_directions')
+        .insert([{ department: dept, sub_direction: sub || null }])
+        .select().single();
+      if (error) throw error;
+      return { success: true, data };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
   // ===== PHASE 2 RESULTS =====
   async getAllPhase2Results() {
     try {
