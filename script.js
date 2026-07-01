@@ -547,6 +547,19 @@ async function startExam() {
     toast(t('errToifa'), 'var(--amber)'); return;
   }
 
+  // Savollar hali orqa fonda yuklanayotgan bo'lsa, tayyor bo'lishini kutamiz
+  if (S.questions.length === 0 && window.loadQuestionsFromSupabase) {
+    toast('Savollar yuklanmoqda, bir lahza...', 'var(--blue-light)');
+    try {
+      const qData = await loadQuestionsFromSupabase();
+      if (qData.success && qData.data.length > 0) {
+        S.questions = qData.data;
+        window.DB_QUESTIONS = qData.data;
+      }
+    } catch(e) { console.warn('Savollarni yuklashda xato:', e); }
+    if (S.questions.length === 0) { toast(t('errNoQ'), 'var(--amber)'); return; }
+  }
+
   // ===== ESKI IMTIHON QOLDIQLARINI TOZALASH =====
   // Eski event listener olib tashlanadi
   document.removeEventListener('visibilitychange', handleTabSwitch);
@@ -1081,7 +1094,7 @@ async function adminTab(tab) {
 
   if (tab === 'questions') {
     try {
-      if (window.loadQuestionsFromSupabase) {
+      if (window.loadQuestionsFromSupabase && S.questions.length === 0) {
         const questionsData = await loadQuestionsFromSupabase();
         if (questionsData && questionsData.success && questionsData.data && questionsData.data.length > 0) {
           S.questions = questionsData.data;
@@ -2396,19 +2409,12 @@ function restorePageState() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Sahifani DARHOL ko'rsatamiz — Supabase yuklanishini kutmaymiz.
+  // Ma'lumotlar orqa fonda yuklanadi: foydalanuvchi forma to'ldirish paytida
+  // savollar allaqachon tayyor bo'ladi.
+  setTimeout(() => { $('loader').classList.add('hide'); initLangPage(); restorePageState(); }, 600);
 
-  // Supabase dan ma'lumotlarni yuklash
   if (window.initializeSupabaseData) {
-    Promise.race([
-      initializeSupabaseData(),
-      new Promise(resolve => setTimeout(resolve, 3000)) // 3 soniyadan so'ng majburiy o'tkazib yuborish
-    ]).then(() => {
-      setTimeout(() => { $('loader').classList.add('hide'); initLangPage(); restorePageState(); }, 1200);
-    }).catch(err => {
-      console.error('Supabase yuklashda xato:', err);
-      setTimeout(() => { $('loader').classList.add('hide'); initLangPage(); restorePageState(); }, 1200);
-    });
-  } else {
-    setTimeout(() => { $('loader').classList.add('hide'); initLangPage(); restorePageState(); }, 1200);
+    initializeSupabaseData().catch(err => console.warn('Supabase:', err));
   }
 });
