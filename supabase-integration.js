@@ -84,7 +84,7 @@ async function loadResultsFromSupabase() {
         pos: r.position,
         jshir: r.jshir,
         phone: r.phone,
-        photo: null,       // ro'yxatda kerak emas — batafsil ko'rishda yuklanadi
+        photo: r.photo || null,
         dir: r.direction,
         lang: r.language,
         total: r.total_questions,

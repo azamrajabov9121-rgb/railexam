@@ -198,11 +198,11 @@ const DB = {
 
   async getAllResults() {
     try {
-      // photo va detailed_answers JUDA og'ir (base64 rasm + 36 savollik JSONB) —
-      // ro'yxat uchun ular kerak emas, faqat batafsil ko'rishda yuklanadi.
+      // detailed_answers og'ir (36 savollik JSONB) — ro'yxatda kerak emas.
+      // photo kichik thumbnail uchun kerak — ro'yxatda ham ko'rsatiladi.
       const { data, error } = await window.supabaseClient
         .from('exam_results')
-        .select('id, user_id, name, position, jshir, phone, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
+        .select('id, user_id, name, position, jshir, phone, photo, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
         .order('exam_date', { ascending: false });
 
       if (error) throw error;
