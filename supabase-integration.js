@@ -493,14 +493,19 @@ async function initializeSupabaseData() {
 
   const phase2QResult = await loadPhase2QuestionsFromSupabase();
   if (phase2QResult.success && phase2QResult.data && phase2QResult.data.length > 0) {
-    // Supabase markaziy manba - barcha qurilmalar shu yerdan o'qiydi
-    if (window.S) window.S.phase2Questions = phase2QResult.data;
-    localStorage.setItem('re_phase2_questions', JSON.stringify(phase2QResult.data));
+    const fromSupabase = phase2QResult.data;
+
+    // Supabase ga saqlanmagan lokal savollarni (id 'p2_' bilan boshlanadi) saqlab qolamiz
+    const currentLocal = (window.S?.phase2Questions || []).filter(q => String(q.id).startsWith('p2_'));
+    const merged = [...fromSupabase, ...currentLocal];
+
+    if (window.S) window.S.phase2Questions = merged;
+    localStorage.setItem('re_phase2_questions', JSON.stringify(merged));
 
     // phase2_questions dagi dept/dir juftliklarini SUBDIRS ga avtomatik qo'shamiz.
     // Admin kompyuterda saqlangan yo'nalishlar boshqa kompda ham ko'rinadi.
     if (typeof SUBDIRS !== 'undefined') {
-      phase2QResult.data.forEach(q => {
+      fromSupabase.forEach(q => {
         if (!q.dept || !q.dir) return;
         if (!SUBDIRS[q.dept]) SUBDIRS[q.dept] = [];
         if (!SUBDIRS[q.dept].includes(q.dir)) {

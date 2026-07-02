@@ -2331,17 +2331,27 @@ async function savePhase2Question(envIndex) {
     return;
   }
 
-  const payload = { env: envIndex, dept: S.phase2AdminDept, dir: S.phase2AdminDir, text: text };
-  let q = { id: 'p2_' + Date.now(), ...payload };
+  const btn = document.querySelector('.modal-overlay .btn-primary');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saqlanmoqda...'; }
 
-  // Supabase'ga saqlaymiz - shunda boshqa qurilmalarda ham ko'rinadi
+  const payload = { env: envIndex, dept: S.phase2AdminDept, dir: S.phase2AdminDir, text: text };
+  let q = null;
+
   if (window.addPhase2QuestionToSupabase) {
     const result = await addPhase2QuestionToSupabase(payload);
     if (result.success && result.data) {
       q = { id: result.data.id, env: result.data.envelope, dept: result.data.department, dir: result.data.direction, text: result.data.question_text };
     } else {
-      toast("Diqqat: Supabase'ga saqlanmadi, faqat shu qurilmada ko'rinadi!", "var(--amber)");
+      // Supabase xatosi — modal yopilmaydi, xato ko'rsatiladi
+      if (btn) { btn.disabled = false; btn.textContent = 'Saqlash'; }
+      const errMsg = result.error || 'Noma\'lum xato';
+      alert(`❌ SUPABASE XATOSI — savol saqlanmadi!\n\nXato: ${errMsg}\n\nInternet ulanishini tekshiring va qayta urinib ko'ring.`);
+      return;
     }
+  } else {
+    // Supabase ulanmagan — lokal saqlash (faqat shu qurilmada)
+    q = { id: 'p2_' + Date.now(), ...payload };
+    toast("Ogohlantirish: Supabase ulanmagan, faqat shu qurilmada saqlanadi!", "var(--amber)");
   }
 
   if (!S.phase2Questions) S.phase2Questions = [];
@@ -2349,7 +2359,7 @@ async function savePhase2Question(envIndex) {
   localStorage.setItem('re_phase2_questions', JSON.stringify(S.phase2Questions));
 
   document.querySelector('.modal-overlay')?.remove();
-  toast("Savol saqlandi!", "var(--green)");
+  toast("✅ Savol Supabase ga saqlandi!", "var(--green)");
   renderAdminPhase2();
 }
 
