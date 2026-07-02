@@ -496,6 +496,18 @@ async function initializeSupabaseData() {
     // Supabase markaziy manba - barcha qurilmalar shu yerdan o'qiydi
     if (window.S) window.S.phase2Questions = phase2QResult.data;
     localStorage.setItem('re_phase2_questions', JSON.stringify(phase2QResult.data));
+
+    // phase2_questions dagi dept/dir juftliklarini SUBDIRS ga avtomatik qo'shamiz.
+    // Admin kompyuterda saqlangan yo'nalishlar boshqa kompda ham ko'rinadi.
+    if (typeof SUBDIRS !== 'undefined') {
+      phase2QResult.data.forEach(q => {
+        if (!q.dept || !q.dir) return;
+        if (!SUBDIRS[q.dept]) SUBDIRS[q.dept] = [];
+        if (!SUBDIRS[q.dept].includes(q.dir)) {
+          SUBDIRS[q.dept].push(q.dir);
+        }
+      });
+    }
   } else if (phase2QResult.success) {
     // Supabase jadvali hali bo'sh - shu brauzerda lokal saqlangan savollar bo'lsa, bir martalik ko'chirib qo'yamiz
     const localQs = JSON.parse(localStorage.getItem('re_phase2_questions') || '[]');
