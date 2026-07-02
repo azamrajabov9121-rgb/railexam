@@ -379,13 +379,24 @@ const DB = {
   // ===== PHASE 2 QUESTIONS (2-bosqich ochiq savollari) =====
   async getAllPhase2Questions() {
     try {
-      const { data, error } = await window.supabaseClient
-        .from('phase2_questions')
-        .select('*')
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      return { success: true, data };
+      // Supabase max-rows=1000 limitini paginatsiya bilan yengamiz
+      const allData = [];
+      const pageSize = 1000;
+      let from = 0;
+      while (true) {
+        const { data, error } = await window.supabaseClient
+          .from('phase2_questions')
+          .select('*')
+          .order('created_at', { ascending: true })
+          .range(from, from + pageSize - 1);
+        if (error) throw error;
+        if (!data || data.length === 0) break;
+        allData.push(...data);
+        if (data.length < pageSize) break;
+        from += pageSize;
+      }
+      console.log(`✅ phase2_questions: ${allData.length} ta savol yuklandi (paginatsiya)`);
+      return { success: true, data: allData };
     } catch (error) {
       console.error('2-bosqich savollarini olishda xato:', error);
       return { success: false, error: error.message };
