@@ -2535,6 +2535,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => { $('loader').classList.add('hide'); initLangPage(); restorePageState(); }, 600);
 
   if (window.initializeSupabaseData) {
-    initializeSupabaseData().catch(err => console.warn('Supabase:', err));
+    initializeSupabaseData()
+      .then(() => {
+        // custom_directions va phase2_questions yuklangach admin panelni qayta render qilamiz
+        if (window.S && window.S.adminSection === 'phase2') renderAdminPhase2();
+        if (window.S && window.S.adminSection === 'questions') renderQuestions();
+      })
+      .catch(err => console.warn('Supabase:', err));
   }
 });
