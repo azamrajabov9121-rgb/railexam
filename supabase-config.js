@@ -208,15 +208,23 @@ const DB = {
 
   async getAllResults() {
     try {
-      // detailed_answers og'ir (36 savollik JSONB) — ro'yxatda kerak emas.
-      // photo kichik thumbnail uchun kerak — ro'yxatda ham ko'rsatiladi.
-      const { data, error } = await window.supabaseClient
-        .from('exam_results')
-        .select('id, user_id, name, position, jshir, phone, photo, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
-        .order('exam_date', { ascending: false });
-
-      if (error) throw error;
-      return { success: true, data };
+      const allData = [];
+      const pageSize = 1000;
+      let from = 0;
+      while (true) {
+        const { data, error } = await window.supabaseClient
+          .from('exam_results')
+          .select('id, user_id, name, position, jshir, phone, photo, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
+          .order('exam_date', { ascending: false })
+          .range(from, from + pageSize - 1);
+        if (error) throw error;
+        if (!data || data.length === 0) break;
+        allData.push(...data);
+        if (data.length < pageSize) break;
+        from += pageSize;
+      }
+      console.log(`✅ exam_results: ${allData.length} ta natija yuklandi (paginatsiya)`);
+      return { success: true, data: allData };
     } catch (error) {
       console.error('Natijalarni olishda xato:', error);
       return { success: false, error: error.message };
@@ -332,13 +340,23 @@ const DB = {
   // ===== PHASE 2 RESULTS =====
   async getAllPhase2Results() {
     try {
-      const { data, error } = await window.supabaseClient
-        .from('phase2_results')
-        .select('*')
-        .order('exam_date', { ascending: false });
-
-      if (error) throw error;
-      return { success: true, data };
+      const allData = [];
+      const pageSize = 1000;
+      let from = 0;
+      while (true) {
+        const { data, error } = await window.supabaseClient
+          .from('phase2_results')
+          .select('*')
+          .order('exam_date', { ascending: false })
+          .range(from, from + pageSize - 1);
+        if (error) throw error;
+        if (!data || data.length === 0) break;
+        allData.push(...data);
+        if (data.length < pageSize) break;
+        from += pageSize;
+      }
+      console.log(`✅ phase2_results: ${allData.length} ta natija yuklandi (paginatsiya)`);
+      return { success: true, data: allData };
     } catch (error) {
       console.error('2-bosqich natijalarini olishda xato:', error);
       return { success: false, error: error.message };
