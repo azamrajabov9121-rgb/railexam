@@ -67,13 +67,23 @@ const DB = {
   // ===== QUESTIONS =====
   async getAllQuestions() {
     try {
-      const { data, error } = await window.supabaseClient
-        .from('questions')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return { success: true, data };
+      const allData = [];
+      const pageSize = 1000;
+      let from = 0;
+      while (true) {
+        const { data, error } = await window.supabaseClient
+          .from('questions')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .range(from, from + pageSize - 1);
+        if (error) throw error;
+        if (!data || data.length === 0) break;
+        allData.push(...data);
+        if (data.length < pageSize) break;
+        from += pageSize;
+      }
+      console.log(`✅ questions: ${allData.length} ta savol yuklandi (paginatsiya)`);
+      return { success: true, data: allData };
     } catch (error) {
       console.error('Savollarni olishda xato:', error);
       return { success: false, error: error.message };
