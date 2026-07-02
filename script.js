@@ -1125,6 +1125,31 @@ async function adminTab(tab) {
     }
   }
 
+  if (tab === 'phase2') {
+    try {
+      if (window.loadPhase2QuestionsFromSupabase) {
+        const hasSupabaseData = (S.phase2Questions || []).some(q => !String(q.id).startsWith('p2_'));
+        if (!hasSupabaseData) {
+          const p2QData = await loadPhase2QuestionsFromSupabase();
+          if (p2QData && p2QData.success && p2QData.data && p2QData.data.length > 0) {
+            const currentLocal = (S.phase2Questions || []).filter(q => String(q.id).startsWith('p2_'));
+            S.phase2Questions = [...p2QData.data, ...currentLocal];
+            if (typeof SUBDIRS !== 'undefined') {
+              p2QData.data.forEach(q => {
+                if (!q.dept || !q.dir) return;
+                if (!SUBDIRS[q.dept]) SUBDIRS[q.dept] = [];
+                if (!SUBDIRS[q.dept].includes(q.dir)) SUBDIRS[q.dept].push(q.dir);
+              });
+            }
+            console.log(`✅ Admin: ${p2QData.data.length} ta 2-bosqich savoli yuklandi`);
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("2-bosqich savollari yuklanmadi:", err);
+    }
+  }
+
   if (tab === 'dash') renderDash();
   else if (tab === 'results') renderResults();
   else if (tab === 'phase2-results') renderPhase2Results();
