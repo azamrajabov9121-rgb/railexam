@@ -196,6 +196,14 @@ function toCyrillic(text) {
   return finalRes;
 }
 
+// Xodim uchun JSHSHIR ga asoslangan deterministik 6 raqamli ID
+function empDisplayId(jshir) {
+  const s = String(jshir || '0');
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0x7fffffff;
+  return String(100000 + (h % 900000));
+}
+
 // Yo'nalish (dir) bo'yicha uning ota-xo'jaligini topadi
 function findDeptForDir(dir) {
   for (const [dept, subs] of Object.entries(SUBDIRS)) {
@@ -1281,12 +1289,7 @@ function renderResults() {
       <div style="overflow-x:auto;">
         <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">🪪 ID</th><th>JSHSHIR</th><th>Lavozim</th><th>Yo'nalish</th><th>Ball</th><th>Holat</th><th>Tab</th><th>Sana</th><th></th></tr></thead>
         <tbody>${rs.map((r, i) => {
-    // Pseudo-random generator based on ID
-    const seed = Number(r.id) || i;
-    let x = Math.sin(seed) * 10000;
-    let randomFract = x - Math.floor(x);
-    // Agar r.userId bo'lsa undan foydalanamiz, aks holda seed dan generatsiya qilamiz
-    const empId = r.userId ? String(r.userId).padStart(6, '0') : String(Math.floor(100000 + randomFract * 900000));
+    const empId = empDisplayId(r.jshir);
     return `<tr>
           <td style="color:var(--text3);">${i + 1}</td>
           <td><div style="display:flex;align-items:center;gap:7px;">
@@ -1385,10 +1388,7 @@ function renderPhase2Results() {
       <div style="overflow-x:auto;">
         <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">🪪 ID</th><th>JSHSHIR</th><th style="min-width:80px;">🎫 Bilet</th><th style="min-width:110px;">Ball (Foizda)</th><th>Holat</th><th style="min-width:180px;">Qog'ozdagi javob varag'i (Rasm/PDF)</th><th style="min-width:100px;">Sana</th><th style="min-width:100px;">Amal</th></tr></thead>
         <tbody>${rs.map((r, i) => {
-    const seed = Number(r.id) || i;
-    let x = Math.sin(seed) * 10000;
-    let randomFract = x - Math.floor(x);
-    const empId = r.userId ? String(r.userId).padStart(6, '0') : String(Math.floor(100000 + randomFract * 900000));
+    const empId = empDisplayId(r.jshir);
 
     const p2 = S.phase2ResultsList.find(p => p.first_stage_result_id === r.id);
 
@@ -1770,7 +1770,7 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
   </div>
   <div style="text-align:right;font-size:8.5px;color:#6b7280;">
     <div style="font-weight:700;font-size:10.5px;color:#1e3a8a;">IMTIHON NATIJASI</div>
-    <div>Sana: ${r.date}</div><div>ID: ${r.userId ? String(r.userId).padStart(6, '0') : r.id}</div>
+    <div>Sana: ${r.date}</div><div>ID: ${empDisplayId(r.jshir)}</div>
   </div>
 </div>
 <div class="info">
