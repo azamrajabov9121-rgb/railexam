@@ -1770,7 +1770,7 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
   </div>
   <div style="text-align:right;font-size:8.5px;color:#6b7280;">
     <div style="font-weight:700;font-size:10.5px;color:#1e3a8a;">IMTIHON NATIJASI</div>
-    <div>Sana: ${r.date}</div><div>ID: ${r.id}</div>
+    <div>Sana: ${r.date}</div><div>ID: ${r.userId ? String(r.userId).padStart(6, '0') : r.id}</div>
   </div>
 </div>
 <div class="info">

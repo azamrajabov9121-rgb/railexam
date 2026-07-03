@@ -79,7 +79,7 @@ async function loadResultsFromSupabase() {
       // Supabase formatidan local formatga o'tkazish
       const formattedResults = result.data.map(r => ({
         id: r.id,
-        user_id: r.user_id,
+        userId: r.user_id,
         name: r.name,
         pos: r.position,
         jshir: r.jshir,
