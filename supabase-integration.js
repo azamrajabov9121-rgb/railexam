@@ -86,6 +86,7 @@ async function loadResultsFromSupabase() {
         phone: r.phone,
         photo: r.photo || null,
         dir: r.direction,
+        sub: r.sub_direction,
         lang: r.language,
         total: r.total_questions,
         correct: r.correct_answers,
@@ -161,7 +162,7 @@ async function loadFullResultFromSupabase(id) {
         data: {
           id: r.id, user_id: r.user_id, name: r.name, pos: r.position,
           jshir: r.jshir, phone: r.phone, photo: r.photo,
-          dir: r.direction, lang: r.language, total: r.total_questions,
+          dir: r.direction, sub: r.sub_direction, lang: r.language, total: r.total_questions,
           correct: r.correct_answers, wrong: r.wrong_answers, pct: r.percentage,
           passed: r.passed, tabs: r.tab_switches, duration: r.duration_seconds,
           date: new Date(r.exam_date).toLocaleString('uz-UZ'),

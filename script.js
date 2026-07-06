@@ -924,7 +924,7 @@ async function submitExam() {
   const total = S.examQuestions.length, pct = Math.round(correct / total * 100), passed = pct >= 71; // o'tish bali: 71% (savollar soni turlicha bo'lsa ham adolatli)
   const elapsed = Math.round((Date.now() - S.startTime) / 1000);
   const randomUserId = Math.floor(100000 + Math.random() * 900000);
-  const r = { id: Date.now(), userId: randomUserId, name: S.userName, pos: S.userPos, jshir: S.userJshir, phone: S.userPhone, photo: S.userPhoto, dir: S.direction, lang: S.lang, total, correct, wrong: total - correct, pct, passed, tabs: S.tabSwitches, duration: elapsed, date: new Date().toLocaleString('uz-UZ'), detailed };
+  const r = { id: Date.now(), userId: randomUserId, name: S.userName, pos: S.userPos, jshir: S.userJshir, phone: S.userPhone, photo: S.userPhoto, dir: S.direction, sub: S.subDirection, lang: S.lang, total, correct, wrong: total - correct, pct, passed, tabs: S.tabSwitches, duration: elapsed, date: new Date().toLocaleString('uz-UZ'), detailed };
 
   // LocalStorage ga saqlash
   S.results.unshift(r);
@@ -1785,7 +1785,8 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
     <tr><td class="lbl">JSHSHIR:</td><td class="val" style="letter-spacing:1px;">${r.jshir || '—'}</td></tr>
     <tr><td class="lbl">Telefon:</td><td class="val">${r.phone || '—'}</td></tr>
     <tr><td class="lbl">Xo'jalik:</td><td class="val">${xojalik}</td></tr>
-    ${yonalish ? `<tr><td class="lbl">Yo'nalish:</td><td class="val">${yonalish}<div style="font-size:8px;color:#9ca3af;">(imtihon topshiradigan yo'nalish)</div></td></tr>` : ''}`;
+    ${yonalish ? `<tr><td class="lbl">Yo'nalish:</td><td class="val">${yonalish}<div style="font-size:8px;color:#9ca3af;">(imtihon topshiradigan yo'nalish)</div></td></tr>` : ''}
+    ${r.sub ? `<tr><td class="lbl">Mutaxassislik:</td><td class="val">${translateDirection(r.sub) || r.sub}</td></tr>` : ''}`;
   })()}</table>
   <div style="text-align:center;min-width:75px;">
     <div class="badge">${st}</div>
@@ -2530,15 +2531,6 @@ function submitPhase2() {
   localStorage.setItem('re_phase2_results', JSON.stringify(S.phase2Results));
 
   showPage('pg-phase2-finish');
-}
-
-function testPhase2() {
-  S.userName = "Test User";
-  S.userJshir = "12345678901234";
-  S.userPos = "Test Position";
-  S.direction = "Tashish va bekatlar ishlari xo'jaligi";
-  S.subDirection = "DSP va manyovr dispetcher (DSS)";
-  startPhase2Envelopes();
 }
 
 window.addEventListener('resize', () => {

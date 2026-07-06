@@ -185,6 +185,7 @@ const DB = {
           phone: resultData.phone,
           photo: resultData.photo || null,
           direction: resultData.dir,
+          sub_direction: resultData.sub || null,
           language: resultData.lang || 'uz',
           total_questions: resultData.total,
           correct_answers: resultData.correct,
@@ -214,7 +215,7 @@ const DB = {
       while (true) {
         const { data, error } = await window.supabaseClient
           .from('exam_results')
-          .select('id, user_id, name, position, jshir, phone, photo, direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
+          .select('id, user_id, name, position, jshir, phone, photo, direction, sub_direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
           .order('exam_date', { ascending: false })
           .range(from, from + pageSize - 1);
         if (error) throw error;

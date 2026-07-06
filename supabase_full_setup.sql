@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS questions (
   direction TEXT NOT NULL,
   question_text TEXT NOT NULL,
   option_a TEXT NOT NULL,
+  
   option_b TEXT NOT NULL,
   option_c TEXT NOT NULL,
   option_d TEXT NOT NULL,
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS exam_results (
   phone TEXT NOT NULL,
   photo TEXT,
   direction TEXT NOT NULL,
+  sub_direction TEXT,
   language TEXT NOT NULL DEFAULT 'uz',
   total_questions INTEGER NOT NULL,
   correct_answers INTEGER NOT NULL,
@@ -92,6 +94,9 @@ CREATE INDEX IF NOT EXISTS idx_phase2_results_exam_date ON phase2_results(exam_d
 
 -- Eski jadvalda bo'lsa ham, "envelope" ustuni yo'q bo'lsa qo'shib qo'yamiz
 ALTER TABLE phase2_results ADD COLUMN IF NOT EXISTS envelope INTEGER;
+
+-- Eski jadvalda bo'lsa ham, "sub_direction" (mutaxassislik) ustuni yo'q bo'lsa qo'shib qo'yamiz
+ALTER TABLE exam_results ADD COLUMN IF NOT EXISTS sub_direction TEXT;
 
 -- ============================================================
 -- Row Level Security (RLS) — xavfsiz qayta ishlatish uchun avval eski policy o'chiriladi
