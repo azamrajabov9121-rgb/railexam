@@ -2010,7 +2010,7 @@ async function saveQ(editId) {
   else if (b64) image = b64;
 
   const questionData = { id: editId || Date.now(), dir, q, opts: { A, B, C, D }, ans, dif: dif || 'medium' };
-  if (image) questionData.image = image;
+  questionData.image = image;
 
   // LocalStorage ga saqlash
   if (editId) {

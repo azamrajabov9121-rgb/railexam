@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS questions (
   option_d TEXT NOT NULL,
   correct_answer TEXT NOT NULL CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
   difficulty TEXT DEFAULT 'medium' CHECK (difficulty IN ('easy', 'medium', 'hard')),
+  image_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -97,6 +98,9 @@ ALTER TABLE phase2_results ADD COLUMN IF NOT EXISTS envelope INTEGER;
 
 -- Eski jadvalda bo'lsa ham, "sub_direction" (mutaxassislik) ustuni yo'q bo'lsa qo'shib qo'yamiz
 ALTER TABLE exam_results ADD COLUMN IF NOT EXISTS sub_direction TEXT;
+
+-- Eski jadvalda bo'lsa ham, "image_url" (savol rasmi) ustuni yo'q bo'lsa qo'shib qo'yamiz
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT;
 
 -- ============================================================
 -- Row Level Security (RLS) — xavfsiz qayta ishlatish uchun avval eski policy o'chiriladi

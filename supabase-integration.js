@@ -199,7 +199,8 @@ async function loadQuestionsFromSupabase() {
           D: q.option_d
         },
         ans: q.correct_answer,
-        dif: q.difficulty
+        dif: q.difficulty,
+        image: q.image_url || null
       }));
 
       console.log(`✅ ${formattedQuestions.length} ta savol Supabase dan yuklandi`);

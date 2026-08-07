@@ -117,7 +117,8 @@ const DB = {
           option_c: questionData.opts.C,
           option_d: questionData.opts.D,
           correct_answer: questionData.ans,
-          difficulty: questionData.dif || 'medium'
+          difficulty: questionData.dif || 'medium',
+          image_url: questionData.image || null
         }])
         .select()
         .single();
@@ -143,6 +144,7 @@ const DB = {
           option_d: questionData.opts.D,
           correct_answer: questionData.ans,
           difficulty: questionData.dif || 'medium',
+          image_url: questionData.image || null,
           updated_at: new Date().toISOString()
         })
         .eq('id', id)
