@@ -228,7 +228,7 @@ const QUESTIONS = [];
 // ===== LOCALES =====
 const L = {
   uz: {
-    lang: "O'zbek tili", flag: "🇺🇿", sub: "Lotin", back: "Tilni o'zgartirish", reg: "Ro'yxatdan o'tish", name: "F.I.Sh (To'liq ism)", pos: "Lavozim", jshir: "JSHSHIR (14 raqam)", phone: "Telefon", camT: "Kamera", camD: "Imtihon uchun rasm oling", capture: "Rasm olish", retakeCam: "Qayta", camOk: "Tasdiqlash", skipCam: "Kamerasiz davom etish →", dirT: "Yo'nalishni tanlang", dirD: "Imtihon yo'nalishini belgilang", start: "Imtihonni boshlash", cont: "Davom etish", prev: "Oldingi", next: "Keyingisi", finish: "Tugatish", fin2: "Imtihonni tugatish", ansgiven: "javob", finQ: "Imtihonni tugatishni tasdiqlaysizmi?", cancel: "Bekor qilish", yesF: "Ha, tugatish", retake: "Qayta topshirish", home: "Bosh sahifa", tabW: "Boshqa tabga o'tdingiz! Bu qayd etildi.", passed: "O'TDINGIZ! 🎉", failed: "YIQILDINGIZ 😔", passedMsg: "Tabriklaymiz! Imtihondan muvaffaqiyatli o'tdingiz.", failedMsg: "Afsuski, o'ta olmadingiz. Qayta urinib ko'ring.", correct: "To'g'ri javoblar", wrong: "Noto'g'ri javoblar", total: "Jami savollar", passScore: "O'tish bali: 71%",
+    lang: "O'zbek tili", flag: "🇺🇿", sub: "Lotin", back: "Tilni o'zgartirish", reg: "Ro'yxatdan o'tish", name: "F.I.Sh (To'liq ism)", pos: "Lavozim", jshir: "JSHSHIR (14 raqam)", phone: "Telefon", camT: "Kamera", camD: "Imtihon uchun rasm oling", capture: "Rasm olish", retakeCam: "Qayta", camOk: "Tasdiqlash", skipCam: "Kamerasiz davom etish →", dirT: "Yo'nalishni tanlang", dirD: "Imtihon yo'nalishini belgilang", start: "Imtihonni boshlash", cont: "Davom etish", prev: "Oldingi", next: "Keyingisi", finish: "Tugatish", fin2: "Imtihonni tugatish", ansgiven: "javob", finQ: "Imtihonni tugatishni tasdiqlaysizmi?", cancel: "Bekor qilish", yesF: "Ha, tugatish", retake: "Qayta topshirish", home: "Bosh sahifa", tabW: "Boshqa tabga o'tdingiz! Bu qayd etildi.", passed: "O'TDINGIZ!", failed: "YIQILDINGIZ", passedMsg: "Tabriklaymiz! Imtihondan muvaffaqiyatli o'tdingiz.", failedMsg: "Afsuski, o'ta olmadingiz. Qayta urinib ko'ring.", correct: "To'g'ri javoblar", wrong: "Noto'g'ri javoblar", total: "Jami savollar", passScore: "O'tish bali: 71%",
     errFill: "Barcha maydonlarni to'ldiring!", errJshir: "JSHSHIR 14 ta raqam bo'lishi kerak!", errDir: "Yo'nalishni tanlang!", errSub: "Mutaxassislikni tanlang!", errToifa: "Toifani tanlang (3-toifa yoki 4-toifa)!", errNoQ: "Bu yo'nalish uchun hali savollar qo'shilmagan!",
     tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
     detailTitle: "Savol-javoblar", yourAnsLbl: "Siz:", corrAnsLbl: "To'g'ri:",
@@ -237,7 +237,7 @@ const L = {
     reqField: "Bu maydon to'ldirilishi shart"
   },
   uzb: {
-    lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ! 🎉", failed: "ЙИҚИЛДИНГИЗ 😔", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
+    lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ!", failed: "ЙИҚИЛДИНГИЗ", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
     errFill: "Барча майдонларни тўлдиринг!", errJshir: "ЖШШИР 14 та рақам бўлиши керак!", errDir: "Йўналишни танланг!", errSub: "Мутахассисликни танланг!", errToifa: "Тоифани танланг (3-тоифа ёки 4-тоифа)!", errNoQ: "Бу йўналиш учун ҳали саволлар қўшилмаган!",
     tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
     detailTitle: "Савол-жавоблар", yourAnsLbl: "Сиз:", corrAnsLbl: "Тўғри:",
@@ -246,7 +246,7 @@ const L = {
     reqField: "Бу майдон тўлдирилиши шарт"
   },
   ru: {
-    lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ! 🎉", failed: "НЕ СДАЛИ 😔", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
+    lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ!", failed: "НЕ СДАЛИ", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
     errFill: "Заполните все поля!", errJshir: "ПИНФЛ должен состоять из 14 цифр!", errDir: "Выберите направление!", errSub: "Выберите специальность!", errToifa: "Выберите категорию (3-я или 4-я категория)!", errNoQ: "Для этого направления вопросы еще не добавлены!",
     tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
     detailTitle: "Вопросы и ответы", yourAnsLbl: "Вы:", corrAnsLbl: "Правильно:",
@@ -315,6 +315,12 @@ function toggleTheme() {
 // Global functions
 const t = k => L[S.lang][k] || k;
 function $(id) { return document.getElementById(id); }
+
+// Ikon chizadi. Rangni ota elementdan meros oladi (currentColor).
+function icon(name, size) {
+  const s = size ? ` style="width:${size}px;height:${size}px"` : '';
+  return `<svg class="ic"${s} viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-${name}"/></svg>`;
+}
 let toastTimer = null;
 function toast(msg, color) {
   const e = $('toast');
@@ -509,7 +515,7 @@ function paintStep1Field(id) {
   if (!el || !box) return;
   const msg = step1FieldError(id);
   el.classList.toggle('err', !!msg);
-  box.textContent = msg ? '⚠ ' + msg : '';
+  box.innerHTML = msg ? icon('alert', 13) + ' ' + msg : '';
   box.classList.toggle('show', !!msg);
 }
 
@@ -933,7 +939,7 @@ function renderQ() {
     `).join('');
 
   $('btn-prev').disabled = S.currentQ === 0;
-  $('btn-next').innerHTML = S.currentQ === total - 1 ? '🏁' : (t('next') + ' →');
+  $('btn-next').innerHTML = S.currentQ === total - 1 ? icon('flag') : (t('next') + ' →');
 
   const hint = $('exam-kbd-hint'); if (hint) hint.textContent = t('examHint');
 
@@ -1043,7 +1049,7 @@ function handleTabSwitch() {
     S.tabSwitches++;
     $('tab-warn-badge').style.display = 'flex';
     $('tab-count-txt').textContent = S.tabSwitches;
-    $('tab-modal-txt').textContent = '⚠️ ' + t('tabW');
+    $('tab-modal-txt').textContent = t('tabW');
     $('tabModal').style.display = 'flex';
   }
 }
@@ -1054,11 +1060,11 @@ function showFinishModal() {
   const total = S.examQuestions.length, answered = Object.keys(S.answers).length, left = total - answered;
   let warnMsg = '';
   if (left > 0) {
-    warnMsg = `⚠️ ${left} ${t('warnLeft')}`;
+    warnMsg = `${icon('alert')} ${left} ${t('warnLeft')}`;
   } else {
-    warnMsg = `✅ ${t('warnAll')}`;
+    warnMsg = `${icon('checkCircle')} ${t('warnAll')}`;
   }
-  $('unanswered-warn').textContent = warnMsg;
+  $('unanswered-warn').innerHTML = warnMsg;
   $('finishModal').style.display = 'flex';
 }
 async function submitExam() {
@@ -1133,7 +1139,7 @@ function showResult(r) {
           <span style="font-size:11px;color:var(--text3);">ball</span>
         </div>
       </div>
-      <div style="font-size:34px;margin-bottom:7px;">${r.passed ? '🎉' : '😔'}</div>
+      <div style="color:${color};margin-bottom:9px;display:flex;justify-content:center;">${icon(r.passed ? 'checkCircle' : 'xCircle', 38)}</div>
       <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:${color};margin-bottom:5px;">${t(r.passed ? 'passed' : 'failed')}</h2>
       <p style="color:var(--text2);font-size:14px;">${t(r.passed ? 'passedMsg' : 'failedMsg')}</p>
       <p style="color:var(--text3);font-size:12px;margin-top:4px;">${t('passScore')}</p>
@@ -1150,11 +1156,11 @@ function showResult(r) {
           const xojalik = pd || translateDirection(r.dir);
           const yonalish = pd ? translateDirection(r.dir) : null;
           return [
-            ['👤', r.name], ['💼', r.pos + ' (hozirda)'],
-            ['🪪', 'JSHSHIR: ' + (r.jshir || '—')], ['📞', r.phone],
-            ['🏢', 'Xo\'jalik: ' + (xojalik || '—')],
-            ...(yonalish ? [['🎯', 'Yo\'nalish: ' + yonalish]] : []),
-            ['📅', r.date], ['⏱', Math.floor(r.duration / 60) + 'd ' + r.duration % 60 + 's'], ['⚠️', 'Tab: ' + r.tabs]
+            [icon('user'), r.name], [icon('briefcase'), r.pos + ' (hozirda)'],
+            [icon('idcard'), 'JSHSHIR: ' + (r.jshir || '—')], [icon('phone'), r.phone],
+            [icon('building'), 'Xo\'jalik: ' + (xojalik || '—')],
+            ...(yonalish ? [[icon('target'), 'Yo\'nalish: ' + yonalish]] : []),
+            [icon('calendar'), r.date], [icon('clock'), Math.floor(r.duration / 60) + 'd ' + r.duration % 60 + 's'], [icon('alert'), 'Tab: ' + r.tabs]
           ].map(([i, v]) => `<div style="display:flex;gap:5px;align-items:start;"><span>${i}</span><span style="color:var(--text2);font-size:12px;">${v || '—'}</span></div>`).join('');
         })()}
       </div>
@@ -1165,7 +1171,7 @@ function showResult(r) {
       </summary>
       <div style="background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;max-height:340px;overflow-y:auto;">
         ${r.detailed.map((d, i) => `<div style="padding:9px 12px;border-bottom:1px solid var(--border);display:flex;gap:9px;">
-          <span style="width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;background:${d.ok ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.15)'};color:${d.ok ? 'var(--green)' : 'var(--red)'};">${d.ok ? '✓' : '✗'}</span>
+          <span style="width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;background:${d.ok ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.15)'};color:${d.ok ? 'var(--green)' : 'var(--red)'};">${d.ok ? icon('check',13) : icon('x',13)}</span>
           <div style="flex:1;min-width:0;">
             <p style="font-size:12px;margin-bottom:3px;">${i + 1}. ${d.q}</p>
             <div style="display:flex;gap:5px;flex-wrap:wrap;font-size:11px;">
@@ -1194,7 +1200,7 @@ function adminLogin() {
     adminTab('dash');
   } else {
     $('admin-login-err').style.display = 'block';
-    $('admin-login-err').textContent = '❌ Login yoki parol noto\'g\'ri!';
+    $('admin-login-err').textContent = 'Login yoki parol noto\'g\'ri!';
   }
 }
 function adminLogout() {
@@ -1218,11 +1224,11 @@ async function adminTab(tab) {
   ['dash', 'results', 'phase2-results', 'questions', 'phase2'].forEach(x => { const n = $('nav-' + x); if (n) n.classList.remove('active'); });
   const a = $('nav-' + tab); if (a) a.classList.add('active');
   $('admin-page-title').textContent = {
-    dash: '📊 Dashboard',
-    results: '📋 Birinchi bosqich natijalari',
-    'phase2-results': '📋 Ikkinchi bosqich natijalari',
-    questions: '❓ 1-Bosqich Savollari',
-    phase2: '❓ 2-Bosqich Savollar'
+    dash: 'Dashboard',
+    results: 'Birinchi bosqich natijalari',
+    'phase2-results': 'Ikkinchi bosqich natijalari',
+    questions: '1-Bosqich Savollari',
+    phase2: '2-Bosqich Savollar'
   }[tab];
 
   // Darhol skeleton ko'rsat
@@ -1319,9 +1325,9 @@ function renderDash() {
   const worst10 = [...rs].sort((a, b) => a.pct - b.pct || a.correct - b.correct).slice(0, 10);
   $('adminContent').innerHTML = `
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-bottom:20px;">
-      ${[['📝', 'Jami imtihonlar', total, '#1e6fc0'], ['✅', "O'tdi", passed, '#22c55e'], ['❌', 'Yiqildi', failed, '#ef4444'], ['📈', "O'rt. ball", avg + '%', '#f59e0b']].map(([ic, l, v, c]) => `
+      ${[[icon('fileText',26), 'Jami imtihonlar', total, '#1e6fc0'], [icon(`checkCircle`,26), "O'tdi", passed, '#22c55e'], [icon('xCircle',26), 'Yiqildi', failed, '#ef4444'], [icon(`trendUp`,26), "O'rt. ball", avg + '%', '#f59e0b']].map(([ic, l, v, c]) => `
         <div class="stat-card" style="--c:${c};">
-          <div style="font-size:22px;margin-bottom:7px;">${ic}</div>
+          <div style="color:${c};margin-bottom:9px;">${ic}</div>
           <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;">${v}</div>
           <div style="color:var(--text3);font-size:12px;margin-top:2px;">${l}</div>
         </div>`).join('')}
@@ -1348,7 +1354,7 @@ function renderDash() {
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
-      <div class="card"><div class="stag">Reyting</div><h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:11px;color:var(--green);">🏆 Top 10 Eng Yaxshi</h3>
+      <div class="card"><div class="stag">Reyting</div><h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:11px;color:var(--green);">${icon('trophy')} Top 10 Eng Yaxshi</h3>
         ${best10.length === 0 ? '<p style="color:var(--text3);">Hali natija yo\'q</p>' : `
         <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th>Xo'jalik</th><th>Lavozim</th><th>Ball</th><th>Sana</th></tr></thead><tbody>
         ${best10.map((r, i) => `<tr>
@@ -1360,7 +1366,7 @@ function renderDash() {
           <td style="color:var(--text3);font-size:11px;">${r.date.split(',')[0]}</td>
         </tr>`).join('')}</tbody></table>`}
       </div>
-      <div class="card"><div class="stag">Reyting</div><h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:11px;color:var(--red);">📉 Top 10 Eng Yomon</h3>
+      <div class="card"><div class="stag">Reyting</div><h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:11px;color:var(--red);">${icon('trendDown')} Top 10 Eng Yomon</h3>
         ${worst10.length === 0 ? '<p style="color:var(--text3);">Hali natija yo\'q</p>' : `
         <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th>Xo'jalik</th><th>Lavozim</th><th>Ball</th><th>Sana</th></tr></thead><tbody>
         ${worst10.map((r, i) => `<tr>
@@ -1411,7 +1417,7 @@ function renderResults() {
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:11px;">
         <span style="color:var(--text3);font-size:13px;">Jami: <strong style="color:var(--text);">${rs.length}</strong> (Supabase dan)</span>
         <div style="display:flex;gap:7px;flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="refreshResults()">🔄 Yangilash</button>
+          <button class="btn btn-primary btn-sm" onclick="refreshResults()">${icon('refresh')} Yangilash</button>
         </div>
       </div>
       <div style="display:flex;gap:7px;flex-wrap:wrap;">
@@ -1422,16 +1428,16 @@ function renderResults() {
         <input id="filterNameP1" class="filter-inp" type="text" placeholder="F.I.Sh qidirish..." value="${S.filterDept}" oninput="S.filterDept=this.value;renderResults()"/>
         <select class="filter-inp" onchange="S.filterStatus=this.value;renderResults()">
           <option value="">— Holat —</option>
-          <option value="passed" ${S.filterStatus === 'passed' ? 'selected' : ''}>✅ O'tdi</option>
-          <option value="failed" ${S.filterStatus === 'failed' ? 'selected' : ''}>❌ Yiqildi</option>
+          <option value="passed" ${S.filterStatus === 'passed' ? 'selected' : ''}>O'tdi</option>
+          <option value="failed" ${S.filterStatus === 'failed' ? 'selected' : ''}>Yiqildi</option>
         </select>
-        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';renderResults()">✕</button>
+        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';renderResults()">${icon('x',18)}</button>
       </div>
     </div>
-    ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">📭</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
+    ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">${icon('inbox',44)}</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
-        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">🪪 ID</th><th>JSHSHIR</th><th>Lavozim</th><th>Yo'nalish</th><th>Ball</th><th>Holat</th><th>Tab</th><th>Sana</th><th></th></tr></thead>
+        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">${icon('idcard')} ID</th><th>JSHSHIR</th><th>Lavozim</th><th>Yo'nalish</th><th>Ball</th><th>Holat</th><th>Tab</th><th>Sana</th><th></th></tr></thead>
         <tbody>${rs.map((r, i) => {
     const empId = empDisplayId(r.jshir);
     return `<tr>
@@ -1444,10 +1450,10 @@ function renderResults() {
           <td style="color:var(--text2);">${r.pos || '—'}</td>
           <td><span style="font-size:11px;background:rgba(30,111,192,.1);color:var(--blue-light);padding:2px 7px;border-radius:5px;">${r.dir || '—'}</span></td>
           <td><strong style="color:${r.passed ? 'var(--green)' : 'var(--red)'};">${r.pct}%</strong><div style="font-size:11px;color:var(--text3);">${r.correct}/${r.total}</div></td>
-          <td><span class="badge ${r.passed ? 'badge-green' : 'badge-red'}">${r.passed ? "✓ O'tdi" : '✗ Yiqildi'}</span></td>
-          <td>${r.tabs > 0 ? `<span style="color:var(--amber);">⚠️${r.tabs}</span>` : '—'}</td>
+          <td><span class="badge ${r.passed ? 'badge-green' : 'badge-red'}">${r.passed ? `${icon("check")} O'tdi` : `${icon("x")} Yiqildi`}</span></td>
+          <td>${r.tabs > 0 ? `<span style="color:var(--amber);">${icon("alert")}${r.tabs}</span>` : '—'}</td>
           <td style="color:var(--text3);font-size:11px;white-space:nowrap;">${r.date}</td>
-          <td style="white-space:nowrap;"><button class="btn btn-secondary btn-sm" onclick="showDetail(${r.id})" style="padding:4px 9px;font-size:11px;">👁</button> <button class="btn btn-sm" onclick="downloadPDF(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(30,111,192,.1);color:var(--blue-light);border:1px solid rgba(30,111,192,.3);">🖨️</button> <button class="btn btn-sm" onclick="deleteResult(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3);margin-left:4px;">🗑</button></td>
+          <td style="white-space:nowrap;"><button class="btn btn-secondary btn-sm" onclick="showDetail(${r.id})" style="padding:4px 9px;font-size:11px;">${icon('eye')}</button> <button class="btn btn-sm" onclick="downloadPDF(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(30,111,192,.1);color:var(--blue-light);border:1px solid rgba(30,111,192,.3);">${icon('printer')}</button> <button class="btn btn-sm" onclick="deleteResult(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3);margin-left:4px;">${icon('trash')}</button></td>
         </tr>`;
   }).join('')}</tbody></table>
       </div>
@@ -1473,9 +1479,9 @@ function showPhotoModal(src, name) {
   el.style.cssText = 'display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:9999;';
   el.innerHTML = `
     <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;animation:fadeUp .25s ease;">
-      <button onclick="this.closest('.modal-overlay').remove()" style="position:absolute;top:-44px;right:-12px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(239,68,68,.4)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">✕</button>
+      <button onclick="this.closest('.modal-overlay').remove()" style="position:absolute;top:-44px;right:-12px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(239,68,68,.4)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">${icon('x',18)}</button>
       ${src ? `<img src="${src}" style="max-width:88vw;max-height:78vh;border-radius:16px;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.7);border:2px solid rgba(96,165,250,.4);">` : `<div style="width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,#1e4d8c,#2563eb);display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:700;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.7);">${(name || '?')[0]}</div>`}
-      ${name ? `<div style="color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.5);">👤 ${name}</div>` : ''}
+      ${name ? `<div style="color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.5);">${icon('user')} ${name}</div>` : ''}
     </div>`;
   el.onclick = e => { if (e.target === el) el.remove(); };
   document.body.appendChild(el);
@@ -1483,14 +1489,14 @@ function showPhotoModal(src, name) {
 
 // Natijalarni yangilash funksiyasi
 async function refreshResults() {
-  toast('🔄 Yangilanmoqda...', 'var(--blue)');
+  toast('Yangilanmoqda...', 'var(--blue)');
   const resultsData = await loadResultsFromSupabase();
   if (resultsData.success && resultsData.data.length > 0) {
     S.results = resultsData.data;
     renderResults();
-    toast(`✅ ${resultsData.data.length} ta natija yangilandi`, 'var(--green)');
+    toast(`${resultsData.data.length} ta natija yangilandi`, 'var(--green)');
   } else {
-    toast('⚠️ Natijalar topilmadi', 'var(--amber)');
+    toast('Natijalar topilmadi', 'var(--amber)');
   }
 }
 
@@ -1514,23 +1520,23 @@ function renderPhase2Results() {
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:11px;">
         <span style="color:var(--text3);font-size:13px;">Jami: <strong style="color:var(--text);">${rs.length}</strong> (1-Etapdan o'tgan xodimlar)</span>
         <div style="display:flex;gap:7px;flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="refreshPhase2Results()">🔄 Yangilash</button>
+          <button class="btn btn-primary btn-sm" onclick="refreshPhase2Results()">${icon('refresh')} Yangilash</button>
         </div>
       </div>
       <div style="display:flex;gap:7px;flex-wrap:wrap;">
         <input id="filterNameP2" class="filter-inp" type="text" placeholder="F.I.Sh qidirish..." value="${S.p2FilterDept}" oninput="S.p2FilterDept=this.value;renderPhase2Results()"/>
         <select class="filter-inp" onchange="S.p2FilterStatus=this.value;renderPhase2Results()">
           <option value="">— Barchasi —</option>
-          <option value="completed" ${S.p2FilterStatus === 'completed' ? 'selected' : ''}>📋 Natijasi kiritilganlar</option>
+          <option value="completed" ${S.p2FilterStatus === 'completed' ? 'selected' : ''}>Natijasi kiritilganlar</option>
           <option value="pending" ${S.p2FilterStatus === 'pending' ? 'selected' : ''}>⏳ Natijasi kiritilmaganlar</option>
         </select>
-        <button class="btn btn-secondary btn-sm" onclick="S.p2FilterDept='';S.p2FilterStatus='';renderPhase2Results()">✕</button>
+        <button class="btn btn-secondary btn-sm" onclick="S.p2FilterDept='';S.p2FilterStatus='';renderPhase2Results()">${icon('x',18)}</button>
       </div>
     </div>
-    ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">📭</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
+    ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">${icon('inbox',44)}</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
-        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">🪪 ID</th><th>JSHSHIR</th><th style="min-width:80px;">🎫 Bilet</th><th style="min-width:110px;">Ball (Foizda)</th><th>Holat</th><th style="min-width:180px;">Qog'ozdagi javob varag'i (Rasm/PDF)</th><th style="min-width:100px;">Sana</th><th style="min-width:100px;">Amal</th></tr></thead>
+        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">${icon('idcard')} ID</th><th>JSHSHIR</th><th style="min-width:80px;">${icon('ticket')} Bilet</th><th style="min-width:110px;">Ball (Foizda)</th><th>Holat</th><th style="min-width:180px;">Qog'ozdagi javob varag'i (Rasm/PDF)</th><th style="min-width:100px;">Sana</th><th style="min-width:100px;">Amal</th></tr></thead>
         <tbody>${rs.map((r, i) => {
     const empId = empDisplayId(r.jshir);
 
@@ -1545,11 +1551,11 @@ function renderPhase2Results() {
               <td style="color:var(--text3);font-size:11px;">${r.jshir || '—'}</td>
               <td>${p2.envelope ? `<span class="badge" style="background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3);">№${p2.envelope}</span>` : '—'}</td>
               <td><strong style="font-size:15px;color:${p2.passed ? 'var(--green)' : 'var(--red)'};">${p2.percentage}%</strong></td>
-              <td><span class="badge ${p2.passed ? 'badge-green' : 'badge-red'}">${p2.passed ? "✓ O'tdi" : '✗ O\'tmadi'}</span></td>
-              <td style="color:var(--text3);font-size:12px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:180px;" title="${p2.attachment_name || ''}">📎 ${p2.attachment_name || 'Fayl biriktirilgan'}</td>
+              <td><span class="badge ${p2.passed ? 'badge-green' : 'badge-red'}">${p2.passed ? `${icon("check")} O'tdi` : `${icon("x")} O'tmadi`}</span></td>
+              <td style="color:var(--text3);font-size:12px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:180px;" title="${p2.attachment_name || ''}">${icon('fileText')} ${p2.attachment_name || 'Fayl biriktirilgan'}</td>
               <td style="color:var(--text3);font-size:11px;white-space:nowrap;">${p2.date.split(',')[0]}</td>
               <td style="white-space:nowrap;">
-                <button class="btn btn-secondary btn-sm" onclick="showPhase2Detail(${p2.id})" style="padding:4px 9px;font-size:11px;" title="Ko'rish">👁 Ko'rish</button> 
+                <button class="btn btn-secondary btn-sm" onclick="showPhase2Detail(${p2.id})" style="padding:4px 9px;font-size:11px;" title="Ko'rish">${icon('eye')} Ko'rish</button> 
               </td>
             </tr>`;
     } else {
@@ -1569,12 +1575,12 @@ function renderPhase2Results() {
                 <span id="p2-status-lbl-${r.id}" style="color:var(--text3);font-size:12px;font-weight:600;">—</span>
               </td>
               <td style="max-width:180px;">
-                <label for="p2-file-${r.id}" class="btn btn-secondary btn-sm" style="padding:5px 9px; font-size:11px; cursor:pointer; max-width:170px; display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;" title="Fayl tanlash">📁 Fayl tanlash</label>
-                <input type="file" id="p2-file-${r.id}" style="display:none;" accept="image/*,application/pdf" onchange="const lbl=this.previousElementSibling; if(this.files[0]) { lbl.textContent=this.files[0].name; lbl.classList.add('btn-primary'); lbl.classList.remove('btn-secondary'); } else { lbl.textContent='📁 Fayl tanlash'; lbl.classList.remove('btn-primary'); lbl.classList.add('btn-secondary'); }" />
+                <label for="p2-file-${r.id}" class="btn btn-secondary btn-sm" style="padding:5px 9px; font-size:11px; cursor:pointer; max-width:170px; display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;" title="Fayl tanlash">${icon('folders')} Fayl tanlash</label>
+                <input type="file" id="p2-file-${r.id}" style="display:none;" accept="image/*,application/pdf" onchange="const lbl=this.previousElementSibling; if(this.files[0]) { lbl.textContent=this.files[0].name; lbl.classList.add('btn-primary'); lbl.classList.remove('btn-secondary'); } else { lbl.textContent='Fayl tanlash'; lbl.classList.remove('btn-primary'); lbl.classList.add('btn-secondary'); }" />
               </td>
               <td style="color:var(--text3);font-size:11px;">—</td>
               <td>
-                <button class="btn btn-green btn-sm" onclick="saveRowPhase2Result(${r.id})" style="padding:5px 12px;font-size:11px;font-weight:600;">💾 Saqlash</button>
+                <button class="btn btn-green btn-sm" onclick="saveRowPhase2Result(${r.id})" style="padding:5px 12px;font-size:11px;font-weight:600;">${icon('download')} Saqlash</button>
               </td>
             </tr>`;
     }
@@ -1663,7 +1669,7 @@ async function saveRowPhase2Result(empId) {
     if (window.savePhase2ResultToSupabase) {
       const res = await savePhase2ResultToSupabase(resultData);
       if (res.success && res.data) {
-        toast("✅ 2-bosqich natijasi saqlandi", "var(--green)");
+        toast("2-bosqich natijasi saqlandi", "var(--green)");
 
         if (window.loadPhase2ResultsFromSupabase) {
           const p2Res = await loadPhase2ResultsFromSupabase();
@@ -1687,14 +1693,14 @@ async function saveRowPhase2Result(empId) {
 }
 
 async function refreshPhase2Results() {
-  toast('🔄 Yangilanmoqda...', 'var(--blue)');
+  toast('Yangilanmoqda...', 'var(--blue)');
   const p2Data = await loadPhase2ResultsFromSupabase();
   if (p2Data.success && p2Data.data) {
     S.phase2ResultsList = p2Data.data;
     renderPhase2Results();
-    toast(`✅ ${p2Data.data.length} ta natija yangilandi`, 'var(--green)');
+    toast(`${p2Data.data.length} ta natija yangilandi`, 'var(--green)');
   } else {
-    toast('⚠️ Natijalar topilmadi', 'var(--amber)');
+    toast('Natijalar topilmadi', 'var(--amber)');
   }
 }
 
@@ -1729,18 +1735,18 @@ function showPhase2Detail(id) {
           <div style="color:var(--text3);font-size:12px;margin-bottom:8px;">Javob varag'i (Rasm):</div>
           <img src="${r.attachment_data}" style="max-width:100%;max-height:350px;border-radius:10px;border:1px solid var(--border);cursor:pointer;object-fit:contain;" onclick="showPhotoModal('${r.attachment_data}','${(r.name || '').replace(/'/g, '\\&apos;')}')" />
           <div style="margin-top:10px;">
-            <a href="${r.attachment_data}" download="${r.attachment_name || 'javob_varaq.jpg'}" class="btn btn-secondary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">💾 Yuklab olish</a>
+            <a href="${r.attachment_data}" download="${r.attachment_name || 'javob_varaq.jpg'}" class="btn btn-secondary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">${icon('download')} Yuklab olish</a>
           </div>
         </div>
       `;
     } else {
       attachmentHTML = `
         <div style="margin-top:20px;padding:15px;background:var(--surface);border:1px solid var(--border);border-radius:10px;text-align:center;">
-          <div style="font-size:36px;margin-bottom:10px;">📄</div>
+          <div style="font-size:36px;margin-bottom:10px;">${icon('fileText',36)}</div>
           <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">Javob varag'i (PDF)</div>
           <div style="font-size:12px;color:var(--text3);margin-bottom:15px;">Fayl nomi: ${r.attachment_name || 'javob_varaq.pdf'}</div>
           <div>
-            <a href="${r.attachment_data}" download="${r.attachment_name || 'javob_varaq.pdf'}" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:8px 16px;">📥 PDF Faylni Yuklab Olish</a>
+            <a href="${r.attachment_data}" download="${r.attachment_name || 'javob_varaq.pdf'}" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:8px 16px;">${icon('download')} PDF Faylni Yuklab Olish</a>
           </div>
         </div>
       `;
@@ -1753,15 +1759,15 @@ function showPhase2Detail(id) {
     <div class="modal" style="max-width:600px;width:92%;max-height:90vh;overflow-y:auto;background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.6);animation:fadeUp .25s ease;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;">
         <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin:0;">2-Bosqich Natija Batafsil</h3>
-        <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;">✕</button>
+        <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;">${icon('x',18)}</button>
       </div>
       
       <div style="padding:15px;background:var(--surface);border-radius:12px;border:1px solid var(--border);margin-bottom:15px;display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:15px;font-weight:700;color:var(--text);">👤 ${r.name}</div>
-        <div style="font-size:13px;color:var(--text2);">🪪 ID raqam: <strong style="color:var(--blue-light);font-family:monospace;">${empId}</strong></div>
-        <div style="font-size:13px;color:var(--text2);">📂 JSHSHIR: ${r.jshir || '—'}</div>
-        ${r.envelope ? `<div style="font-size:13px;color:var(--text2);">🎫 Bilet/Kanvert: <strong style="color:#60a5fa;">№${r.envelope}</strong></div>` : ''}
-        <div style="font-size:13px;color:var(--text2);">📅 Sana: ${r.date}</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">${icon('user')} ${r.name}</div>
+        <div style="font-size:13px;color:var(--text2);">${icon('idcard')} ID raqam: <strong style="color:var(--blue-light);font-family:monospace;">${empId}</strong></div>
+        <div style="font-size:13px;color:var(--text2);">${icon('idcard')} JSHSHIR: ${r.jshir || '—'}</div>
+        ${r.envelope ? `<div style="font-size:13px;color:var(--text2);">${icon('ticket')} Bilet/Kanvert: <strong style="color:#60a5fa;">№${r.envelope}</strong></div>` : ''}
+        <div style="font-size:13px;color:var(--text2);">${icon('calendar')} Sana: ${r.date}</div>
         <div style="margin-top:5px;display:flex;align-items:center;gap:10px;">
           <span style="font-size:14px;font-weight:600;color:var(--text);">Natija: <strong style="color:${r.passed ? 'var(--green)' : 'var(--red)'};">${r.percentage}%</strong></span>
           <span class="badge ${r.passed ? 'badge-green' : 'badge-red'}">${r.passed ? "O'tdi" : "O'tmadi"}</span>
@@ -1777,11 +1783,11 @@ function showPhase2Detail(id) {
 
 async function deletePhase2Result(id) {
   if (confirm("Ushbu 2-bosqich natijasini o'chirishni tasdiqlaysizmi?")) {
-    toast("🗑 O'chirilmoqda...", "var(--blue)");
+    toast("O'chirilmoqda...", "var(--blue)");
     if (window.deletePhase2ResultFromSupabase) {
       const res = await deletePhase2ResultFromSupabase(id);
       if (res.success) {
-        toast("✅ Natija o'chirildi", "var(--green)");
+        toast("Natija o'chirildi", "var(--green)");
         S.phase2ResultsList = S.phase2ResultsList.filter(r => r.id !== id);
         renderPhase2Results();
       } else {
@@ -1804,7 +1810,7 @@ async function showDetail(id) {
   el.innerHTML = `<div class="modal" style="max-width:850px;width:92%;max-height:90vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="font-family:'Syne',sans-serif;font-weight:700;">Natija tafsiloti</h3>
-      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x',18)}</button>
     </div>
     <div style="display:flex;gap:13px;margin-bottom:14px;padding:13px;background:var(--surface2);border-radius:11px;">
       ${r.photo ? `<img src="${r.photo}" style="width:58px;height:58px;border-radius:10px;object-fit:cover;">` : `<div style="width:58px;height:58px;border-radius:10px;background:#1e4d8c;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;">${r.name?.[0] || '?'}</div>`}
@@ -1823,7 +1829,7 @@ async function showDetail(id) {
     const userText = d.opts && d.userAns && d.opts[d.userAns] ? `) ${d.opts[d.userAns]}` : '';
     const correctText = d.opts && d.correctAns && d.opts[d.correctAns] ? `) ${d.opts[d.correctAns]}` : '';
     return `<div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:start;">
-          <span style="width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;background:${d.ok ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.15)'};color:${d.ok ? 'var(--green)' : 'var(--red)'};">${d.ok ? '✓' : '✗'}</span>
+          <span style="width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;background:${d.ok ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.15)'};color:${d.ok ? 'var(--green)' : 'var(--red)'};">${d.ok ? icon('check',13) : icon('x',13)}</span>
           <div style="font-size:12px;flex:1;min-width:0;">
             <p style="margin-bottom:6px;font-weight:500;line-height:1.4;">${i + 1}. ${d.q}</p>
             <div style="display:flex;flex-direction:column;gap:5px;">
@@ -1840,7 +1846,7 @@ async function showDetail(id) {
   }).join('')}
     </div>
     <div style="margin-top:13px;">
-      <button class="btn btn-primary" onclick="downloadPDF(${r.id})" style="width:100%;font-size:14px;padding:11px;display:flex;align-items:center;justify-content:center;gap:8px;">🖨️ PDF Yuklab olish (A4)</button>
+      <button class="btn btn-primary" onclick="downloadPDF(${r.id})" style="width:100%;font-size:14px;padding:11px;display:flex;align-items:center;justify-content:center;gap:8px;">${icon('printer')} PDF Yuklab olish (A4)</button>
     </div>
   </div>`;
   el.onclick = e => { if (e.target === el) el.remove(); };
@@ -1858,7 +1864,7 @@ async function downloadPDF(id) {
   if (!win) { toast('Popup bloklangan! Ruxsat bering.', 'var(--red)'); return; }
   const sc = r.passed ? '#16a34a' : '#dc2626';
   const sb = r.passed ? '#dcfce7' : '#fee2e2';
-  const st = r.passed ? "✓ O'TGAN" : '✗ YIQILGAN';
+  const st = r.passed ? "O'TGAN" : "YIQILGAN";
   const ph = r.photo
     ? `<img src="${r.photo}" style="width:72px;height:72px;border-radius:8px;object-fit:cover;border:2px solid #e5e7eb;">`
     : `<div style="width:72px;height:72px;border-radius:8px;background:#dbeafe;border:2px solid #bfdbfe;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#1e40af;">${(r.name || '?')[0]}</div>`;
@@ -1941,7 +1947,7 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
 <div class="stats">
   <div class="sbox" style="border-color:#bbf7d0;background:#f0fdf4;"><div class="snum" style="color:#16a34a;">${r.correct}</div><div class="slbl">✓ To'g'ri</div></div>
   <div class="sbox" style="border-color:#fecaca;background:#fff1f2;"><div class="snum" style="color:#dc2626;">${r.wrong}</div><div class="slbl">✗ Noto'g'ri</div></div>
-  <div class="sbox" style="border-color:#bfdbfe;background:#eff6ff;"><div class="snum" style="color:#1e3a8a;">${r.total}</div><div class="slbl">📋 Jami</div></div>
+  <div class="sbox" style="border-color:#bfdbfe;background:#eff6ff;"><div class="snum" style="color:#1e3a8a;">${r.total}</div><div class="slbl">Jami</div></div>
   <div class="sbox" style="border-color:#e5e7eb;background:#f9fafb;"><div class="snum" style="color:#374151;">${Math.floor(r.duration / 60)}m${r.duration % 60}s</div><div class="slbl">⏱ Vaqt</div></div>
   ${r.tabs > 0 ? `<div class="sbox" style="border-color:#fed7aa;background:#fff7ed;"><div class="snum" style="color:#ea580c;">${r.tabs}</div><div class="slbl">⚠️ Tab</div></div>` : ''}
 </div>
@@ -2012,7 +2018,7 @@ function renderQuestions() {
         <span style="color:var(--text3);font-size:13px;">Jami: <strong style="color:var(--text);">${total}</strong></span>
       </div>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-secondary btn-sm" onclick="showManageDirections()">🗂 Yo'nalishlar</button>
+        <button class="btn btn-secondary btn-sm" onclick="showManageDirections()">${icon('folders')} Yo'nalishlar</button>
         <button class="btn btn-secondary btn-sm" onclick="showAddDirection()">+ Yo'nalish qo'shish</button>
         <button class="btn btn-primary btn-sm" onclick="showAddQ(null)">+ Savol qo'shish</button>
       </div>
@@ -2026,8 +2032,8 @@ function renderQuestions() {
           <td style="max-width:230px;"><p style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;">${q.q}</p></td>
           <td><span style="width:27px;height:27px;background:rgba(34,197,94,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--green);">${q.ans}</span></td>
           <td><div style="display:flex;gap:4px;">
-            <button class="btn btn-secondary btn-sm" onclick="showAddQ(${q.id})" style="padding:4px 8px;font-size:11px;">✏️</button>
-            <button class="btn btn-sm" onclick="deleteQ(${q.id})" style="padding:4px 8px;font-size:11px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);">🗑</button>
+            <button class="btn btn-secondary btn-sm" onclick="showAddQ(${q.id})" style="padding:4px 8px;font-size:11px;">${icon('pencil')}</button>
+            <button class="btn btn-sm" onclick="deleteQ(${q.id})" style="padding:4px 8px;font-size:11px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);">${icon('trash')}</button>
           </div></td>
         </tr>`).join('')}</tbody></table>
       </div>
@@ -2059,7 +2065,7 @@ function showAddQ(editId) {
   el.innerHTML = `<div class="modal" style="max-width:560px;max-height:92vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="font-family:'Syne',sans-serif;font-weight:700;">${q ? 'Tahrirlash' : 'Yangi savol'}</h3>
-      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x',18)}</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:11px;">
       <div>
@@ -2100,7 +2106,7 @@ function showAddQ(editId) {
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:3px;">
         <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">Bekor qilish</button>
-        <button class="btn btn-primary" onclick="saveQ(${editId || 'null'})">💾 ${q ? 'Saqlash' : "Qo'shish"}</button>
+        <button class="btn btn-primary" onclick="saveQ(${editId || 'null'})">${icon('download')} ${q ? 'Saqlash' : "Qo'shish"}</button>
       </div>
     </div>
   </div>`;
@@ -2185,7 +2191,7 @@ async function saveQ(editId) {
 
   syncQuestionsToFile();
   document.querySelector('.modal-overlay')?.remove();
-  toast(editId ? 'Yangilandi ✅' : "Qo'shildi ✅", 'var(--green)'); renderQuestions();
+  toast(editId ? 'Yangilandi' : "Qo'shildi", 'var(--green)'); renderQuestions();
 }
 async function deleteQ(id) {
   if (confirm('Savolni o\'chirish?')) {
@@ -2205,7 +2211,7 @@ async function deleteQ(id) {
     }
 
     syncQuestionsToFile();
-    toast("O'chirildi 🗑", 'var(--red)'); renderQuestions();
+    toast("O'chirildi", 'var(--red)'); renderQuestions();
   }
 }
 // Natijalarni results.js fayliga saqlaydigan funksiya (DEPRECATED - Supabase ishlatiladi)
@@ -2250,10 +2256,10 @@ function showManageDirections() {
   const el = document.createElement('div'); el.className = 'modal-overlay';
   el.innerHTML = `<div class="modal" style="max-width:680px;width:95%;max-height:85vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <h3 style="font-family:'Syne',sans-serif;font-weight:700;">🗂 Yo'nalishlarni boshqarish</h3>
-      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;">${icon('folders')} Yo'nalishlarni boshqarish</h3>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x',18)}</button>
     </div>
-    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">🔒 Tizim yo'nalishlari o'chirib bo'lmaydi. Faqat admin qo'shgan yo'nalishlar o'chirilishi mumkin.</p>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">${icon('lock')} Tizim yo'nalishlari o'chirib bo'lmaydi. Faqat admin qo'shgan yo'nalishlar o'chirilishi mumkin.</p>
     <div style="display:flex;flex-direction:column;gap:6px;">
       ${rows.map((r, i) => `
         <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;gap:10px;">
@@ -2263,7 +2269,7 @@ function showManageDirections() {
           </div>
           <div style="display:flex;align-items:center;gap:7px;flex-shrink:0;">
             ${r.isCustom
-              ? `<button onclick="deleteDirection('${r.dept.replace(/'/g,"\\'")}', ${r.sub ? `'${r.sub.replace(/'/g,"\\'")}' ` : 'null'}, this)" class="btn btn-red btn-sm" style="padding:4px 10px;font-size:11px;">🗑 O'chirish</button>`
+              ? `<button onclick="deleteDirection('${r.dept.replace(/'/g,"\\'")}', ${r.sub ? `'${r.sub.replace(/'/g,"\\'")}' ` : 'null'}, this)" class="btn btn-red btn-sm" style="padding:4px 10px;font-size:11px;">${icon('trash')} O'chirish</button>`
               : `<span style="font-size:10px;color:var(--text3);padding:4px 10px;border:1px solid var(--border);border-radius:7px;">Tizim</span>`}
           </div>
         </div>`).join('')}
@@ -2314,7 +2320,7 @@ function showAddDirection() {
   el.innerHTML = `<div class="modal" style="max-width:400px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="font-family:'Syne',sans-serif;font-weight:700;">Yangi yo'nalish qo'shish</h3>
-      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x',18)}</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:11px;">
       <div>
@@ -2432,7 +2438,7 @@ function renderAdminPhase2() {
       let items = envs[i].map((q, idx) => `
         <div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid var(--border);font-size:12px;">
           <div><strong>${idx + 1}.</strong> ${q.text}</div>
-          <button onclick="deletePhase2Question('${q.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;">🗑</button>
+          <button onclick="deletePhase2Question('${q.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;">${icon('trash')}</button>
         </div>
       `).join('');
       if (qCount === 0) items = `<div style="padding:8px;font-size:12px;color:var(--text3);">Savollar yo'q</div>`;
@@ -2440,7 +2446,7 @@ function renderAdminPhase2() {
       envHtml += `
         <div class="card" style="margin-bottom:15px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-            <h3 style="font-size:16px;font-weight:700;">Kanvert ${i} <span class="badge" style="background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3);">🎫 Bilet №${i}</span> <span class="badge" style="background:var(--surface2);color:var(--text2);">${qCount}/7</span></h3>
+            <h3 style="font-size:16px;font-weight:700;">Kanvert ${i} <span class="badge" style="background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3);">${icon('ticket')} Bilet №${i}</span> <span class="badge" style="background:var(--surface2);color:var(--text2);">${qCount}/7</span></h3>
             ${qCount < 7 ? `<button class="btn btn-primary" style="padding:4px 10px;font-size:11px;" onclick="openPhase2Modal(${i})">+ Qo'shish</button>` : `<span style="font-size:11px;color:var(--green);font-weight:700;">To'ldi</span>`}
           </div>
           <div style="background:var(--surface2);border-radius:8px;">${items}</div>
@@ -2453,7 +2459,7 @@ function renderAdminPhase2() {
 
   $('adminContent').innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:10px;">
-      <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">✉️ 2-Etap Savollari (Kanvertlar)</h2>
+      <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">${icon('ticket')} 2-Etap Savollari (Kanvertlar)</h2>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
         <select class="filter-inp" onchange="S.phase2AdminDept=this.value; S.phase2AdminDir=''; renderAdminPhase2()">
           <option value="">— Xo'jalikni tanlang —</option>
@@ -2515,7 +2521,7 @@ async function savePhase2Question(envIndex) {
       // Supabase xatosi — modal yopilmaydi, xato ko'rsatiladi
       if (btn) { btn.disabled = false; btn.textContent = 'Saqlash'; }
       const errMsg = result.error || 'Noma\'lum xato';
-      alert(`❌ SUPABASE XATOSI — savol saqlanmadi!\n\nXato: ${errMsg}\n\nInternet ulanishini tekshiring va qayta urinib ko'ring.`);
+      alert(`SUPABASE XATOSI — savol saqlanmadi!\n\nXato: ${errMsg}\n\nInternet ulanishini tekshiring va qayta urinib ko'ring.`);
       return;
     }
   } else {
@@ -2528,7 +2534,7 @@ async function savePhase2Question(envIndex) {
   S.phase2Questions.push(q);
 
   document.querySelector('.modal-overlay')?.remove();
-  toast("✅ Savol Supabase ga saqlandi!", "var(--green)");
+  toast("Savol Supabase ga saqlandi!", "var(--green)");
   renderAdminPhase2();
 }
 
@@ -2618,7 +2624,7 @@ function renderPhase2Exam(questions, visualNum) {
   const container = $('phase2-questions-container');
   // Bilet (haqiqiy kanvert) raqamini ko'rsatish - admin panelidagi Kanvert raqamiga mos keladi
   const biletBadge = $('phase2-bilet-badge');
-  if (biletBadge) biletBadge.textContent = `🎫 Bilet №${S.phase2EnvelopeIndex}`;
+  if (biletBadge) biletBadge.textContent = `Bilet №${S.phase2EnvelopeIndex}`;
 
   container.innerHTML = questions.map((q, i) => `
     <div class="phase2-q-card" data-num="${String(i + 1).padStart(2, '0')}">
