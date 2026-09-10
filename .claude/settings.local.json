@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(cd /mnt/c/Users/behru/Desktop/railexam_demo && ls -la *.js *.html 2>/dev/null | head -20)",
-      "Read(//mnt/c/Users/behru/Desktop/**)"
+      "Read(//mnt/c/Users/behru/Desktop/**)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }

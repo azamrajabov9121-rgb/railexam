@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(git -C \"c:/Users/Admin/Desktop/railexam\" diff --stat)",
+      "Bash(node --check script.js)",
+      "Bash(node --check supabase-config.js)",
+      "Bash(node --check supabase-integration.js)"
+    ]
+  }
+}
