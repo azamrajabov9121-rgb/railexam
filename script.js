@@ -2215,6 +2215,9 @@ function findDuplicateQuestions() {
   });
   return Object.values(groups)
     .filter(g => g.length > 1)
+    // Guruh ichida eng kichik id (eng avval qo'shilgani) birinchi turadi —
+    // saqlanadigan nusxa aynan shu bo'ladi.
+    .map(g => g.slice().sort((a, b) => Number(a.id) - Number(b.id)))
     .sort((a, b) => b.length - a.length || a[0].dir.localeCompare(b[0].dir));
 }
 
