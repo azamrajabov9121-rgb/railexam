@@ -268,7 +268,7 @@ window.S = {
   examDone: false,
   results: (window.DB_RESULTS && window.DB_RESULTS.length ? window.DB_RESULTS : []),
   questions: (window.DB_QUESTIONS && window.DB_QUESTIONS.length ? window.DB_QUESTIONS : []),
-  phase2Questions: JSON.parse(localStorage.getItem('re_phase2_questions') || (typeof DEFAULT_PHASE2_TICKETS !== 'undefined' ? JSON.stringify(DEFAULT_PHASE2_TICKETS) : '[]')),
+  phase2Questions: [],
   phase2Results: JSON.parse(localStorage.getItem('re_phase2_results') || '[]'),
   phase2Answers: [],
   phase2EnvelopeIndex: null,
@@ -278,6 +278,10 @@ window.S = {
   phase2ResultsList: [], p2FilterDept: '', p2FilterStatus: ''
 };
 let S = window.S;
+
+// 2-bosqich savollari faqat Supabase'dan olinadi. Eski brauzerlarda qolgan nusxa
+// Supabase'dagi savollar bilan qo'shilib, har biletda savol sonini ikkilantirardi.
+localStorage.removeItem('re_phase2_questions');
 
 // ===== THEME INIT =====
 const savedTheme = localStorage.getItem('re_theme');
@@ -1135,22 +1139,18 @@ async function adminTab(tab) {
 
   if (tab === 'phase2') {
     try {
-      if (window.loadPhase2QuestionsFromSupabase) {
-        const hasSupabaseData = (S.phase2Questions || []).some(q => !String(q.id).startsWith('p2_'));
-        if (!hasSupabaseData) {
-          const p2QData = await loadPhase2QuestionsFromSupabase();
-          if (p2QData && p2QData.success && p2QData.data && p2QData.data.length > 0) {
-            const currentLocal = (S.phase2Questions || []).filter(q => String(q.id).startsWith('p2_'));
-            S.phase2Questions = [...p2QData.data, ...currentLocal];
-            if (typeof SUBDIRS !== 'undefined') {
-              p2QData.data.forEach(q => {
-                if (!q.dept || !q.dir) return;
-                if (!SUBDIRS[q.dept]) SUBDIRS[q.dept] = [];
-                if (!SUBDIRS[q.dept].includes(q.dir)) SUBDIRS[q.dept].push(q.dir);
-              });
-            }
-            console.log(`✅ Admin: ${p2QData.data.length} ta 2-bosqich savoli yuklandi`);
+      if (window.loadPhase2QuestionsFromSupabase && (S.phase2Questions || []).length === 0) {
+        const p2QData = await loadPhase2QuestionsFromSupabase();
+        if (p2QData && p2QData.success && p2QData.data && p2QData.data.length > 0) {
+          S.phase2Questions = p2QData.data;
+          if (typeof SUBDIRS !== 'undefined') {
+            p2QData.data.forEach(q => {
+              if (!q.dept || !q.dir) return;
+              if (!SUBDIRS[q.dept]) SUBDIRS[q.dept] = [];
+              if (!SUBDIRS[q.dept].includes(q.dir)) SUBDIRS[q.dept].push(q.dir);
+            });
           }
+          console.log(`✅ Admin: ${p2QData.data.length} ta 2-bosqich savoli yuklandi`);
         }
       }
     } catch (err) {
@@ -2382,7 +2382,6 @@ async function savePhase2Question(envIndex) {
 
   if (!S.phase2Questions) S.phase2Questions = [];
   S.phase2Questions.push(q);
-  localStorage.setItem('re_phase2_questions', JSON.stringify(S.phase2Questions));
 
   document.querySelector('.modal-overlay')?.remove();
   toast("✅ Savol Supabase ga saqlandi!", "var(--green)");
@@ -2392,7 +2391,6 @@ async function savePhase2Question(envIndex) {
 async function deletePhase2Question(id) {
   if (!confirm("Savolni o'chirasizmi?")) return;
   S.phase2Questions = S.phase2Questions.filter(q => String(q.id) !== String(id));
-  localStorage.setItem('re_phase2_questions', JSON.stringify(S.phase2Questions));
 
   // Supabase'da ham o'chiramiz (faqat Supabase'dan kelgan, raqamli id'lar uchun - lokal id'lar 'p2_' bilan boshlanadi)
   if (window.deletePhase2QuestionFromSupabase && !String(id).startsWith('p2_')) {
@@ -2404,7 +2402,14 @@ async function deletePhase2Question(id) {
 }
 
 // ===== 2-BOSQICH (PHASE 2) STUDENT =====
-function startPhase2Envelopes() {
+async function startPhase2Envelopes() {
+  // Savollar hali yuklanmagan bo'lsa (masalan sahifa yangi ochilgan), Supabase'dan olamiz
+  if ((S.phase2Questions || []).length === 0 && window.loadPhase2QuestionsFromSupabase) {
+    toast('Savollar yuklanmoqda, bir lahza...', 'var(--blue-light)');
+    const p2QData = await loadPhase2QuestionsFromSupabase();
+    if (p2QData && p2QData.success && p2QData.data) S.phase2Questions = p2QData.data;
+  }
+
   // Check if phase 2 questions exist for the student's direction
   const myQs = (S.phase2Questions || []).filter(q => q.dept === S.direction && q.dir === S.subDirection);
   if (myQs.length === 0) {
@@ -2512,7 +2517,8 @@ function startPhase2Timer() {
 function submitPhase2() {
   if (S.phase2TimerInterval) clearInterval(S.phase2TimerInterval);
 
-  const envQuestions = S.phase2Questions.filter(q => q.env === S.phase2EnvelopeIndex);
+  const envQuestions = S.phase2Questions.filter(q =>
+    q.env === S.phase2EnvelopeIndex && q.dept === S.direction && q.dir === S.subDirection);
   const result = {
     id: 'p2res_' + Date.now(),
     userId: S.userJshir,
@@ -2545,7 +2551,23 @@ function restorePageState() {
   showPage('pg-lang');
 }
 
+function dismissTestBanner() {
+  const b = $('testBanner');
+  if (b) b.hidden = true;
+  document.body.classList.remove('has-banner');
+  localStorage.setItem('re_test_banner_hidden', '1');
+}
+
+function initTestBanner() {
+  if (localStorage.getItem('re_test_banner_hidden') === '1') return;
+  const b = $('testBanner');
+  if (!b) return;
+  b.hidden = false;
+  document.body.classList.add('has-banner');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initTestBanner();
   // Sahifani DARHOL ko'rsatamiz — Supabase yuklanishini kutmaymiz.
   // Ma'lumotlar orqa fonda yuklanadi: foydalanuvchi forma to'ldirish paytida
   // savollar allaqachon tayyor bo'ladi.

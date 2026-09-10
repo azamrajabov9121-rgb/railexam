@@ -437,33 +437,6 @@ async function deletePhase2QuestionFromSupabase(id) {
   }
 }
 
-// ===== BIR MARTALIK MIGRATSIYA: shu brauzerdagi lokal 2-bosqich savollarini Supabase'ga ko'chirish =====
-// Faqat Supabase jadvali hali bo'sh bo'lganda ishlaydi (initializeSupabaseData ichida chaqiriladi)
-async function migratePhase2QuestionsToSupabase(localQuestions) {
-  if (!window.DB || !localQuestions || localQuestions.length === 0) return;
-
-  console.log(`🔄 ${localQuestions.length} ta lokal 2-bosqich savoli Supabase'ga ko'chirilmoqda...`);
-  const migrated = [];
-  for (const q of localQuestions) {
-    const result = await DB.createPhase2Question({ env: q.env, dept: q.dept, dir: q.dir, text: q.text });
-    if (result.success && result.data) {
-      migrated.push({
-        id: result.data.id,
-        env: result.data.envelope,
-        dept: result.data.department,
-        dir: result.data.direction,
-        text: result.data.question_text
-      });
-    }
-  }
-
-  if (migrated.length > 0) {
-    if (window.S) window.S.phase2Questions = migrated;
-    localStorage.setItem('re_phase2_questions', JSON.stringify(migrated));
-    console.log(`✅ ${migrated.length} ta 2-bosqich savoli muvaffaqiyatli ko'chirildi`);
-  }
-}
-
 // ===== INITIALIZATION =====
 async function initializeSupabaseData() {
   console.log('🔄 Supabase dan ma\'lumotlar yuklanmoqda...');
@@ -496,13 +469,7 @@ async function initializeSupabaseData() {
   const phase2QResult = await loadPhase2QuestionsFromSupabase();
   if (phase2QResult.success && phase2QResult.data && phase2QResult.data.length > 0) {
     const fromSupabase = phase2QResult.data;
-
-    // Supabase ga saqlanmagan lokal savollarni (id 'p2_' bilan boshlanadi) saqlab qolamiz
-    const currentLocal = (window.S?.phase2Questions || []).filter(q => String(q.id).startsWith('p2_'));
-    const merged = [...fromSupabase, ...currentLocal];
-
-    if (window.S) window.S.phase2Questions = merged;
-    localStorage.setItem('re_phase2_questions', JSON.stringify(merged));
+    if (window.S) window.S.phase2Questions = fromSupabase;
 
     // phase2_questions dagi dept/dir juftliklarini SUBDIRS ga avtomatik qo'shamiz.
     // Admin kompyuterda saqlangan yo'nalishlar boshqa kompda ham ko'rinadi.
@@ -514,12 +481,6 @@ async function initializeSupabaseData() {
           SUBDIRS[q.dept].push(q.dir);
         }
       });
-    }
-  } else if (phase2QResult.success) {
-    // Supabase jadvali hali bo'sh - shu brauzerda lokal saqlangan savollar bo'lsa, bir martalik ko'chirib qo'yamiz
-    const localQs = JSON.parse(localStorage.getItem('re_phase2_questions') || '[]');
-    if (localQs.length > 0) {
-      await migratePhase2QuestionsToSupabase(localQs);
     }
   }
 
@@ -549,5 +510,4 @@ window.deletePhase2ResultFromSupabase = deletePhase2ResultFromSupabase;
 window.loadPhase2QuestionsFromSupabase = loadPhase2QuestionsFromSupabase;
 window.addPhase2QuestionToSupabase = addPhase2QuestionToSupabase;
 window.deletePhase2QuestionFromSupabase = deletePhase2QuestionFromSupabase;
-window.migratePhase2QuestionsToSupabase = migratePhase2QuestionsToSupabase;
 window.initializeSupabaseData = initializeSupabaseData;
