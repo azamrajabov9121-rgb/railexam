@@ -2008,7 +2008,18 @@ function renderQuestions() {
   const dirs = [...new Set(S.questions.map(q => q.dir))];
   const perPage = 15, total = qs.length, pages = Math.ceil(total / perPage);
   const paged = qs.slice((S.qPage - 1) * perPage, S.qPage * perPage);
+  const dupCount = findDuplicateQuestions().reduce((s, g) => s + g.length - 1, 0);
   $('adminContent').innerHTML = `
+    ${dupCount > 0 ? `
+    <div style="display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;padding:var(--sp-3) var(--sp-4);margin-bottom:13px;
+                border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.08);border-radius:var(--r-md);">
+      <span style="color:var(--amber);">${icon('alert')}</span>
+      <span style="font-size:13px;color:var(--text2);flex:1;min-width:200px;">
+        Bazada <strong style="color:var(--amber);">${dupCount} ta</strong> takroriy savol bor —
+        bir xil savol bir necha marta saqlangan.
+      </span>
+      <button class="btn btn-secondary btn-sm" onclick="showDuplicatesModal()">Ko'rib chiqish</button>
+    </div>` : ''}
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:13px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <select class="filter-inp" onchange="S.qFilterDir=this.value;S.qPage=1;renderQuestions()">
@@ -2193,6 +2204,106 @@ async function saveQ(editId) {
   document.querySelector('.modal-overlay')?.remove();
   toast(editId ? 'Yangilandi' : "Qo'shildi", 'var(--green)'); renderQuestions();
 }
+// ===== TAKRORIY SAVOLLARNI TOPISH =====
+// Bir xil yo'nalishda bir xil matnli savollarni guruhlaydi.
+// Matn solishtirishdan oldin ortiqcha bo'shliqlar va harf registri tenglashtiriladi.
+function findDuplicateQuestions() {
+  const groups = {};
+  S.questions.forEach(q => {
+    const key = q.dir + '||' + (q.q || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    (groups[key] = groups[key] || []).push(q);
+  });
+  return Object.values(groups)
+    .filter(g => g.length > 1)
+    .sort((a, b) => b.length - a.length || a[0].dir.localeCompare(b[0].dir));
+}
+
+function showDuplicatesModal() {
+  const dups = findDuplicateQuestions();
+  const extra = dups.reduce((s, g) => s + g.length - 1, 0);
+
+  const body = dups.length === 0
+    ? `<div style="text-align:center;padding:40px;color:var(--text3);">
+         <div style="color:var(--green);margin-bottom:12px;">${icon('checkCircle', 44)}</div>
+         Takroriy savol topilmadi.
+       </div>`
+    : dups.map(g => `
+      <div style="border:1px solid var(--border);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-3);background:var(--surface2);">
+        <div style="font-size:11px;color:var(--blue-light);margin-bottom:6px;">${g[0].dir}</div>
+        <p style="font-size:13px;line-height:1.5;margin-bottom:var(--sp-3);">${g[0].q}</p>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${g.map((q, i) => `
+            <div style="display:flex;align-items:center;gap:var(--sp-3);padding:7px 10px;border-radius:var(--r-sm);background:var(--surface);">
+              <span class="badge" style="background:${i === 0 ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.12)'};color:${i === 0 ? 'var(--green)' : 'var(--red)'};">
+                ${i === 0 ? 'saqlanadi' : 'ortiqcha'}
+              </span>
+              <span style="font-size:12px;color:var(--text3);">id: ${q.id}</span>
+              <span style="font-size:12px;color:var(--text3);">javob: <strong style="color:var(--text2);">${q.ans}</strong></span>
+              <span style="flex:1;"></span>
+              ${i === 0 ? '' : `<button class="btn btn-sm" onclick="deleteDuplicate(${q.id}, this)"
+                style="background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);">
+                ${icon('trash')} O'chirish</button>`}
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+
+  const el = document.createElement('div');
+  el.className = 'modal-overlay';
+  el.innerHTML = `
+    <div class="modal" style="max-width:780px;width:94%;max-height:88vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-4);">
+        <div>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;">Takroriy savollar</h3>
+          <p style="color:var(--text3);font-size:12px;margin-top:3px;">
+            ${dups.length} ta guruh · ${extra} ta ortiqcha nusxa
+          </p>
+        </div>
+        <button onclick="this.closest('.modal-overlay').remove()"
+          style="background:none;border:none;color:var(--text3);cursor:pointer;">${icon('x', 20)}</button>
+      </div>
+      <div id="dupList" style="overflow-y:auto;flex:1;padding-right:4px;">${body}</div>
+      ${extra > 0 ? `<div style="margin-top:var(--sp-4);padding-top:var(--sp-4);border-top:1px solid var(--border);">
+        <button class="btn btn-sm" onclick="deleteAllDuplicates()"
+          style="width:100%;background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);">
+          ${icon('trash')} Barcha ortiqcha nusxalarni o'chirish (${extra} ta)</button>
+        <p style="color:var(--text3);font-size:11px;text-align:center;margin-top:8px;">
+          Har bir guruhdan eng eskisi saqlanadi</p>
+      </div>` : ''}
+    </div>`;
+  el.onclick = e => { if (e.target === el) el.remove(); };
+  document.body.appendChild(el);
+}
+
+// Modaldan bitta nusxani o'chiradi (tasdiq so'ramaydi — foydalanuvchi allaqachon ko'rib turibdi)
+async function deleteDuplicate(id, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  S.questions = S.questions.filter(q => q.id !== id);
+  if (window.deleteQuestionFromSupabase) {
+    try { await deleteQuestionFromSupabase(id); } catch (e) { console.error(e); }
+  }
+  const row = btn && btn.parentElement;
+  if (row) row.remove();
+  toast("O'chirildi", 'var(--red)');
+}
+
+async function deleteAllDuplicates() {
+  const dups = findDuplicateQuestions();
+  const ids = dups.flatMap(g => g.slice(1).map(q => q.id));
+  if (!ids.length) return;
+  if (!confirm(`${ids.length} ta ortiqcha nusxa o'chiriladi.\nHar bir guruhdan eng eskisi saqlanadi.\n\nDavom etamizmi?`)) return;
+
+  toast(`${ids.length} ta savol o'chirilmoqda...`, 'var(--blue)');
+  S.questions = S.questions.filter(q => !ids.includes(q.id));
+  for (const id of ids) {
+    if (window.deleteQuestionFromSupabase) {
+      try { await deleteQuestionFromSupabase(id); } catch (e) { console.error(e); }
+    }
+  }
+  toast(`${ids.length} ta ortiqcha nusxa o'chirildi`, 'var(--green)');
+  document.querySelector('.modal-overlay')?.remove();
+  renderQuestions();
+}
+
 async function deleteQ(id) {
   if (confirm('Savolni o\'chirish?')) {
     // LocalStorage dan o'chirish
