@@ -296,8 +296,8 @@ label.lbl { display: block; color: var(--text3); font-size: 13px; margin-bottom:
   background: repeating-linear-gradient(90deg, var(--border2) 0, var(--border2) 3px, transparent 3px, transparent 17px);
   opacity: .55;
 }
-.afrosiyob { position: absolute; bottom: 7px; animation: trainMove 14s linear infinite; }
-@keyframes trainMove { 0% { left: -300px; } 100% { left: 100%; } }
+.afrosiyob { position: absolute; bottom: 7px; animation: trainMove 19s linear infinite; }
+@keyframes trainMove { 0% { left: -730px; } 100% { left: 100%; } }
 
 /* Harakatga sezgir foydalanuvchilar uchun animatsiya to'xtaydi */
 @media (prefers-reduced-motion: reduce) {
