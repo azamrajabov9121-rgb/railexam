@@ -296,13 +296,20 @@ localStorage.removeItem('re_phase2_questions');
 const savedTheme = localStorage.getItem('re_theme');
 if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
 
+// Tugma keyingi holatni ko'rsatadi: qorong'i temada quyosh ("yorug'ga o'tish")
+function applyThemeButton(theme) {
+  const icon = document.getElementById('btn-theme-icon');
+  const label = document.getElementById('btn-theme-label');
+  const isLight = theme === 'light';
+  if (icon) icon.setAttribute('href', isLight ? '#ic-moon' : '#ic-sun');
+  if (label) label.textContent = isLight ? 'Qorong\'i tema' : 'Yorug\' tema';
+}
+
 function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'light' ? 'dark' : 'light';
+  const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('re_theme', next);
-  const btn = document.getElementById('btn-theme');
-  if (btn) btn.innerHTML = next === 'light' ? '🌙 Qorong\'i tema' : '☀️ Yorug\' tema';
+  applyThemeButton(next);
 }
 
 // Global functions
@@ -2706,6 +2713,7 @@ function initTestBanner() {
 document.addEventListener('DOMContentLoaded', () => {
   initTestBanner();
   initStep1Validation();
+  applyThemeButton(document.documentElement.getAttribute('data-theme') || 'dark');
   // Sahifani DARHOL ko'rsatamiz — Supabase yuklanishini kutmaymiz.
   // Ma'lumotlar orqa fonda yuklanadi: foydalanuvchi forma to'ldirish paytida
   // savollar allaqachon tayyor bo'ladi.

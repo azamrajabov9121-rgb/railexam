@@ -124,6 +124,9 @@ body {
 }
 .btn-primary:disabled::after { display: none; }
 
+/* Ikonlar — rangni ota elementdan meros oladi, hover bilan birga o'zgaradi */
+.ic { width: 17px; height: 17px; flex-shrink: 0; display: block; }
+
 /* Ikkilamchi ("arvoh") tugma — e'tiborni markazdan tortmaydi */
 .ghost-btn {
   display: inline-flex; align-items: center; gap: var(--sp-2);

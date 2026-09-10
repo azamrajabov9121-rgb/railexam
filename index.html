@@ -115,6 +115,23 @@
         <use href="#afCoach" x="0" /><use href="#afCoach" x="97" />
         <use href="#afPower" x="194" />
       </g>
+
+      <!-- ===== IKONLAR (viewBox 0 0 24 24, rangni tugmadan meros oladi) ===== -->
+      <g id="ic-sun" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M6 18l-1.4 1.4M19.4 4.6L18 6" />
+      </g>
+      <g id="ic-moon" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" />
+      </g>
+      <g id="ic-shield" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M12 21.5s7.5-3.8 7.5-9.5V5.3L12 2.5 4.5 5.3v6.7c0 5.7 7.5 9.5 7.5 9.5Z" />
+        <circle cx="12" cy="10.7" r="1.5" />
+        <path d="M12 12.2v2.4" />
+      </g>
     </defs>
   </svg>
 
@@ -136,8 +153,18 @@
   <!-- ===== TIL SAHIFASI ===== -->
   <div id="pg-lang" class="page rail-bg" style="align-items:center;position:relative;">
     <div style="position:absolute;top:20px;right:24px;display:flex;gap:10px;z-index:10;">
-      <button id="btn-theme" class="ghost-btn" onclick="toggleTheme()">☀️ Yorug' tema</button>
-      <button class="ghost-btn" onclick="showPage('pg-admin-login')">🔐 Admin panel</button>
+      <button id="btn-theme" class="ghost-btn" onclick="toggleTheme()">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+          <use href="#ic-sun" id="btn-theme-icon" />
+        </svg>
+        <span id="btn-theme-label">Yorug' tema</span>
+      </button>
+      <button class="ghost-btn" onclick="showPage('pg-admin-login')">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+          <use href="#ic-shield" />
+        </svg>
+        <span>Admin panel</span>
+      </button>
     </div>
     <!-- margin:auto — joy bo'lsa markazlashadi, sig'masa tepadan boshlanib, kesilmaydi -->
     <div style="width:100%;max-width:420px;position:relative;z-index:1;margin:auto 0;">
