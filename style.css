@@ -397,6 +397,16 @@ body.has-banner { padding-top: var(--banner-h); }
 body.has-banner .page { min-height: calc(100vh - var(--banner-h)); }
 body.has-banner .sidebar { top: var(--banner-h); }
 body.has-banner .admin-topbar { top: var(--banner-h); }
+body.has-banner .exam-topbar { top: var(--banner-h); }
+
+/* Imtihon sarlavhasi — taymer va progress doim ko'rinib turishi shart */
+.exam-topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  background: rgba(7, 14, 26, .96); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-3) var(--sp-4);
+}
+[data-theme="light"] .exam-topbar { background: rgba(255, 255, 255, .95); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {

@@ -232,21 +232,24 @@ const L = {
     errFill: "Barcha maydonlarni to'ldiring!", errJshir: "JSHSHIR 14 ta raqam bo'lishi kerak!", errDir: "Yo'nalishni tanlang!", errSub: "Mutaxassislikni tanlang!", errToifa: "Toifani tanlang (3-toifa yoki 4-toifa)!", errNoQ: "Bu yo'nalish uchun hali savollar qo'shilmagan!",
     tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
     detailTitle: "Savol-javoblar", yourAnsLbl: "Siz:", corrAnsLbl: "To'g'ri:",
-    langHint: "Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin"
+    langHint: "Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin",
+    examHint: "Klaviatura: A–D javobni belgilaydi, ← → savollar orasida yuradi"
   },
   uzb: {
     lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ! 🎉", failed: "ЙИҚИЛДИНГИЗ 😔", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
     errFill: "Барча майдонларни тўлдиринг!", errJshir: "ЖШШИР 14 та рақам бўлиши керак!", errDir: "Йўналишни танланг!", errSub: "Мутахассисликни танланг!", errToifa: "Тоифани танланг (3-тоифа ёки 4-тоифа)!", errNoQ: "Бу йўналиш учун ҳали саволлар қўшилмаган!",
     tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
     detailTitle: "Савол-жавоблар", yourAnsLbl: "Сиз:", corrAnsLbl: "Тўғри:",
-    langHint: "Маслаҳат: тилни 1–3 рақамлари билан танлаб, Enter босишингиз мумкин"
+    langHint: "Маслаҳат: тилни 1–3 рақамлари билан танлаб, Enter босишингиз мумкин",
+    examHint: "Клавиатура: A–D жавобни белгилайди, ← → саволлар орасида юради"
   },
   ru: {
     lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ! 🎉", failed: "НЕ СДАЛИ 😔", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
     errFill: "Заполните все поля!", errJshir: "ПИНФЛ должен состоять из 14 цифр!", errDir: "Выберите направление!", errSub: "Выберите специальность!", errToifa: "Выберите категорию (3-я или 4-я категория)!", errNoQ: "Для этого направления вопросы еще не добавлены!",
     tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
     detailTitle: "Вопросы и ответы", yourAnsLbl: "Вы:", corrAnsLbl: "Правильно:",
-    langHint: "Подсказка: язык можно выбрать клавишами 1–3 и нажать Enter"
+    langHint: "Подсказка: язык можно выбрать клавишами 1–3 и нажать Enter",
+    examHint: "Клавиатура: A–D выбирает ответ, ← → переход между вопросами"
   }
 };
 // ===== STATE =====
@@ -844,8 +847,28 @@ function renderQ() {
   $('btn-prev').disabled = S.currentQ === 0;
   $('btn-next').innerHTML = S.currentQ === total - 1 ? '🏁' : (t('next') + ' →');
 
+  const hint = $('exam-kbd-hint'); if (hint) hint.textContent = t('examHint');
+
   buildQNav();
 }
+
+// Imtihonda klaviatura: A-D javobni belgilaydi, ← → savollar orasida yuradi
+document.addEventListener('keydown', e => {
+  const page = $('pg-exam');
+  if (!page || !page.classList.contains('active')) return;
+  if (e.target.closest('input, textarea, select')) return;
+  if (document.querySelector('.modal-overlay') || $('finishModal')?.style.display === 'flex') return;
+
+  const key = e.key.toUpperCase();
+  if (['A', 'B', 'C', 'D'].includes(key)) {
+    const q = S.examQuestions[S.currentQ];
+    if (q && q.opts && q.opts[key]) { selectAnswer(key); e.preventDefault(); }
+  } else if (e.key === 'ArrowRight') {
+    nextQ(); e.preventDefault();
+  } else if (e.key === 'ArrowLeft') {
+    prevQ(); e.preventDefault();
+  }
+});
 
 // ===== ACTIONS =====
 function selectAnswer(k) {
