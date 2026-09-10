@@ -284,14 +284,30 @@ label.lbl { display: block; color: var(--text3); font-size: 13px; margin-bottom:
 .lang-card.sel   { border-color: var(--blue-light); background: rgba(37, 99, 235, 0.2); box-shadow: inset 0 0 20px rgba(37, 99, 235, 0.15); }
 
 /* ===== TRAIN ANIMATION ===== */
-.train-wrap { overflow: hidden; height: 68px; position: relative; margin-top: 18px; }
-.train-track-bg { position: absolute; bottom: 5px; left: 0; right: 0; height: 3px; background: var(--border); }
-.train-ties {
-  position: absolute; bottom: 5px; left: 0; right: 0; height: 3px;
-  background: repeating-linear-gradient(90deg, var(--border2) 0, var(--border2) 18px, transparent 18px, transparent 32px);
+.train-wrap {
+  overflow: hidden; height: 60px; position: relative;
+  pointer-events: none; user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
-.afrosiyob { position: absolute; bottom: 8px; animation: trainMove 7s linear infinite; }
-@keyframes trainMove { 0% { left: -330px; } 100% { left: 108%; } }
+.train-track-bg { position: absolute; bottom: 5px; left: 0; right: 0; height: 2px; background: var(--border); }
+.train-ties {
+  position: absolute; bottom: 2px; left: 0; right: 0; height: 5px;
+  background: repeating-linear-gradient(90deg, var(--border2) 0, var(--border2) 3px, transparent 3px, transparent 17px);
+  opacity: .55;
+}
+.afrosiyob { position: absolute; bottom: 7px; animation: trainMove 14s linear infinite; }
+@keyframes trainMove { 0% { left: -300px; } 100% { left: 100%; } }
+
+/* Harakatga sezgir foydalanuvchilar uchun animatsiya to'xtaydi */
+@media (prefers-reduced-motion: reduce) {
+  .afrosiyob { animation: none; left: 50%; transform: translateX(-50%); }
+}
+
+/* Past ekranlarda poyezd kontentga xalaqit bermasligi uchun yashiriladi */
+@media (max-height: 620px) {
+  .train-wrap { display: none; }
+}
 
 /* ===== CAMERA ===== */
 .cam-wrap { background: var(--surface2); border: 2px dashed var(--border2); border-radius: var(--r-lg); overflow: hidden; position: relative; width: 100%; }

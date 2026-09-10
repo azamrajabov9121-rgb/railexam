@@ -15,22 +15,139 @@
 </head>
 
 <body>
+  <!-- ===== AFROSIYOB POYEZDI (bir marta chiziladi, bir necha joyda ishlatiladi) ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="afBody" x1="0" y1="9" x2="0" y2="33" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#ffffff" />
+        <stop offset=".62" stop-color="#f4f8fc" />
+        <stop offset="1" stop-color="#d3dde9" />
+      </linearGradient>
+      <linearGradient id="afSky" x1="0" y1="9" x2="0" y2="27" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#4cc3ee" />
+        <stop offset="1" stop-color="#0d84bd" />
+      </linearGradient>
+      <linearGradient id="afGlass" x1="0" y1="12" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#31597f" />
+        <stop offset="1" stop-color="#0a1628" />
+      </linearGradient>
+      <radialGradient id="afLamp">
+        <stop stop-color="#fffbe8" />
+        <stop offset="1" stop-color="#fde68a" stop-opacity="0" />
+      </radialGradient>
+
+      <g id="afrosiyobTrain">
+        <!-- Pantograflar (tok qabul qilgichlar) -->
+        <g stroke="#7f97b3" stroke-width="1.1" stroke-linecap="round" fill="none">
+          <path d="M58 9 L52 3.5" /><path d="M58 9 L65 3.5" /><path d="M49 3.5 h20" />
+          <path d="M152 9 L146 3.5" /><path d="M152 9 L159 3.5" /><path d="M143 3.5 h20" />
+        </g>
+
+        <!-- Vagonlararo o'tish yo'laklari -->
+        <g fill="#2c3b50">
+          <rect x="97" y="13" width="9" height="20" rx="1.5" />
+          <rect x="193" y="13" width="9" height="20" rx="1.5" />
+        </g>
+
+        <!-- G'ildiraklar (Talgo — kichik, yon to'siq ostida) -->
+        <g fill="#0b1220">
+          <circle cx="26" cy="36.5" r="4.2" /><circle cx="80" cy="36.5" r="4.2" />
+          <circle cx="122" cy="36.5" r="4.2" /><circle cx="176" cy="36.5" r="4.2" />
+          <circle cx="214" cy="37" r="4.8" /><circle cx="228" cy="37" r="4.8" />
+          <circle cx="286" cy="37" r="4.8" /><circle cx="300" cy="37" r="4.8" />
+        </g>
+        <g fill="#63809f">
+          <circle cx="26" cy="36.5" r="1.5" /><circle cx="80" cy="36.5" r="1.5" />
+          <circle cx="122" cy="36.5" r="1.5" /><circle cx="176" cy="36.5" r="1.5" />
+          <circle cx="214" cy="37" r="1.7" /><circle cx="228" cy="37" r="1.7" />
+          <circle cx="286" cy="37" r="1.7" /><circle cx="300" cy="37" r="1.7" />
+        </g>
+
+        <!-- Pastki to'siq (yubka) -->
+        <g fill="#25344a">
+          <rect x="8" y="32" width="90" height="4" rx="1.5" />
+          <rect x="105" y="32" width="90" height="4" rx="1.5" />
+          <rect x="205" y="32" width="105" height="4" rx="1.5" />
+        </g>
+
+        <!-- Vagon korpuslari (oq) -->
+        <rect x="6" y="9" width="93" height="24" rx="4.5" fill="url(#afBody)" />
+        <rect x="103" y="9" width="93" height="24" rx="4.5" fill="url(#afBody)" />
+
+        <!-- Boshqaruv vagoni: uzun aerodinamik burun -->
+        <path d="M200 33 V13 Q200 9 205 9 H270 C291 9.6 307 13 317 19
+                 C324 23 329 27.6 329.6 31 V31.6 Q329.8 33 326 33 Z" fill="url(#afBody)" />
+
+        <!-- Moviy tom va burun qopqog'i -->
+        <path d="M262 9 H270 C291 9.6 307 13 317 19 C320.6 21.3 323.8 23.9 326 26.4
+                 L315.5 26.4 C309 21.4 299 17 287 15 C279.4 13.7 270 13.1 262 13.1 Z" fill="url(#afSky)" />
+        <g fill="#1fa5dc" opacity=".9">
+          <rect x="6" y="9" width="93" height="2.4" rx="1.2" />
+          <rect x="103" y="9" width="93" height="2.4" rx="1.2" />
+          <rect x="205" y="9" width="58" height="2.4" rx="1.2" />
+        </g>
+
+        <!-- Kabina oynasi va yon oyna -->
+        <path d="M283 13.4 C296 15 307 19.6 314.5 25.6 L298 25.6 Q283.5 25.6 283 19.4 Z" fill="url(#afGlass)"
+          stroke="#0a2440" stroke-width=".6" />
+        <rect x="264" y="14.2" width="15" height="8.4" rx="2" fill="url(#afGlass)" />
+
+        <!-- Vagon derazalari -->
+        <g fill="url(#afGlass)">
+          <rect x="13" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="26" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="39" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="52" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="65" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="78" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="110" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="123" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="136" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="149" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="162" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="175" y="14.5" width="9" height="7.5" rx="1.8" />
+          <rect x="209" y="14.5" width="9" height="7.5" rx="1.8" /><rect x="222" y="14.5" width="9" height="7.5" rx="1.8" />
+        </g>
+
+        <!-- Eshiklar -->
+        <g stroke="#b9c8da" stroke-width=".8">
+          <path d="M91 10.5 V31.5" /><path d="M188 10.5 V31.5" /><path d="M240 10.5 V31.5" />
+        </g>
+
+        <!-- O'zbekiston bayrog'i tasmasi -->
+        <g>
+          <rect x="6" y="25.6" width="93" height="1.7" fill="#0099b5" />
+          <rect x="6" y="27.3" width="93" height=".5" fill="#ce1126" />
+          <rect x="6" y="27.8" width="93" height="1.5" fill="#ffffff" />
+          <rect x="6" y="29.3" width="93" height=".5" fill="#ce1126" />
+          <rect x="6" y="29.8" width="93" height="1.7" fill="#1eb53a" />
+
+          <rect x="103" y="25.6" width="93" height="1.7" fill="#0099b5" />
+          <rect x="103" y="27.3" width="93" height=".5" fill="#ce1126" />
+          <rect x="103" y="27.8" width="93" height="1.5" fill="#ffffff" />
+          <rect x="103" y="29.3" width="93" height=".5" fill="#ce1126" />
+          <rect x="103" y="29.8" width="93" height="1.7" fill="#1eb53a" />
+
+          <rect x="200" y="25.6" width="112" height="1.7" fill="#0099b5" />
+          <rect x="200" y="27.3" width="112" height=".5" fill="#ce1126" />
+          <rect x="200" y="27.8" width="112" height="1.5" fill="#ffffff" />
+          <rect x="200" y="29.3" width="112" height=".5" fill="#ce1126" />
+          <rect x="200" y="29.8" width="112" height="1.7" fill="#1eb53a" />
+        </g>
+
+        <!-- Korpusdagi "Afrosiyob" yozuvi -->
+        <text x="234" y="24" font-family="Georgia, 'Times New Roman', serif" font-style="italic"
+          font-size="6.6" fill="#1a6fb0">Afrosiyob</text>
+
+        <!-- Burun uchidagi to'q qism (avtomatik ilgak qopqog'i) -->
+        <path d="M318 30.6 C323 30.8 327 31.4 329.4 32 Q329.7 33 326 33 L319.5 33 Z" fill="#2c3b50" />
+
+        <!-- Faralar -->
+        <ellipse cx="318" cy="28.6" rx="8.5" ry="5" fill="url(#afLamp)" />
+        <circle cx="316.5" cy="28.6" r="1.9" fill="#fffdf2" />
+      </g>
+    </defs>
+  </svg>
+
   <!-- LOADER -->
   <div id="loader">
     <div class="loader-train">
-      <svg width="130" height="44" viewBox="0 0 130 44" fill="none">
-        <rect x="2" y="7" width="120" height="25" rx="5" fill="#1a3d7a" />
-        <rect x="2" y="7" width="120" height="7" rx="5" fill="#2060a8" />
-        <polygon points="2,32 2,7 28,7 36,32" fill="#122e60" />
-        <rect x="40" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".65" />
-        <rect x="60" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".55" />
-        <rect x="80" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".45" />
-        <rect x="100" y="11" width="15" height="9" rx="1.5" fill="#5bb3f5" opacity=".35" />
-        <ellipse cx="28" cy="37" rx="5" ry="5" fill="#0a1628" stroke="#1e6fc0" stroke-width="2" />
-        <ellipse cx="28" cy="37" rx="2.2" ry="2.2" fill="#1e6fc0" />
-        <ellipse cx="95" cy="37" rx="5" ry="5" fill="#0a1628" stroke="#1e6fc0" stroke-width="2" />
-        <ellipse cx="95" cy="37" rx="2.2" ry="2.2" fill="#1e6fc0" />
-        <circle cx="6" cy="19" r="3" fill="#fffde7" opacity=".9" />
+      <svg width="230" height="32" viewBox="0 0 330 46" fill="none" aria-hidden="true">
+        <use href="#afrosiyobTrain" />
       </svg>
     </div>
     <div class="loader-bar">
@@ -78,6 +195,13 @@
         style="text-align:center;color:var(--text2);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:13px;">
         Tilni tanlang / Выберите язык</p>
       <div style="display:flex;flex-direction:column;gap:10px;" id="langList"></div>
+    </div>
+    <div class="train-wrap" style="position:absolute;left:0;right:0;bottom:14px;">
+      <div class="train-track-bg"></div>
+      <div class="train-ties"></div>
+      <svg class="afrosiyob" width="290" height="40" viewBox="0 0 330 46" fill="none" aria-hidden="true">
+        <use href="#afrosiyobTrain" />
+      </svg>
     </div>
   </div>
 
