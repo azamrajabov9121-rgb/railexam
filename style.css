@@ -118,6 +118,28 @@ body {
 .btn-sm { padding: var(--sp-2) var(--sp-4); font-size: 13px; border-radius: var(--r-sm); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
 
+/* Ikkilamchi ("arvoh") tugma — e'tiborni markazdan tortmaydi */
+.ghost-btn {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4); border-radius: var(--r-md);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--text3); cursor: pointer;
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: color .25s, border-color .25s, background .25s, transform .25s;
+}
+.ghost-btn:hover {
+  color: var(--blue-light); border-color: rgba(96, 165, 250, .45);
+  background: rgba(37, 99, 235, .1); transform: translateY(-1px);
+}
+
+/* Klaviatura bilan boshqarish — fokus aniq ko'rinsin */
+:focus-visible {
+  outline: 2px solid var(--blue-light);
+  outline-offset: 2px;
+}
+
 /* ===== INPUTS ===== */
 .inp {
   width: 100%; background: var(--surface2); border: 1px solid var(--border);
@@ -304,9 +326,13 @@ label.lbl { display: block; color: var(--text3); font-size: 13px; margin-bottom:
   .afrosiyob { animation: none; left: 50%; transform: translateX(-50%); }
 }
 
-/* Past ekranlarda poyezd kontentga xalaqit bermasligi uchun yashiriladi */
+/* Pastdagi bo'shliq poyezd yo'li uchun ajratilgan */
+#pg-lang { padding: var(--sp-6) var(--sp-6) 104px; }
+
+/* Past ekranlarda poyezd yashiriladi va uning joyi kontentga qaytariladi */
 @media (max-height: 620px) {
   .train-wrap { display: none; }
+  #pg-lang { padding-bottom: var(--sp-6); }
 }
 
 /* ===== CAMERA ===== */
@@ -402,6 +428,8 @@ body.has-banner .admin-topbar { top: var(--banner-h); }
 [data-theme="light"] .qnum:not(.current):not(.answered) { background: #ffffff; color: #020617; border-color: #cbd5e1; }
 [data-theme="light"] .lang-card { background: rgba(255, 255, 255, 0.9); border-color: #cbd5e1; color: #020617; }
 [data-theme="light"] .lang-card:hover { background: rgba(241, 245, 249, 0.95); }
+[data-theme="light"] .ghost-btn { background: rgba(15, 23, 42, .03); border-color: rgba(15, 23, 42, .14); color: var(--text2); }
+[data-theme="light"] .ghost-btn:hover { background: rgba(37, 99, 235, .08); border-color: rgba(37, 99, 235, .4); color: var(--blue); }
 [data-theme="light"] .card { background: #ffffff; border-color: #cbd5e1; }
 [data-theme="light"] .modal { background: #ffffff; border-color: #cbd5e1; }
 [data-theme="light"] .tbl th { color: #334155; border-bottom: 1px solid #cbd5e1; }

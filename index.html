@@ -134,23 +134,13 @@
   <div class="glow2"></div>
 
   <!-- ===== TIL SAHIFASI ===== -->
-  <div id="pg-lang" class="page rail-bg"
-    style="align-items:center;justify-content:center;padding:24px;position:relative;">
+  <div id="pg-lang" class="page rail-bg" style="align-items:center;position:relative;">
     <div style="position:absolute;top:20px;right:24px;display:flex;gap:10px;z-index:10;">
-      <button id="btn-theme" onclick="toggleTheme()"
-        style="color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;background:rgba(15,23,42,0.4);backdrop-filter:blur(8px);border:1.5px solid var(--border);padding:8px 16px;border-radius:10px;transition:all .3s;display:flex;align-items:center;gap:6px;"
-        onmouseover="this.style.color='var(--blue-light)';this.style.borderColor='var(--blue-light)';this.style.background='rgba(37,99,235,0.1)';this.style.transform='translateY(-2px)';"
-        onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)';this.style.background='rgba(15,23,42,0.4)';this.style.transform='translateY(0)';">
-        ☀️ Yorug' tema
-      </button>
-      <button onclick="showPage('pg-admin-login')"
-        style="color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;background:rgba(15,23,42,0.4);backdrop-filter:blur(8px);border:1.5px solid var(--border);padding:8px 16px;border-radius:10px;transition:all .3s;display:flex;align-items:center;gap:6px;"
-        onmouseover="this.style.color='var(--blue-light)';this.style.borderColor='var(--blue-light)';this.style.background='rgba(37,99,235,0.1)';this.style.transform='translateY(-2px)';"
-        onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)';this.style.background='rgba(15,23,42,0.4)';this.style.transform='translateY(0)';">
-        🔐 Admin panel
-      </button>
+      <button id="btn-theme" class="ghost-btn" onclick="toggleTheme()">☀️ Yorug' tema</button>
+      <button class="ghost-btn" onclick="showPage('pg-admin-login')">🔐 Admin panel</button>
     </div>
-    <div style="width:100%;max-width:420px;position:relative;z-index:1;">
+    <!-- margin:auto — joy bo'lsa markazlashadi, sig'masa tepadan boshlanib, kesilmaydi -->
+    <div style="width:100%;max-width:420px;position:relative;z-index:1;margin:auto 0;">
       <div style="text-align:center;margin-bottom:32px;">
         <div id="main-logo" onclick="showPage('pg-lang')"
           style="display:inline-flex;align-items:center;justify-content:center;width:86px;height:86px;background:linear-gradient(135deg,#0d2a5e,#1e6fc0);border:2px solid rgba(91,179,245,.25);border-radius:22px;margin-bottom:14px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;box-shadow:0 4px 24px rgba(30,111,192,.25);"
@@ -161,15 +151,23 @@
         </div>
         <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:800;margin-bottom:5px;">Rail<span
             style="color:var(--blue-light);">Exam</span></h1>
-        <p style="color:var(--text3);font-size:13px;">O'zbekiston Temir Yo'llari | Ta'lim Markazi</p>
+        <p style="color:var(--text2);font-size:13px;letter-spacing:.05em;">O'zbekiston Temir Yo'llari | Ta'lim
+          Markazi</p>
         <div
-          style="width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);margin:12px auto;">
+          style="width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);margin:16px auto 0;">
         </div>
       </div>
       <p
-        style="text-align:center;color:var(--text2);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:13px;">
+        style="text-align:center;color:var(--text2);font-size:13.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;">
         Tilni tanlang / Выберите язык</p>
       <div style="display:flex;flex-direction:column;gap:10px;" id="langList"></div>
+      <button class="btn btn-primary" onclick="goToRegister()"
+        style="width:100%;margin-top:18px;font-size:16px;padding:14px;">
+        <span id="txt-lang-continue">Davom etish</span> →
+      </button>
+      <p id="txt-lang-hint" style="text-align:center;color:var(--text3);font-size:11.5px;margin-top:10px;">
+        Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin
+      </p>
     </div>
     <div class="train-wrap" style="position:absolute;left:0;right:0;bottom:14px;">
       <div class="train-track-bg"></div>
