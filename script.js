@@ -316,7 +316,17 @@ function showPage(id) {
   }
 }
 function closeModal(id) { $(id).style.display = 'none'; }
-function shuffle(arr) { return [...arr].sort(() => Math.random() - .5); }
+// Fisher-Yates — har bir tartib teng ehtimollik bilan chiqadi.
+// (sort(() => Math.random() - .5) noto'g'ri natija beradi: ba'zi savollar
+// boshqalariga qaraganda ancha tez-tez tushib qoladi.)
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 // ===== TIL SAHIFASI =====
 function getFlagSVG(code) {
@@ -641,6 +651,16 @@ async function startExam() {
     // Sub-yo'nalish yo'q: xo'jalik nomi bo'yicha filter
     pool = S.questions.filter(q => q.dir === S.direction);
   }
+  // Bazada bitta savol bir necha marta saqlangan bo'lishi mumkin (har xil id, bir xil matn).
+  // Bitta imtihonda u takror tushmasligi uchun matn bo'yicha yagonalashtiramiz.
+  const seenText = new Set();
+  pool = pool.filter(q => {
+    const key = (q.q || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (seenText.has(key)) return false;
+    seenText.add(key);
+    return true;
+  });
+
   // Pool bo'sh bo'lsa ogohlantirish, aks holda faqat shu pool dan olamiz
   if (pool.length === 0) {
     toast(t('errNoQ'), 'var(--amber)');
