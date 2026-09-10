@@ -2257,7 +2257,7 @@ function showDuplicatesModal() {
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-4);">
         <div>
           <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;">Takroriy savollar</h3>
-          <p style="color:var(--text3);font-size:12px;margin-top:3px;">
+          <p id="dupCount" style="color:var(--text3);font-size:12px;margin-top:3px;">
             ${dups.length} ta guruh · ${extra} ta ortiqcha nusxa
           </p>
         </div>
@@ -2265,10 +2265,10 @@ function showDuplicatesModal() {
           style="background:none;border:none;color:var(--text3);cursor:pointer;">${icon('x', 20)}</button>
       </div>
       <div id="dupList" style="overflow-y:auto;flex:1;padding-right:4px;">${body}</div>
-      ${extra > 0 ? `<div style="margin-top:var(--sp-4);padding-top:var(--sp-4);border-top:1px solid var(--border);">
+      ${extra > 0 ? `<div id="dupBulk" style="margin-top:var(--sp-4);padding-top:var(--sp-4);border-top:1px solid var(--border);">
         <button class="btn btn-sm" onclick="deleteAllDuplicates()"
           style="width:100%;background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);">
-          ${icon('trash')} Barcha ortiqcha nusxalarni o'chirish (${extra} ta)</button>
+          ${icon('trash')} Barcha ortiqcha nusxalarni o'chirish (<span id="dupBulkCount">${extra}</span> ta)</button>
         <p style="color:var(--text3);font-size:11px;text-align:center;margin-top:8px;">
           Har bir guruhdan eng eskisi saqlanadi</p>
       </div>` : ''}
@@ -2287,6 +2287,22 @@ async function deleteDuplicate(id, btn) {
   const row = btn && btn.parentElement;
   if (row) row.remove();
   toast("O'chirildi", 'var(--red)');
+
+  // Ostidagi ro'yxat va ogohlantirish paneli ham yangilansin
+  renderQuestions();
+  refreshDuplicatesHeader();
+}
+
+// Modal sarlavhasidagi sanoqni qayta hisoblaydi
+function refreshDuplicatesHeader() {
+  const dups = findDuplicateQuestions();
+  const extra = dups.reduce((s, g) => s + g.length - 1, 0);
+  const cnt = document.getElementById('dupCount');
+  if (cnt) cnt.textContent = `${dups.length} ta guruh · ${extra} ta ortiqcha nusxa`;
+  const bulkCount = document.getElementById('dupBulkCount');
+  if (bulkCount) bulkCount.textContent = extra;
+  const bulk = document.getElementById('dupBulk');
+  if (bulk && extra === 0) bulk.remove();
 }
 
 async function deleteAllDuplicates() {
