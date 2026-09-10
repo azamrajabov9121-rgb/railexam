@@ -233,7 +233,8 @@ const L = {
     tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
     detailTitle: "Savol-javoblar", yourAnsLbl: "Siz:", corrAnsLbl: "To'g'ri:",
     langHint: "Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin",
-    examHint: "Klaviatura: A–D javobni belgilaydi, ← → savollar orasida yuradi"
+    examHint: "Klaviatura: A–D javobni belgilaydi, ← → savollar orasida yuradi",
+    reqField: "Bu maydon to'ldirilishi shart"
   },
   uzb: {
     lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ! 🎉", failed: "ЙИҚИЛДИНГИЗ 😔", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
@@ -241,7 +242,8 @@ const L = {
     tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
     detailTitle: "Савол-жавоблар", yourAnsLbl: "Сиз:", corrAnsLbl: "Тўғри:",
     langHint: "Маслаҳат: тилни 1–3 рақамлари билан танлаб, Enter босишингиз мумкин",
-    examHint: "Клавиатура: A–D жавобни белгилайди, ← → саволлар орасида юради"
+    examHint: "Клавиатура: A–D жавобни белгилайди, ← → саволлар орасида юради",
+    reqField: "Бу майдон тўлдирилиши шарт"
   },
   ru: {
     lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ! 🎉", failed: "НЕ СДАЛИ 😔", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
@@ -249,7 +251,8 @@ const L = {
     tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
     detailTitle: "Вопросы и ответы", yourAnsLbl: "Вы:", corrAnsLbl: "Правильно:",
     langHint: "Подсказка: язык можно выбрать клавишами 1–3 и нажать Enter",
-    examHint: "Клавиатура: A–D выбирает ответ, ← → переход между вопросами"
+    examHint: "Клавиатура: A–D выбирает ответ, ← → переход между вопросами",
+    reqField: "Обязательное поле"
   }
 };
 // ===== STATE =====
@@ -305,7 +308,15 @@ function toggleTheme() {
 // Global functions
 const t = k => L[S.lang][k] || k;
 function $(id) { return document.getElementById(id); }
-function toast(msg, color) { const e = $('toast'); e.textContent = msg; e.style.background = color || 'var(--blue)'; e.style.opacity = '1'; setTimeout(() => e.style.opacity = '0', 3000); }
+let toastTimer = null;
+function toast(msg, color) {
+  const e = $('toast');
+  e.textContent = msg;
+  e.style.borderColor = color || 'var(--border2)';
+  e.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => e.classList.remove('show'), 3000);
+}
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const p = $(id);
@@ -435,6 +446,7 @@ function initRegister() {
   $('txt-dir-desc').textContent = t('dirD');
   $('txt-start-btn').textContent = t('cont');
   $('txt-continue').textContent = t('cont');
+  refreshStep1State();
   S.direction = ''; S.subDirection = ''; S.toifa = '';
   ['inp-name', 'inp-pos', 'inp-jshir', 'inp-phone'].forEach(id => { const el = $(id); if (el) el.value = ''; });
   const jc = $('jshir-cnt'); if (jc) jc.textContent = '0/14';
@@ -471,14 +483,63 @@ function updateStepBar(a) {
     <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:all .3s;background:${a >= s ? 'var(--blue)' : 'var(--surface2)'};color:${a >= s ? 'white' : 'var(--text3)'};">${s}</div>
     ${s < total ? `<div style="width:24px;height:2px;background:${a > s ? 'var(--blue)' : 'var(--border)'};transition:background .3s;"></div>` : ''}`).join('');
 }
+// ===== 1-QADAM: MAYDONLARNI TEKSHIRISH =====
+const STEP1_FIELDS = {
+  name: v => v ? '' : t('reqField'),
+  pos: v => v ? '' : t('reqField'),
+  jshir: v => !v ? t('reqField') : (v.length !== 14 ? t('errJshir') : ''),
+  phone: v => v ? '' : t('reqField')
+};
+
+function step1FieldError(id) {
+  const el = $('inp-' + id);
+  return el ? STEP1_FIELDS[id](el.value.trim()) : '';
+}
+
+// Xatoni maydonning o'zida ko'rsatadi (hoshiya qizil + tagida izoh)
+function paintStep1Field(id) {
+  const el = $('inp-' + id), box = $('err-' + id);
+  if (!el || !box) return;
+  const msg = step1FieldError(id);
+  el.classList.toggle('err', !!msg);
+  box.textContent = msg ? '⚠ ' + msg : '';
+  box.classList.toggle('show', !!msg);
+}
+
+function step1Valid() {
+  return Object.keys(STEP1_FIELDS).every(id => !step1FieldError(id));
+}
+
+// Yozish davomida: tuzatilgan xato darhol yo'qoladi, tugma holati yangilanadi
+function refreshStep1State() {
+  Object.keys(STEP1_FIELDS).forEach(id => {
+    const box = $('err-' + id);
+    if (box && box.classList.contains('show') && !step1FieldError(id)) paintStep1Field(id);
+  });
+  const btn = $('btn-step1');
+  if (btn) btn.disabled = !step1Valid();
+}
+
+function initStep1Validation() {
+  Object.keys(STEP1_FIELDS).forEach(id => {
+    const el = $('inp-' + id);
+    if (!el) return;
+    el.addEventListener('input', refreshStep1State);
+    el.addEventListener('blur', () => paintStep1Field(id));
+  });
+  refreshStep1State();
+}
+
 function goStep2() {
-  const name = $('inp-name').value.trim();
-  const pos = $('inp-pos').value.trim();
-  const jshir = $('inp-jshir').value.trim();
-  const phone = $('inp-phone').value.trim();
-  if (!name || !pos || !jshir || !phone) { toast(t('errFill'), 'var(--red)'); return; }
-  if (jshir.length !== 14) { toast(t('errJshir'), 'var(--amber)'); return; }
-  S.userName = name; S.userPos = pos; S.userJshir = jshir; S.userPhone = phone;
+  if (!step1Valid()) {
+    Object.keys(STEP1_FIELDS).forEach(paintStep1Field);
+    toast(t('errFill'), 'var(--red)');
+    return;
+  }
+  S.userName = $('inp-name').value.trim();
+  S.userPos = $('inp-pos').value.trim();
+  S.userJshir = $('inp-jshir').value.trim();
+  S.userPhone = $('inp-phone').value.trim();
   showStep(2);
 }
 function goStep3() { stopCamera(); showStep(3); }
@@ -2644,6 +2705,7 @@ function initTestBanner() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initTestBanner();
+  initStep1Validation();
   // Sahifani DARHOL ko'rsatamiz — Supabase yuklanishini kutmaymiz.
   // Ma'lumotlar orqa fonda yuklanadi: foydalanuvchi forma to'ldirish paytida
   // savollar allaqachon tayyor bo'ladi.

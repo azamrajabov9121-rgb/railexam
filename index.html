@@ -193,17 +193,23 @@
           <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;" id="txt-register-title">Ro'yxatdan
             o'tish</h2>
         </div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;" id="stepBar"></div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:26px;" id="stepBar"></div>
       </div>
       <!-- STEP 1 -->
       <div id="step1" class="card">
         <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;font-size:16px;">1. Shaxsiy
           ma'lumotlar</h3>
         <div style="display:flex;flex-direction:column;gap:13px;">
-          <div><label class="lbl" id="lbl-name">F.I.Sh (To'liq ism)</label><input class="inp" id="inp-name"
-              placeholder="Karimov Jasur Alievich" type="text" autocomplete="name" /></div>
-          <div><label class="lbl" id="lbl-pos">Lavozim</label><input class="inp" id="inp-pos"
-              placeholder="Lokomotiv haydovchisi" type="text" /></div>
+          <div>
+            <label class="lbl" id="lbl-name">F.I.Sh (To'liq ism)</label>
+            <input class="inp" id="inp-name" placeholder="Karimov Jasur Alievich" type="text" autocomplete="name" />
+            <div class="field-err" id="err-name"></div>
+          </div>
+          <div>
+            <label class="lbl" id="lbl-pos">Lavozim</label>
+            <input class="inp" id="inp-pos" placeholder="Lokomotiv haydovchisi" type="text" />
+            <div class="field-err" id="err-pos"></div>
+          </div>
           <div>
             <label class="lbl" id="lbl-jshir">JSHSHIR (14 raqam)</label>
             <div class="jshir-wrap">
@@ -213,10 +219,14 @@
                 style="letter-spacing:2px;padding-right:56px;" />
               <span class="jshir-counter" id="jshir-cnt">0/14</span>
             </div>
+            <div class="field-err" id="err-jshir"></div>
           </div>
-          <div><label class="lbl" id="lbl-phone">Telefon</label><input class="inp" id="inp-phone"
-              placeholder="+998 90 123 45 67" type="tel" autocomplete="tel" /></div>
-          <button class="btn btn-primary" onclick="goStep2()" style="width:100%;margin-top:3px;"><span
+          <div>
+            <label class="lbl" id="lbl-phone">Telefon</label>
+            <input class="inp" id="inp-phone" placeholder="+998 90 123 45 67" type="tel" autocomplete="tel" />
+            <div class="field-err" id="err-phone"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-step1" onclick="goStep2()" style="width:100%;margin-top:3px;"><span
               id="txt-continue">Davom etish</span> →</button>
         </div>
       </div>
@@ -538,9 +548,7 @@
       <button class="btn btn-red" onclick="closeModal('tabModal')" style="width:100%;">Imtihonga qaytish</button>
     </div>
   </div>
-  <div id="toast"
-    style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e3a5f;border:1px solid var(--border2);color:white;padding:11px 18px;border-radius:11px;font-size:14px;z-index:9000;opacity:0;transition:opacity .3s;pointer-events:none;max-width:88vw;text-align:center;">
-  </div>
+  <div id="toast"></div>
 
   <div id="testBanner" class="test-banner" hidden>
     <span>🚧 Sayt test rejimida — ayrim funksiyalar vaqtincha cheklangan bo‘lishi mumkin.</span>

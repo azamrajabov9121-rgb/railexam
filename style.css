@@ -117,6 +117,12 @@ body {
 .btn-red:hover { background: #b91c1c; }
 .btn-sm { padding: var(--sp-2) var(--sp-4); font-size: 13px; border-radius: var(--r-sm); }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+/* Asosiy tugma faol emas — "hali tayyor emas" degan signal beradi */
+.btn-primary:disabled {
+  opacity: 1; background: var(--surface2); color: var(--text3);
+  border: 1px solid var(--border); box-shadow: none;
+}
+.btn-primary:disabled::after { display: none; }
 
 /* Ikkilamchi ("arvoh") tugma — e'tiborni markazdan tortmaydi */
 .ghost-btn {
@@ -146,9 +152,34 @@ body {
   border-radius: var(--r-md); padding: var(--sp-3) var(--sp-4); color: var(--text);
   font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: all .25s;
 }
-.inp:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(30, 111, 192, .15); }
+.inp:focus { border-color: var(--blue2); box-shadow: 0 0 0 3px rgba(59, 130, 246, .16), 0 0 12px rgba(59, 130, 246, .28); }
 .inp::placeholder { color: var(--text3); }
 select.inp option { background: #0f1e35; }
+
+/* Brauzer avtoto'ldirganda o'z oq fonini majburlaydi — uni qaytaramiz */
+.inp:-webkit-autofill,
+.inp:-webkit-autofill:hover,
+.inp:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px #16233a inset;
+  caret-color: var(--text);
+  transition: background-color 9999s ease-in-out 0s;
+}
+[data-theme="light"] .inp:-webkit-autofill,
+[data-theme="light"] .inp:-webkit-autofill:hover,
+[data-theme="light"] .inp:-webkit-autofill:focus {
+  -webkit-text-fill-color: #020617;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+}
+
+/* Xato holati — maydon o'zida ko'rsatiladi */
+.inp.err { border-color: rgba(239, 68, 68, .75); }
+.inp.err:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(239, 68, 68, .16); }
+.field-err {
+  display: none; align-items: center; gap: 5px;
+  margin-top: 6px; font-size: 12px; color: #f87171;
+}
+.field-err.show { display: flex; }
 
 label.lbl { display: block; color: var(--text3); font-size: 13px; margin-bottom: var(--sp-2); font-weight: 500; }
 
@@ -163,6 +194,21 @@ label.lbl { display: block; color: var(--text3); font-size: 13px; margin-bottom:
   background: linear-gradient(90deg, transparent, rgba(96, 165, 250, .55), transparent);
 }
 .card:hover { border-color: var(--border2); box-shadow: 0 12px 32px rgba(2, 8, 23, .35); }
+
+/* ===== TOAST (bildirishnoma) — o'ng yuqorida, kontentga xalaqit bermaydi ===== */
+#toast {
+  position: fixed; top: 0; right: var(--sp-6); z-index: 9000;
+  max-width: min(380px, 88vw); padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md); border: 1px solid var(--border2);
+  background: rgba(15, 23, 42, .92); color: #fff; font-size: 14px;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 32px rgba(2, 8, 23, .5);
+  opacity: 0; pointer-events: none;
+  transform: translateY(-14px);
+  transition: opacity .28s ease, transform .28s ease;
+}
+#toast.show { opacity: 1; transform: translateY(var(--sp-6)); }
+body.has-banner #toast.show { transform: translateY(calc(var(--banner-h) + var(--sp-3))); }
 
 /* ===== PROGRESS BAR ===== */
 .pbar { height: 6px; background: var(--surface2); border-radius: var(--r-sm); overflow: hidden; }
