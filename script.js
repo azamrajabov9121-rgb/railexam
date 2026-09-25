@@ -270,7 +270,7 @@ window.S = {
   examQuestions: [],
   answers: {},
   currentQ: 0,
-  timeLeft: 36 * 60,
+  timeLeft: 40 * 60,
   timerInterval: null,
   tabSwitches: 0,
   startTime: null,
@@ -459,10 +459,18 @@ function initRegister() {
   $('txt-dir-desc').textContent = t('dirD');
   $('txt-start-btn').textContent = t('cont');
   $('txt-continue').textContent = t('cont');
-  refreshStep1State();
+
+  // Yangi ro'yxat = yangi xodim. Oldingi xodimdan hech narsa qolmasligi kerak:
+  // uning surati keyingisi kamerani o'tkazib yuborsa, natijasiga yopishib qolardi.
+  S.userName = ''; S.userPos = ''; S.userJshir = ''; S.userPhone = ''; S.userPhoto = '';
   S.direction = ''; S.subDirection = ''; S.toifa = '';
-  ['inp-name', 'inp-pos', 'inp-jshir', 'inp-phone'].forEach(id => { const el = $(id); if (el) el.value = ''; });
+  ['inp-name', 'inp-pos', 'inp-jshir', 'inp-phone'].forEach(id => {
+    const el = $(id); if (el) { el.value = ''; el.classList.remove('err'); }
+    const box = $('err-' + id.replace('inp-', ''));
+    if (box) { box.innerHTML = ''; box.classList.remove('show'); }
+  });
   const jc = $('jshir-cnt'); if (jc) jc.textContent = '0/14';
+  refreshStep1State();   // maydonlar tozalangandan KEYIN — aks holda tugma faol qolardi
 
   // Translate "Ortga" buttons dynamically
   document.querySelectorAll('button').forEach(btn => {
@@ -487,6 +495,7 @@ function showStep(n) {
   });
   updateStepBar(n);
   if (n === 2) initCamera();
+  else stopCamera();   // kamera qadamidan chiqilganda (masalan "Ortga") kamera o'chsin
   if (n === 4) initSubDirList();
 }
 function updateStepBar(a) {
@@ -613,6 +622,8 @@ function selectToifa(btn, toifa) {
 // ===== KAMERA (MOBIL FIX) =====
 let camStream = null;
 function initCamera() {
+  stopCamera();       // oldingi oqim yopilmasa kamera band bo'lib, chirog'i yonib qoladi
+  S.userPhoto = '';   // ekranda jonli kamera ko'rinadi — xotirada eski surat qolmasin
   $('btn-capture').disabled = true;
   $('btn-capture').style.display = 'flex';
   $('btn-retake').style.display = 'none';
@@ -775,7 +786,7 @@ async function startExam() {
 
   S.answers = {};
   S.currentQ = 0;
-  S.timeLeft = 36 * 60;
+  S.timeLeft = 40 * 60;
   S.tabSwitches = 0;
   S.startTime = Date.now();
   S.examDone = false;
@@ -793,16 +804,20 @@ async function startExam() {
 async function translateInBackground() {
   const SEP = ' ||||| ';
   const BATCH = 10; // 10 matn = 2 ta savol
-  const total = S.examQuestions.length * 5;
+  // Qaysi imtihon uchun ishlayotganimizni eslab qolamiz: agar bu orada boshqa
+  // xodim yangi imtihon boshlasa, eski tarjima uning savollariga yozilmasligi kerak.
+  const qs = S.examQuestions;
+  const stale = () => S.examDone || S.examQuestions !== qs;
+  const total = qs.length * 5;
 
   for (let i = 0; i < total; i += BATCH) {
-    if (S.examDone) break; // Imtihon tugagan bo'lsa to'xtatish
+    if (stale()) break;
 
     const batch = [];
     for (let j = i; j < Math.min(i + BATCH, total); j++) {
       const qIdx = Math.floor(j / 5);
       const fIdx = j % 5;
-      const q = S.examQuestions[qIdx];
+      const q = qs[qIdx];
       if (!q) { batch.push(''); continue; }
       if (fIdx === 0) batch.push(q.q || '');
       else batch.push(q.opts[['A', 'B', 'C', 'D'][fIdx - 1]] || '');
@@ -815,21 +830,24 @@ async function translateInBackground() {
       const joined = data[0].map(x => x[0]).join('');
       const parts = joined.split(/\s*\|\|\|\|\|\s*/);
 
+      // Tarmoqni kutgan paytda imtihon almashgan bo'lishi mumkin
+      if (stale()) break;
+
       // Tarjimani savollarga joylashtirish
       for (let j = 0; j < batch.length; j++) {
         const globalIdx = i + j;
         const qIdx = Math.floor(globalIdx / 5);
         const fIdx = globalIdx % 5;
-        if (!S.examQuestions[qIdx]) continue;
+        if (!qs[qIdx]) continue;
         const txt = parts[j] || batch[j];
-        if (fIdx === 0) S.examQuestions[qIdx].q = txt;
-        else S.examQuestions[qIdx].opts[['A', 'B', 'C', 'D'][fIdx - 1]] = txt;
+        if (fIdx === 0) qs[qIdx].q = txt;
+        else qs[qIdx].opts[['A', 'B', 'C', 'D'][fIdx - 1]] = txt;
       }
 
       // Hozirgi savol tarjima qilingan bo'lsa — ekranni yangilash
       const bStart = Math.floor(i / 5);
       const bEnd = Math.floor((i + BATCH - 1) / 5);
-      if (!S.examDone && S.currentQ >= bStart && S.currentQ <= bEnd) {
+      if (!stale() && S.currentQ >= bStart && S.currentQ <= bEnd) {
         renderQ();
       }
     } catch (e) {
@@ -840,35 +858,29 @@ async function translateInBackground() {
 
 
 // ===== IMTIHON =====
-function initExam() {
-  $('txt-prev').textContent = t('prev');
-  $('txt-next').textContent = t('next');
-  $('txt-fin2').textContent = t('fin2');
-  $('txt-finish-mid').textContent = t('finish');
-  $('txt-ans-given').textContent = t('ansgiven');
-  $('txt-finish-q').textContent = t('finQ');
-  $('txt-cancel-btn').textContent = t('cancel');
-  $('txt-yes-finish').textContent = t('yesF');
+function setText(id, text) { const el = $(id); if (el) el.textContent = text; }
 
-  // Translate tab switcher warnings inside modal
+function initExam() {
+  // Avval imtihonning o'zi: savol, navigatsiya va taymer. Yorliqlar keyin —
+  // bitta yorliq topilmasa ham imtihon to'xtab qolmasligi kerak.
+  buildQNav();
+  renderQ();
+  startTimer();
+  document.addEventListener('visibilitychange', handleTabSwitch);
+
+  // "Keyingisi" tugmasini renderQ o'zi to'liq chizadi (txt-next ichida)
+  setText('txt-prev', t('prev'));
+  setText('txt-fin2', t('fin2'));
+  setText('txt-finish-mid', t('finish'));
+  setText('txt-ans-given', t('ansgiven'));
+  setText('txt-finish-q', t('finQ'));
+  setText('txt-cancel-btn', t('cancel'));
+  setText('txt-yes-finish', t('yesF'));
+
   const tabDesc = document.querySelector('#tabModal p');
   if (tabDesc) tabDesc.textContent = t('tabDesc');
   const tabBtn = document.querySelector('#tabModal button');
   if (tabBtn) tabBtn.textContent = t('tabBtn');
-
-  buildQNav();
-
-  // 🔥 Birinchi savolni ko'rsatish - majburiy render
-  renderQ();
-
-  // Qo'shimcha xavfsizlik uchun
-  setTimeout(() => {
-    renderQ();
-  }, 50);
-
-  startTimer();
-
-  document.addEventListener('visibilitychange', handleTabSwitch);
 }
 
 
@@ -939,7 +951,11 @@ function renderQ() {
     `).join('');
 
   $('btn-prev').disabled = S.currentQ === 0;
-  $('btn-next').innerHTML = S.currentQ === total - 1 ? icon('flag') : (t('next') + ' →');
+  // Tugma ichi to'liq qayta yoziladi — txt-next har safar qayta yaratiladi,
+  // aks holda keyingi xodimning imtihoni boshlanishida u topilmay qolardi.
+  $('btn-next').innerHTML = S.currentQ === total - 1
+    ? icon('flag')
+    : `<span id="txt-next">${t('next')}</span> →`;
 
   const hint = $('exam-kbd-hint'); if (hint) hint.textContent = t('examHint');
 
@@ -970,7 +986,11 @@ function selectAnswer(k) {
   S.answers[S.currentQ] = k;
   renderQ();
 
+  // Kutish davomida imtihon tugagan, almashgan yoki xodim o'zi boshqa savolga
+  // o'tgan bo'lsa — avtomatik o'tish bekor qilinadi
+  const qs = S.examQuestions, at = S.currentQ;
   setTimeout(() => {
+    if (S.examDone || S.examQuestions !== qs || S.currentQ !== at) return;
     if (S.currentQ < S.examQuestions.length - 1) nextQ();
   }, 380);
 }
@@ -1068,8 +1088,12 @@ function showFinishModal() {
   $('finishModal').style.display = 'flex';
 }
 async function submitExam() {
-  closeModal('finishModal'); clearInterval(S.timerInterval);
-  S.examDone = true; document.removeEventListener('visibilitychange', handleTabSwitch);
+  // Ikki marta bosish yoki taymer bilan bir vaqtda — natija ikki marta saqlanmasin
+  if (S.examDone) return;
+  S.examDone = true;
+  closeModal('finishModal');
+  clearInterval(S.timerInterval); S.timerInterval = null;
+  document.removeEventListener('visibilitychange', handleTabSwitch);
   let correct = 0;
   const detailed = S.examQuestions.map((q, i) => {
     const ua = S.answers[i] || null; const ok = ua === q.correctMapped; if (ok) correct++;
@@ -2767,6 +2791,7 @@ function renderPhase2Exam(questions, visualNum) {
   `).join('');
 
   S.phase2TimeLeft = 40 * 60; // 40 minutes
+  S.phase2Done = false;
   startPhase2Timer();
   showPage('pg-phase2-exam');
 }
@@ -2795,7 +2820,10 @@ function startPhase2Timer() {
 }
 
 function submitPhase2() {
-  if (S.phase2TimerInterval) clearInterval(S.phase2TimerInterval);
+  // Ikki marta bosish yoki taymer bilan bir vaqtda — natija ikki marta yozilmasin
+  if (S.phase2Done) return;
+  S.phase2Done = true;
+  if (S.phase2TimerInterval) { clearInterval(S.phase2TimerInterval); S.phase2TimerInterval = null; }
 
   const envQuestions = S.phase2Questions.filter(q =>
     q.env === S.phase2EnvelopeIndex && q.dept === S.direction && q.dir === S.subDirection);
