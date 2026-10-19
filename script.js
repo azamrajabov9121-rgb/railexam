@@ -1104,10 +1104,8 @@ async function submitExam() {
   const randomUserId = Math.floor(100000 + Math.random() * 900000);
   const r = { id: Date.now(), userId: randomUserId, name: S.userName, pos: S.userPos, jshir: S.userJshir, phone: S.userPhone, photo: S.userPhoto, dir: S.direction, sub: S.subDirection, lang: S.lang, total, correct, wrong: total - correct, pct, passed, tabs: S.tabSwitches, duration: elapsed, date: new Date().toLocaleString('uz-UZ'), detailed };
 
-  // LocalStorage ga saqlash
   S.results.unshift(r);
   if (S.results.length > 300) S.results = S.results.slice(0, 300);
-  localStorage.setItem('re_results', JSON.stringify(S.results));
 
   // Supabase ga saqlash asinxron (kutib turilmaydi)
   if (window.saveExamResultToSupabase) {
@@ -1122,8 +1120,22 @@ async function submitExam() {
     });
   }
 
+  cacheResultsLocally();
   syncResultsToFile();
   showResult(r);
+}
+
+// re_results — faqat zaxira nusxa. S.results Supabase dan suratlari (base64) bilan
+// keladi; ularni to'liq yozish brauzerning ~5 MB limitidan oshib QuotaExceededError
+// otardi va submitExam yarim yo'lda to'xtardi: natija bazaga yuborilmas, natija
+// sahifasi ochilmas, "Tugatish" esa qayta bosilganda ishlamasdi (examDone allaqachon true).
+function cacheResultsLocally() {
+  try {
+    const lean = S.results.slice(0, 300).map(({ photo, detailed, ...rest }) => rest);
+    localStorage.setItem('re_results', JSON.stringify(lean));
+  } catch (e) {
+    console.warn('⚠️ Natijalar localStorage ga sig\'madi:', e);
+  }
 }
 
 // ===== NATIJA =====
@@ -2006,7 +2018,7 @@ async function deleteResult(id) {
   if (confirm("Ushbu natijani o'chirishni xohlaysizmi?")) {
     // LocalStorage dan o'chirish
     S.results = S.results.filter(r => r.id !== id);
-    localStorage.setItem('re_results', JSON.stringify(S.results));
+    cacheResultsLocally();
 
     // Supabase dan o'chirish
     if (window.deleteResultFromSupabase) {
@@ -2842,7 +2854,11 @@ function submitPhase2() {
   };
 
   S.phase2Results.unshift(result);
-  localStorage.setItem('re_phase2_results', JSON.stringify(S.phase2Results));
+  try {
+    localStorage.setItem('re_phase2_results', JSON.stringify(S.phase2Results));
+  } catch (e) {
+    console.warn('⚠️ 2-bosqich natijalari localStorage ga sig\'madi:', e);
+  }
 
   showPage('pg-phase2-finish');
 }
