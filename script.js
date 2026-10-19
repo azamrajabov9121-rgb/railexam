@@ -1087,6 +1087,27 @@ function showFinishModal() {
   $('unanswered-warn').innerHTML = warnMsg;
   $('finishModal').style.display = 'flex';
 }
+// localStorage ~5MB bilan cheklangan. Har bir natijada rasm (base64) va barcha
+// savollar bor, shuning uchun bir necha o'nlab imtihondan keyin joy tugaydi va
+// setItem xato tashlaydi — natija sahifasi ochilmay, "Ha, tugatish" ishlamay qolardi.
+// Joy yetmasa: avval eski natijalardan rasm va tafsilotlarni olib tashlaymiz,
+// keyin eng eski natijalarni qisqartiramiz. Natijalar baribir Supabase da saqlanadi.
+function saveResultsLocal() {
+  const trySave = list => {
+    try { localStorage.setItem('re_results', JSON.stringify(list)); return true; }
+    catch (e) { return false; }
+  };
+  if (trySave(S.results)) return;
+  let slim = S.results.map((x, i) => i === 0 ? x : { ...x, photo: '', detailed: [] });
+  if (trySave(slim)) return;
+  slim[0] = { ...slim[0], photo: '' };
+  while (slim.length > 1) {
+    slim = slim.slice(0, Math.floor(slim.length / 2));
+    if (trySave(slim)) return;
+  }
+  console.warn('⚠️ Natija localStorage ga saqlanmadi (joy yetarli emas)');
+}
+
 async function submitExam() {
   // Ikki marta bosish yoki taymer bilan bir vaqtda — natija ikki marta saqlanmasin
   if (S.examDone) return;
@@ -1107,7 +1128,7 @@ async function submitExam() {
   // LocalStorage ga saqlash
   S.results.unshift(r);
   if (S.results.length > 300) S.results = S.results.slice(0, 300);
-  localStorage.setItem('re_results', JSON.stringify(S.results));
+  saveResultsLocal();
 
   // Supabase ga saqlash asinxron (kutib turilmaydi)
   if (window.saveExamResultToSupabase) {
@@ -2006,7 +2027,7 @@ async function deleteResult(id) {
   if (confirm("Ushbu natijani o'chirishni xohlaysizmi?")) {
     // LocalStorage dan o'chirish
     S.results = S.results.filter(r => r.id !== id);
-    localStorage.setItem('re_results', JSON.stringify(S.results));
+    saveResultsLocal();
 
     // Supabase dan o'chirish
     if (window.deleteResultFromSupabase) {
