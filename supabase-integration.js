@@ -94,6 +94,7 @@ async function loadResultsFromSupabase() {
         pct: r.percentage,
         passed: r.passed,
         tabs: r.tab_switches,
+        violations: r.violations || null,
         duration: r.duration_seconds,
         date: new Date(r.exam_date).toLocaleString('uz-UZ'),
         detailed: []       // ro'yxatda kerak emas — batafsil ko'rishda yuklanadi
@@ -164,7 +165,7 @@ async function loadFullResultFromSupabase(id) {
           jshir: r.jshir, phone: r.phone, photo: r.photo,
           dir: r.direction, sub: r.sub_direction, lang: r.language, total: r.total_questions,
           correct: r.correct_answers, wrong: r.wrong_answers, pct: r.percentage,
-          passed: r.passed, tabs: r.tab_switches, duration: r.duration_seconds,
+          passed: r.passed, tabs: r.tab_switches, violations: r.violations || null, duration: r.duration_seconds,
           date: new Date(r.exam_date).toLocaleString('uz-UZ'),
           detailed: r.detailed_answers || []
         }
@@ -451,13 +452,8 @@ async function initializeSupabaseData() {
 
   }
 
-  const resultsResult = await loadResultsFromSupabase();
-  if (resultsResult.success && resultsResult.data.length > 0) {
-    window.DB_RESULTS = resultsResult.data;
-    if (window.S) {
-      window.S.results = resultsResult.data;
-    }
-  }
+  // Natijalar (barcha xodimlarning rasmlari bilan) bu yerda yuklanmaydi: imtihon
+  // topshiruvchiga ular kerak emas. Admin panel ochilganda adminTab o'zi yuklaydi.
 
   const phase2Result = await loadPhase2ResultsFromSupabase();
   if (phase2Result.success && phase2Result.data) {

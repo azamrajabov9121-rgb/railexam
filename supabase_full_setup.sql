@@ -56,8 +56,11 @@ CREATE TABLE IF NOT EXISTS exam_results (
   tab_switches INTEGER DEFAULT 0,
   duration_seconds INTEGER NOT NULL,
   exam_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  detailed_answers JSONB
+  detailed_answers JSONB,
+  violations JSONB
 );
+-- Qoidabuzarliklar jurnali (har bir chiqish: vaqti, davomiyligi, savoli). Mavjud bazaga qo'shish uchun:
+ALTER TABLE exam_results ADD COLUMN IF NOT EXISTS violations JSONB;
 CREATE INDEX IF NOT EXISTS idx_exam_results_user_id ON exam_results(user_id);
 CREATE INDEX IF NOT EXISTS idx_exam_results_direction ON exam_results(direction);
 CREATE INDEX IF NOT EXISTS idx_exam_results_passed ON exam_results(passed);

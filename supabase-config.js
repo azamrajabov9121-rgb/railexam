@@ -24,6 +24,12 @@ if (!window.supabaseClient && window.supabase) {
 // Database Helper Functions
 // ============================================================
 
+// exam_results.violations ustuni (qoidabuzarliklar jurnali) bazaga hali qo'shilmagan bo'lsa
+// Supabase shu ustun nomi bilan xato qaytaradi — bunday holda ustunsiz ishlaymiz
+function isMissingViolationsColumn(error) {
+  return /violations/i.test((error && (error.message || error.details)) || '');
+}
+
 const DB = {
   // ===== USERS =====
   async createUser(userData) {
@@ -177,29 +183,34 @@ const DB = {
   // ===== EXAM RESULTS =====
   async createExamResult(resultData) {
     try {
-      const { data, error } = await window.supabaseClient
-        .from('exam_results')
-        .insert([{
-          user_id: resultData.user_id || null,
-          name: resultData.name,
-          position: resultData.pos,
-          jshir: resultData.jshir,
-          phone: resultData.phone,
-          photo: resultData.photo || null,
-          direction: resultData.dir,
-          sub_direction: resultData.sub || null,
-          language: resultData.lang || 'uz',
-          total_questions: resultData.total,
-          correct_answers: resultData.correct,
-          wrong_answers: resultData.wrong,
-          percentage: resultData.pct,
-          passed: resultData.passed,
-          tab_switches: resultData.tabs || 0,
-          duration_seconds: resultData.duration,
-          detailed_answers: resultData.detailed || []
-        }])
-        .select()
-        .single();
+      const row = {
+        user_id: resultData.user_id || null,
+        name: resultData.name,
+        position: resultData.pos,
+        jshir: resultData.jshir,
+        phone: resultData.phone,
+        photo: resultData.photo || null,
+        direction: resultData.dir,
+        sub_direction: resultData.sub || null,
+        language: resultData.lang || 'uz',
+        total_questions: resultData.total,
+        correct_answers: resultData.correct,
+        wrong_answers: resultData.wrong,
+        percentage: resultData.pct,
+        passed: resultData.passed,
+        tab_switches: resultData.tabs || 0,
+        duration_seconds: resultData.duration,
+        detailed_answers: resultData.detailed || [],
+        violations: resultData.violations || null
+      };
+      const insert = r => window.supabaseClient.from('exam_results').insert([r]).select().single();
+      let { data, error } = await insert(row);
+      // Bazaga "violations" ustuni hali qo'shilmagan bo'lsa ham natija yo'qolmasin
+      if (error && isMissingViolationsColumn(error)) {
+        console.warn("⚠️ exam_results.violations ustuni yo'q — qoidabuzarliklar jurnali saqlanmadi. SQL ni ishga tushiring.");
+        delete row.violations;
+        ({ data, error } = await insert(row));
+      }
 
       if (error) throw error;
       return { success: true, data };
@@ -211,15 +222,21 @@ const DB = {
 
   async getAllResults() {
     try {
-      const allData = [];
+      let allData = [];
       const pageSize = 1000;
       let from = 0;
+      let withViolations = true;
       while (true) {
         const { data, error } = await window.supabaseClient
           .from('exam_results')
-          .select('id, user_id, name, position, jshir, phone, photo, direction, sub_direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date')
+          .select('id, user_id, name, position, jshir, phone, photo, direction, sub_direction, language, total_questions, correct_answers, wrong_answers, percentage, passed, tab_switches, duration_seconds, exam_date' + (withViolations ? ', violations' : ''))
           .order('exam_date', { ascending: false })
           .range(from, from + pageSize - 1);
+        if (error && withViolations && isMissingViolationsColumn(error)) {
+          // Ustun hali qo'shilmagan — eski ko'rinishda boshidan yuklaymiz
+          withViolations = false; allData = []; from = 0;
+          continue;
+        }
         if (error) throw error;
         if (!data || data.length === 0) break;
         allData.push(...data);

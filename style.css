@@ -710,3 +710,13 @@ body.has-banner .exam-topbar { top: var(--banner-h); }
   0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
   100% { transform: translate(var(--dx, 0), 105vh) rotate(var(--rot, 480deg)); opacity: 0; }
 }
+
+/* ===== IMTIHON HIMOYASI ===== */
+/* Imtihon paytida savol matnini belgilab nusxalab bo'lmaydi */
+body.exam-locked #pg-exam { -webkit-user-select: none; user-select: none; }
+#fs-banner {
+  align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap;
+  margin-bottom: 14px; padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md);
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.45);
+  color: var(--text); font-size: 13px;
+}

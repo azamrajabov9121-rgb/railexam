@@ -230,7 +230,7 @@ const L = {
   uz: {
     lang: "O'zbek tili", flag: "🇺🇿", sub: "Lotin", back: "Tilni o'zgartirish", reg: "Ro'yxatdan o'tish", name: "F.I.Sh (To'liq ism)", pos: "Lavozim", jshir: "JSHSHIR (14 raqam)", phone: "Telefon", camT: "Kamera", camD: "Imtihon uchun rasm oling", capture: "Rasm olish", retakeCam: "Qayta", camOk: "Tasdiqlash", skipCam: "Kamerasiz davom etish →", dirT: "Yo'nalishni tanlang", dirD: "Imtihon yo'nalishini belgilang", start: "Imtihonni boshlash", cont: "Davom etish", prev: "Oldingi", next: "Keyingisi", finish: "Tugatish", fin2: "Imtihonni tugatish", ansgiven: "javob", finQ: "Imtihonni tugatishni tasdiqlaysizmi?", cancel: "Bekor qilish", yesF: "Ha, tugatish", retake: "Qayta topshirish", home: "Bosh sahifa", tabW: "Boshqa tabga o'tdingiz! Bu qayd etildi.", passed: "O'TDINGIZ!", failed: "YIQILDINGIZ", passedMsg: "Tabriklaymiz! Imtihondan muvaffaqiyatli o'tdingiz.", failedMsg: "Afsuski, o'ta olmadingiz. Qayta urinib ko'ring.", correct: "To'g'ri javoblar", wrong: "Noto'g'ri javoblar", total: "Jami savollar", passScore: "O'tish bali: 71%",
     errFill: "Barcha maydonlarni to'ldiring!", errJshir: "JSHSHIR 14 ta raqam bo'lishi kerak!", errDir: "Yo'nalishni tanlang!", errSub: "Mutaxassislikni tanlang!", errToifa: "Toifani tanlang (3-toifa yoki 4-toifa)!", errNoQ: "Bu yo'nalish uchun hali savollar qo'shilmagan!",
-    tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
+    tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", saveSaving: "Natija bazaga yuborilmoqda...", saveOk: "Natija bazaga saqlandi", saveFail: "Natija bazaga yuborilmadi. U shu kompyuterda saqlab qo'yildi va sayt qayta ochilganda avtomatik yuboriladi. Iltimos, mas'ul xodimga xabar bering.", saveLost: "Natija bazaga yuborilmadi. Sahifani yopmang va mas'ul xodimni chaqiring.", saveRetry: "Qayta yuborish", fsOff: "Imtihon to'liq ekran rejimida o'tkaziladi. Chiqish qayd etiladi.", fsBack: "To'liq ekranga o'tish", blocked: "Bu amal imtihon paytida taqiqlangan va qayd etildi", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
     detailTitle: "Savol-javoblar", yourAnsLbl: "Siz:", corrAnsLbl: "To'g'ri:",
     langHint: "Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin",
     examHint: "Klaviatura: A–D javobni belgilaydi, ← → savollar orasida yuradi",
@@ -239,7 +239,7 @@ const L = {
   uzb: {
     lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ!", failed: "ЙИҚИЛДИНГИЗ", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
     errFill: "Барча майдонларни тўлдиринг!", errJshir: "ЖШШИР 14 та рақам бўлиши керак!", errDir: "Йўналишни танланг!", errSub: "Мутахассисликни танланг!", errToifa: "Тоифани танланг (3-тоифа ёки 4-тоифа)!", errNoQ: "Бу йўналиш учун ҳали саволлар қўшилмаган!",
-    tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
+    tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", saveSaving: "Натижа базага юборилмоқда...", saveOk: "Натижа базага сақланди", saveFail: "Натижа базага юборилмади. У шу компьютерда сақлаб қўйилди ва сайт қайта очилганда автоматик юборилади. Илтимос, масъул ходимга хабар беринг.", saveLost: "Натижа базага юборилмади. Саҳифани ёпманг ва масъул ходимни чақиринг.", saveRetry: "Қайта юбориш", fsOff: "Имтиҳон тўлиқ экран режимида ўтказилади. Чиқиш қайд этилади.", fsBack: "Тўлиқ экранга ўтиш", blocked: "Бу амал имтиҳон пайтида тақиқланган ва қайд этилди", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
     detailTitle: "Савол-жавоблар", yourAnsLbl: "Сиз:", corrAnsLbl: "Тўғри:",
     langHint: "Маслаҳат: тилни 1–3 рақамлари билан танлаб, Enter босишингиз мумкин",
     examHint: "Клавиатура: A–D жавобни белгилайди, ← → саволлар орасида юради",
@@ -248,7 +248,7 @@ const L = {
   ru: {
     lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ!", failed: "НЕ СДАЛИ", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
     errFill: "Заполните все поля!", errJshir: "ПИНФЛ должен состоять из 14 цифр!", errDir: "Выберите направление!", errSub: "Выберите специальность!", errToifa: "Выберите категорию (3-я или 4-я категория)!", errNoQ: "Для этого направления вопросы еще не добавлены!",
-    tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
+    tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", saveSaving: "Результат отправляется в базу...", saveOk: "Результат сохранён в базе", saveFail: "Результат не отправлен в базу. Он сохранён на этом компьютере и будет отправлен автоматически при следующем открытии сайта. Пожалуйста, сообщите ответственному сотруднику.", saveLost: "Результат не отправлен в базу. Не закрывайте страницу и позовите ответственного сотрудника.", saveRetry: "Отправить снова", fsOff: "Экзамен проходит в полноэкранном режиме. Выход фиксируется.", fsBack: "Включить полноэкранный режим", blocked: "Это действие запрещено во время экзамена и зафиксировано", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
     detailTitle: "Вопросы и ответы", yourAnsLbl: "Вы:", corrAnsLbl: "Правильно:",
     langHint: "Подсказка: язык можно выбрать клавишами 1–3 и нажать Enter",
     examHint: "Клавиатура: A–D выбирает ответ, ← → переход между вопросами",
@@ -273,9 +273,13 @@ window.S = {
   timeLeft: 40 * 60,
   timerInterval: null,
   tabSwitches: 0,
+  violations: null,
   startTime: null,
   examDone: false,
-  results: (window.DB_RESULTS && window.DB_RESULTS.length ? window.DB_RESULTS : []),
+  // Natijalar faqat Supabase'dan olinadi. results.js dagi eski sinov yozuvlari
+  // admin panelda haqiqiy natijalar o'rnida ko'rinib qolardi.
+  results: [],
+  resultsLoaded: false,
   questions: (window.DB_QUESTIONS && window.DB_QUESTIONS.length ? window.DB_QUESTIONS : []),
   phase2Questions: [],
   phase2Results: JSON.parse(localStorage.getItem('re_phase2_results') || '[]'),
@@ -283,7 +287,7 @@ window.S = {
   phase2EnvelopeIndex: null,
   phase2TimeLeft: 40 * 60,
   phase2TimerInterval: null,
-  adminSection: 'dash', charts: {}, filterDir: '', filterDept: '', filterStatus: '', qPage: 1, qFilterDir: '',
+  adminSection: 'dash', charts: {}, filterDir: '', filterDept: '', filterStatus: '', filterViol: '', qPage: 1, qFilterDir: '',
   phase2ResultsList: [], p2FilterDept: '', p2FilterStatus: ''
 };
 let S = window.S;
@@ -291,6 +295,9 @@ let S = window.S;
 // 2-bosqich savollari faqat Supabase'dan olinadi. Eski brauzerlarda qolgan nusxa
 // Supabase'dagi savollar bilan qo'shilib, har biletda savol sonini ikkilantirardi.
 localStorage.removeItem('re_phase2_questions');
+// Eski versiya barcha natijalarni (rasmlari bilan) brauzer xotirasiga yozardi. Xotira
+// to'lgach imtihonni tugatish tugmasi ishlamay qolardi — o'sha eski nusxa tozalanadi.
+localStorage.removeItem('re_results');
 
 // ===== THEME INIT =====
 const savedTheme = localStorage.getItem('re_theme');
@@ -335,6 +342,8 @@ function showPage(id) {
   const p = $(id);
   if (p) p.classList.add('active');
   window.scrollTo(0, 0);
+  // Imtihon sahifasidan har qanday yo'l bilan chiqilganda kuzatuv to'xtaydi
+  if (id !== 'pg-exam') stopExamGuard();
   if (id !== 'pg-exam' && id !== 'pg-phase2-exam' && id !== 'pg-result' && id !== 'pg-phase2-finish' && id !== 'pg-phase2-envelopes') {
     localStorage.setItem('re_current_page', id);
   }
@@ -712,8 +721,8 @@ async function startExam() {
   }
 
   // ===== ESKI IMTIHON QOLDIQLARINI TOZALASH =====
-  // Eski event listener olib tashlanadi
-  document.removeEventListener('visibilitychange', handleTabSwitch);
+  // Oldingi imtihon kuzatuvi (listenerlar, to'liq ekran) to'xtatiladi
+  stopExamGuard();
   // Eski taymer to'xtatiladi
   if (S.timerInterval) { clearInterval(S.timerInterval); S.timerInterval = null; }
   // Tab ogohlantirish yashiriladi
@@ -866,7 +875,7 @@ function initExam() {
   buildQNav();
   renderQ();
   startTimer();
-  document.addEventListener('visibilitychange', handleTabSwitch);
+  startExamGuard();
 
   // "Keyingisi" tugmasini renderQ o'zi to'liq chizadi (txt-next ichida)
   setText('txt-prev', t('prev'));
@@ -1064,14 +1073,243 @@ function updateTimer() {
   }
 }
 // ===== ANTI-CHEAT =====
-function handleTabSwitch() {
-  if (document.hidden && !S.examDone) {
+// Har bir chiqish alohida yoziladi: turi, imtihon boshidan necha soniyada bo'lgani (s),
+// davomiyligi (d) va qaysi savolda bo'lgani (q). Admin faqat sonni emas, to'liq
+// manzarani ko'radi. 2 soniyadan qisqa chiqishlar "qisqa" deb belgilanadi — tizim
+// bildirishnomasi kabi tasodifiy holatlar xodimga qarshi ishlatilmasin.
+const SHORT_AWAY_SEC = 2;
+const MAX_VIOLATION_EVENTS = 200;
+let guardActive = false, awayEvent = null, fsEvent = null, fsWasActive = false, lastBlocked = {};
+
+function examSec() { return Math.round((Date.now() - S.startTime) / 100) / 10; }
+
+function pushViolation(ev) {
+  if (S.violations.events.length < MAX_VIOLATION_EVENTS) S.violations.events.push(ev);
+  else S.violations.dropped = (S.violations.dropped || 0) + 1;
+  return ev;
+}
+
+function closeViolation(ev) {
+  ev.d = Math.max(0, Math.round((examSec() - ev.s) * 10) / 10);
+  return ev;
+}
+
+// Sahifadan chiqish: boshqa tab / oynani yashirish (document.hidden) yoki brauzer oynasi
+// ko'rinib tursa ham fokus boshqa dasturda (Alt+Tab, ikkinchi monitor, ekranni bo'lish)
+function setAway(away) {
+  if (!guardActive || S.examDone) return;
+  if (away && !awayEvent) {
+    awayEvent = pushViolation({ t: document.hidden ? 'tab' : 'win', s: examSec(), q: S.currentQ + 1 });
     S.tabSwitches++;
     $('tab-warn-badge').style.display = 'flex';
     $('tab-count-txt').textContent = S.tabSwitches;
-    $('tab-modal-txt').textContent = t('tabW');
-    $('tabModal').style.display = 'flex';
+  } else if (away && awayEvent && document.hidden) {
+    awayEvent.t = 'tab'; // avval fokus ketdi, keyin tab ham yashirildi
+  } else if (!away && awayEvent) {
+    const ev = closeViolation(awayEvent);
+    awayEvent = null;
+    if (ev.d < SHORT_AWAY_SEC) {
+      ev.short = true;
+    } else {
+      $('tab-modal-txt').textContent = t('tabW');
+      $('tabModal').style.display = 'flex';
+    }
   }
+}
+function onGuardBlur() { setAway(true); }
+function onGuardFocus() { setAway(document.hidden); }
+function onGuardVisibility() { setAway(document.hidden || !document.hasFocus()); }
+
+function enterExamFullscreen() {
+  const el = document.documentElement;
+  if (!el.requestFullscreen || document.fullscreenElement) return;
+  el.requestFullscreen().catch(() => showFsBanner(true));
+}
+function showFsBanner(show) {
+  const b = $('fs-banner'); if (!b) return;
+  if (show) {
+    setText('fs-banner-txt', t('fsOff'));
+    setText('fs-banner-btn', t('fsBack'));
+  }
+  b.style.display = show ? 'flex' : 'none';
+}
+function onGuardFullscreen() {
+  if (!guardActive || S.examDone) return;
+  if (document.fullscreenElement) {
+    fsWasActive = true;
+    if (fsEvent) { closeViolation(fsEvent); fsEvent = null; }
+    showFsBanner(false);
+  } else {
+    if (fsWasActive && !fsEvent) fsEvent = pushViolation({ t: 'fs', s: examSec(), q: S.currentQ + 1 });
+    showFsBanner(true);
+  }
+}
+
+// Nusxalash, qo'yish, o'ng tugma va ba'zi tugmalar bloklanadi va urinish yoziladi
+function logBlocked(type) {
+  const now = Date.now();
+  if (now - (lastBlocked[type] || 0) < 1000) return; // tugmani bosib turish bitta urinish
+  lastBlocked[type] = now;
+  pushViolation({ t: type, s: examSec(), q: S.currentQ + 1 });
+  toast(t('blocked'), 'var(--amber)');
+}
+function onGuardBlockedEvent(e) {
+  if (!guardActive || S.examDone) return;
+  e.preventDefault();
+  logBlocked(e.type === 'contextmenu' ? 'menu' : e.type);
+}
+function onGuardKey(e) {
+  if (!guardActive || S.examDone) return;
+  const k = (e.key || '').toLowerCase(), ctrl = e.ctrlKey || e.metaKey;
+  let type = null;
+  if (k === 'printscreen') type = 'screenshot';
+  else if (k === 'f12' || (ctrl && e.shiftKey && ['i', 'j', 'c'].includes(k)) || (ctrl && k === 'u')) type = 'devtools';
+  else if (ctrl && k === 'p') type = 'print';
+  else if (ctrl && k === 's') type = 'save';
+  if (!type) return;
+  e.preventDefault();
+  logBlocked(type);
+}
+
+const GUARD_LISTENERS = [
+  [window, 'blur', onGuardBlur], [window, 'focus', onGuardFocus],
+  [document, 'visibilitychange', onGuardVisibility], [document, 'fullscreenchange', onGuardFullscreen],
+  [document, 'copy', onGuardBlockedEvent], [document, 'cut', onGuardBlockedEvent],
+  [document, 'paste', onGuardBlockedEvent], [document, 'contextmenu', onGuardBlockedEvent],
+  [document, 'keydown', onGuardKey], [document, 'keyup', onGuardKey]
+];
+
+function startExamGuard() {
+  stopExamGuard();
+  S.violations = {
+    v: 1,
+    start: new Date(S.startTime).toISOString(),
+    // Ikkinchi monitor ulanganmi (faqat Chrome/Edge biladi, boshqalarda null)
+    ext: typeof screen.isExtended === 'boolean' ? screen.isExtended : null,
+    events: []
+  };
+  awayEvent = null; fsEvent = null; lastBlocked = {};
+  fsWasActive = !!document.fullscreenElement;
+  guardActive = true;
+  GUARD_LISTENERS.forEach(([target, type, fn]) => target.addEventListener(type, fn));
+  document.body.classList.add('exam-locked');
+  enterExamFullscreen();
+}
+
+function stopExamGuard() {
+  if (!guardActive) return;
+  guardActive = false;
+  GUARD_LISTENERS.forEach(([target, type, fn]) => target.removeEventListener(type, fn));
+  // Vaqt tugaganda xodim hali tashqarida bo'lsa ham chiqish davomiyligi yoziladi
+  if (awayEvent) { const ev = closeViolation(awayEvent); if (ev.d < SHORT_AWAY_SEC) ev.short = true; awayEvent = null; }
+  if (fsEvent) { closeViolation(fsEvent); fsEvent = null; }
+  document.body.classList.remove('exam-locked');
+  showFsBanner(false);
+  if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+}
+
+// ===== QOIDABUZARLIK HISOBOTI (admin) =====
+const VIOL_LABELS = {
+  tab: "Boshqa tabga o'tdi yoki oynani yashirdi",
+  win: "Oynadan chiqdi (boshqa dastur, Alt+Tab)",
+  fs: "To'liq ekran rejimidan chiqdi",
+  copy: 'Nusxalashga urindi', cut: 'Kesib olishga urindi', paste: "Matn qo'yishga urindi",
+  menu: "O'ng tugmani bosdi", print: 'Chop etishga urindi', save: 'Sahifani saqlashga urindi',
+  screenshot: 'Ekran rasmini olishga urindi (PrintScreen)', devtools: 'Dasturchi vositalarini ochishga urindi'
+};
+const isAwayType = type => type === 'tab' || type === 'win';
+
+function fmtSec(sec) {
+  sec = Math.round(sec || 0);
+  return sec < 60 ? sec + 's' : Math.floor(sec / 60) + 'd ' + sec % 60 + 's';
+}
+
+// green — toza; amber — bir oz chiqish yoki urinish bor; red — shubhali
+function violationSummary(r) {
+  const v = r && r.violations;
+  if (!v || !Array.isArray(v.events)) {
+    // Eski natijalar: faqat chiqishlar soni saqlangan
+    const n = (r && r.tabs) || 0;
+    return { legacy: true, leaves: n, away: n, short: 0, awaySec: 0, longest: 0, fs: 0, blocked: 0, ext: null, dropped: 0, level: n >= 3 ? 'red' : n > 0 ? 'amber' : 'green' };
+  }
+  const s = { legacy: false, leaves: 0, away: 0, short: 0, awaySec: 0, longest: 0, fs: 0, blocked: 0, ext: v.ext, dropped: v.dropped || 0 };
+  v.events.forEach(e => {
+    if (isAwayType(e.t)) {
+      s.leaves++;
+      if (e.short) s.short++; else s.away++;
+      s.awaySec += e.d || 0;
+      s.longest = Math.max(s.longest, e.d || 0);
+    } else if (e.t === 'fs') s.fs++;
+    else s.blocked++;
+  });
+  s.level = (s.away >= 3 || s.awaySec >= 60) ? 'red'
+    : (s.leaves || s.fs || s.blocked || s.ext || s.dropped) ? 'amber' : 'green';
+  return s;
+}
+
+const VIOL_COLORS = { red: ['var(--red)', 'rgba(239,68,68,.12)', 'rgba(239,68,68,.35)'], amber: ['var(--amber)', 'rgba(245,158,11,.12)', 'rgba(245,158,11,.35)'] };
+
+function violationBadge(r) {
+  const s = violationSummary(r);
+  if (s.level === 'green') return s.legacy ? '<span style="color:var(--text3);">—</span>' : `<span title="Qoidabuzarlik yo'q" style="color:var(--green);">${icon('check')}</span>`;
+  const [fg, bg, bd] = VIOL_COLORS[s.level];
+  const label = s.away ? `${s.away}×${s.legacy ? '' : ' · ' + fmtSec(s.awaySec)}`
+    : s.short ? `${s.short} qisqa` : `${s.fs + s.blocked} urinish`;
+  return `<button onclick="showViolations(${r.id})" title="Batafsil" style="display:inline-flex;align-items:center;gap:4px;white-space:nowrap;font-size:11px;font-weight:700;color:${fg};background:${bg};border:1px solid ${bd};border-radius:6px;padding:3px 8px;cursor:pointer;">${icon('alert', 13)}${label}</button>`;
+}
+
+function violationClock(v, sec) {
+  const d = new Date(new Date(v.start).getTime() + sec * 1000);
+  return [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':');
+}
+
+function violationReportHTML(r) {
+  const s = violationSummary(r);
+  const v = r.violations;
+  if (s.legacy) {
+    return `<p style="font-size:12px;color:var(--text3);padding:10px 12px;background:var(--surface2);border-radius:9px;">${s.leaves ? `Sahifadan ${s.leaves} marta chiqilgan.` : "Sahifadan chiqilmagan."} Bu natija eski usulda saqlangan — vaqti va davomiyligi ma'lum emas.</p>`;
+  }
+  const tiles = [
+    ['Chiqishlar', s.away, s.away ? 'var(--red)' : 'var(--text)'],
+    ['Qisqa (<2s)', s.short, 'var(--text2)'],
+    ['Tashqarida jami', fmtSec(s.awaySec), s.awaySec >= 60 ? 'var(--red)' : 'var(--text)'],
+    ['Eng uzuni', fmtSec(s.longest), 'var(--text)'],
+    ["To'liq ekrandan chiqish", s.fs, s.fs ? 'var(--amber)' : 'var(--text)'],
+    ['Taqiqlangan urinish', s.blocked, s.blocked ? 'var(--amber)' : 'var(--text)']
+  ].map(([l, n, c]) => `<div style="text-align:center;padding:9px 6px;background:var(--surface2);border-radius:9px;"><div style="font-size:17px;font-weight:800;color:${c};">${n}</div><div style="font-size:10.5px;color:var(--text3);margin-top:2px;">${l}</div></div>`).join('');
+  const notes = [
+    s.ext ? `${icon('alert', 13)} Imtihon boshida kompyuterga ikkinchi monitor ulangan edi.` : '',
+    s.dropped ? `${icon('alert', 13)} Yana ${s.dropped} ta hodisa yozilmay qoldi (chegara ${MAX_VIOLATION_EVENTS} ta).` : ''
+  ].filter(Boolean).map(n => `<div style="font-size:12px;color:var(--amber);margin-top:6px;">${n}</div>`).join('');
+  const rows = v.events.map(e => {
+    const color = isAwayType(e.t) ? (e.short ? 'var(--text3)' : 'var(--red)') : 'var(--amber)';
+    const dur = e.d != null ? `<span style="font-weight:700;color:${color};">${fmtSec(e.d)}</span>${e.short ? ' <span style="font-size:10px;color:var(--text3);">qisqa</span>' : ''}` : '';
+    return `<div style="display:flex;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid var(--border);font-size:12px;${e.short ? 'opacity:.65;' : ''}">
+      <span style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0;"></span>
+      <span style="font-family:monospace;color:var(--text2);">${violationClock(v, e.s)}</span>
+      <span style="flex:1;min-width:0;">${VIOL_LABELS[e.t] || e.t}</span>
+      <span style="color:var(--text3);white-space:nowrap;">${e.q}-savol</span>
+      <span style="min-width:62px;text-align:right;white-space:nowrap;">${dur}</span>
+    </div>`;
+  }).join('');
+  return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px;">${tiles}</div>${notes}
+    ${v.events.length ? `<div style="margin-top:10px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;">${rows}</div>`
+      : `<p style="font-size:12px;color:var(--green);margin-top:10px;">${icon('checkCircle', 14)} Imtihon davomida qoidabuzarlik qayd etilmadi.</p>`}`;
+}
+
+function showViolations(id) {
+  const r = S.results.find(x => x.id === id); if (!r) return;
+  const el = document.createElement('div'); el.className = 'modal-overlay';
+  el.innerHTML = `<div class="modal" style="max-width:640px;width:94%;max-height:88vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;">${icon('alert')} Qoidabuzarliklar</h3>
+      <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x', 18)}</button>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:12px;">${r.name || '—'} · ${r.date}</p>
+    ${violationReportHTML(r)}
+  </div>`;
+  el.onclick = e => { if (e.target === el) el.remove(); };
+  document.body.appendChild(el);
 }
 
 
@@ -1093,7 +1331,7 @@ async function submitExam() {
   S.examDone = true;
   closeModal('finishModal');
   clearInterval(S.timerInterval); S.timerInterval = null;
-  document.removeEventListener('visibilitychange', handleTabSwitch);
+  stopExamGuard();
   let correct = 0;
   const detailed = S.examQuestions.map((q, i) => {
     const ua = S.answers[i] || null; const ok = ua === q.correctMapped; if (ok) correct++;
@@ -1102,28 +1340,87 @@ async function submitExam() {
   const total = S.examQuestions.length, pct = Math.round(correct / total * 100), passed = pct >= 71; // o'tish bali: 71% (savollar soni turlicha bo'lsa ham adolatli)
   const elapsed = Math.round((Date.now() - S.startTime) / 1000);
   const randomUserId = Math.floor(100000 + Math.random() * 900000);
-  const r = { id: Date.now(), userId: randomUserId, name: S.userName, pos: S.userPos, jshir: S.userJshir, phone: S.userPhone, photo: S.userPhoto, dir: S.direction, sub: S.subDirection, lang: S.lang, total, correct, wrong: total - correct, pct, passed, tabs: S.tabSwitches, duration: elapsed, date: new Date().toLocaleString('uz-UZ'), detailed };
+  const r = { id: Date.now(), userId: randomUserId, name: S.userName, pos: S.userPos, jshir: S.userJshir, phone: S.userPhone, photo: S.userPhoto, dir: S.direction, sub: S.subDirection, lang: S.lang, total, correct, wrong: total - correct, pct, passed, tabs: S.tabSwitches, violations: S.violations, duration: elapsed, date: new Date().toLocaleString('uz-UZ'), detailed };
 
-  // LocalStorage ga saqlash
   S.results.unshift(r);
-  if (S.results.length > 300) S.results = S.results.slice(0, 300);
-  localStorage.setItem('re_results', JSON.stringify(S.results));
-
-  // Supabase ga saqlash asinxron (kutib turilmaydi)
-  if (window.saveExamResultToSupabase) {
-    saveExamResultToSupabase(r).then(supabaseResult => {
-      if (supabaseResult.success) {
-        console.log('✅ Natija Supabase ga saqlandi');
-      } else {
-        console.warn('⚠️ Supabase ga saqlanmadi:', supabaseResult.error);
-      }
-    }).catch(error => {
-      console.error('❌ Supabase ga saqlashda xato:', error);
-    });
-  }
-
-  syncResultsToFile();
   showResult(r);
+  // Natija ekranda darhol ko'rinadi, bazaga yuborish orqa fonda — holati natija kartasida
+  sendResult(r);
+}
+
+function sendResult(r) {
+  setSaveStatus('saving');
+  saveResultReliably(r).then(ok => {
+    if (ok) { setSaveStatus('saved'); return; }
+    // Navbatga ham yozib bo'lmasa (brauzer xotirasi to'la) — sahifada qayta yuborish tugmasi
+    if (addPendingResult(r)) setSaveStatus('failed');
+    else setSaveStatus('lost', () => sendResult(r));
+  });
+}
+
+// ===== NATIJANI BAZAGA ISHONCHLI SAQLASH =====
+// Natija hech qachon jim yo'qolmasligi kerak: Supabase xato qaytarsa yoki internet
+// uzilsa bir necha marta qayta uriniladi, bo'lmasa natija shu brauzerda navbatga
+// qo'yiladi va sayt keyingi safar ochilganda qayta yuboriladi.
+const PENDING_RESULTS_KEY = 're_pending_results';
+
+async function saveResultReliably(r) {
+  if (!window.saveExamResultToSupabase) return false;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await saveExamResultToSupabase(r);
+      if (res && res.success) return true;
+      console.warn(`⚠️ Natija saqlanmadi (${attempt}-urinish):`, res && res.error);
+    } catch (e) {
+      console.error(`❌ Natija saqlanmadi (${attempt}-urinish):`, e);
+    }
+    if (attempt < 3) await new Promise(ok => setTimeout(ok, attempt * 2000));
+  }
+  return false;
+}
+
+function readPendingResults() {
+  try { return JSON.parse(localStorage.getItem(PENDING_RESULTS_KEY) || '[]'); } catch (e) { return []; }
+}
+function writePendingResults(list) {
+  try {
+    if (list.length) localStorage.setItem(PENDING_RESULTS_KEY, JSON.stringify(list));
+    else localStorage.removeItem(PENDING_RESULTS_KEY);
+    return true;
+  } catch (e) { console.error('❌ Kutilayotgan natijalar brauzerga yozilmadi:', e); return false; }
+}
+function addPendingResult(r) { return writePendingResults([...readPendingResults(), r]); }
+
+async function flushPendingResults() {
+  const list = readPendingResults();
+  if (!list.length) return;
+  const left = [];
+  for (const r of list) if (!(await saveResultReliably(r))) left.push(r);
+  writePendingResults(left);
+  console.log(`ℹ️ Kutilayotgan natijalar: ${list.length - left.length} ta yuborildi, ${left.length} ta qoldi`);
+}
+
+function setSaveStatus(state, retry) {
+  const card = $('resultCard'); if (!card) return;
+  let el = $('save-status');
+  if (!el) {
+    el = document.createElement('div'); el.id = 'save-status';
+    el.style.cssText = 'margin-top:11px;padding:10px 13px;border-radius:10px;font-size:13px;display:flex;gap:8px;align-items:center;';
+    card.appendChild(el);
+  }
+  const look = {
+    saving: ['clock', 'var(--text2)', 'var(--surface)', 'var(--border)'],
+    saved: ['checkCircle', 'var(--green)', 'rgba(34,197,94,.08)', 'rgba(34,197,94,.3)'],
+    failed: ['alert', 'var(--red)', 'rgba(239,68,68,.08)', 'rgba(239,68,68,.35)'],
+    lost: ['alert', 'var(--red)', 'rgba(239,68,68,.08)', 'rgba(239,68,68,.35)']
+  }[state];
+  el.style.color = look[1]; el.style.background = look[2]; el.style.border = '1px solid ' + look[3];
+  el.innerHTML = `${icon(look[0], 16)}<span style="flex:1;">${t({ saving: 'saveSaving', saved: 'saveOk', failed: 'saveFail', lost: 'saveLost' }[state])}</span>`;
+  if (retry) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-red btn-sm'; btn.textContent = t('saveRetry'); btn.onclick = retry;
+    el.appendChild(btn);
+  }
 }
 
 // ===== NATIJA =====
@@ -1261,24 +1558,27 @@ async function adminTab(tab) {
   // Ma'lumotlarni orqa fonda yuklaymiz (faqat hali yuklanmagan bo'lsa)
   if (tab === 'dash' || tab === 'results') {
     try {
-      if (window.loadResultsFromSupabase && S.results.length === 0) {
+      if (window.loadResultsFromSupabase && !S.resultsLoaded) {
         const resultsData = await loadResultsFromSupabase();
-        if (resultsData && resultsData.success && resultsData.data && resultsData.data.length > 0) {
+        if (resultsData && resultsData.success && resultsData.data) {
           S.results = resultsData.data;
+          S.resultsLoaded = true;
           console.log(`✅ Admin: ${resultsData.data.length} ta natija yuklandi`);
         }
       }
     } catch (err) {
-      console.warn("Supabase natijalari yuklanmadi, lokal o'zgaruvchilardan foydalaniladi:", err);
+      console.warn("Supabase natijalari yuklanmadi:", err);
     }
+    if (!S.resultsLoaded) toast("Natijalar bazadan yuklanmadi. Internetni tekshirib, sahifani yangilang.", 'var(--red)');
   }
 
   if (tab === 'phase2-results') {
     try {
-      if (window.loadResultsFromSupabase && S.results.length === 0) {
+      if (window.loadResultsFromSupabase && !S.resultsLoaded) {
         const resultsData = await loadResultsFromSupabase();
         if (resultsData && resultsData.success && resultsData.data) {
           S.results = resultsData.data;
+          S.resultsLoaded = true;
         }
       }
     } catch (err) {
@@ -1432,6 +1732,10 @@ function renderResults() {
   if (S.filterDept) rs = rs.filter(r => r.name && r.name.toLowerCase().includes(S.filterDept.toLowerCase()));
   if (S.filterStatus === 'passed') rs = rs.filter(r => r.passed);
   if (S.filterStatus === 'failed') rs = rs.filter(r => !r.passed);
+  if (S.filterViol) rs = rs.filter(r => {
+    const level = violationSummary(r).level;
+    return S.filterViol === 'red' ? level === 'red' : S.filterViol === 'any' ? level !== 'green' : level === 'green';
+  });
 
   // Yo'nalishlar ro'yxatini natijalardan olish (Supabase dan)
   const dirs = [...new Set(S.results.map(r => r.dir))].filter(d => d);
@@ -1441,6 +1745,7 @@ function renderResults() {
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:11px;">
         <span style="color:var(--text3);font-size:13px;">Jami: <strong style="color:var(--text);">${rs.length}</strong> (Supabase dan)</span>
         <div style="display:flex;gap:7px;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">${icon('download')} Excel</button>
           <button class="btn btn-primary btn-sm" onclick="refreshResults()">${icon('refresh')} Yangilash</button>
         </div>
       </div>
@@ -1455,13 +1760,19 @@ function renderResults() {
           <option value="passed" ${S.filterStatus === 'passed' ? 'selected' : ''}>O'tdi</option>
           <option value="failed" ${S.filterStatus === 'failed' ? 'selected' : ''}>Yiqildi</option>
         </select>
-        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';renderResults()">${icon('x',18)}</button>
+        <select class="filter-inp" onchange="S.filterViol=this.value;renderResults()">
+          <option value="">— Qoidabuzarlik —</option>
+          <option value="red" ${S.filterViol === 'red' ? 'selected' : ''}>Shubhali</option>
+          <option value="any" ${S.filterViol === 'any' ? 'selected' : ''}>Har qanday</option>
+          <option value="clean" ${S.filterViol === 'clean' ? 'selected' : ''}>Toza</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';S.filterViol='';renderResults()">${icon('x',18)}</button>
       </div>
     </div>
     ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">${icon('inbox',44)}</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
-        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">${icon('idcard')} ID</th><th>JSHSHIR</th><th>Lavozim</th><th>Yo'nalish</th><th>Ball</th><th>Holat</th><th>Tab</th><th>Sana</th><th></th></tr></thead>
+        <table class="tbl"><thead><tr><th>#</th><th>F.I.Sh</th><th style="color:var(--blue-light);white-space:nowrap;">${icon('idcard')} ID</th><th>JSHSHIR</th><th>Lavozim</th><th>Yo'nalish</th><th>Ball</th><th>Holat</th><th>Qoidabuzarlik</th><th>Sana</th><th></th></tr></thead>
         <tbody>${rs.map((r, i) => {
     const empId = empDisplayId(r.jshir);
     return `<tr>
@@ -1475,7 +1786,7 @@ function renderResults() {
           <td><span style="font-size:11px;background:rgba(30,111,192,.1);color:var(--blue-light);padding:2px 7px;border-radius:5px;">${r.dir || '—'}</span></td>
           <td><strong style="color:${r.passed ? 'var(--green)' : 'var(--red)'};">${r.pct}%</strong><div style="font-size:11px;color:var(--text3);">${r.correct}/${r.total}</div></td>
           <td><span class="badge ${r.passed ? 'badge-green' : 'badge-red'}">${r.passed ? `${icon("check")} O'tdi` : `${icon("x")} Yiqildi`}</span></td>
-          <td>${r.tabs > 0 ? `<span style="color:var(--amber);">${icon("alert")}${r.tabs}</span>` : '—'}</td>
+          <td>${violationBadge(r)}</td>
           <td style="color:var(--text3);font-size:11px;white-space:nowrap;">${r.date}</td>
           <td style="white-space:nowrap;"><button class="btn btn-secondary btn-sm" onclick="showDetail(${r.id})" style="padding:4px 9px;font-size:11px;">${icon('eye')}</button> <button class="btn btn-sm" onclick="downloadPDF(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(30,111,192,.1);color:var(--blue-light);border:1px solid rgba(30,111,192,.3);">${icon('printer')}</button> <button class="btn btn-sm" onclick="deleteResult(${r.id})" style="padding:4px 9px;font-size:11px;background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3);margin-left:4px;">${icon('trash')}</button></td>
         </tr>`;
@@ -1848,6 +2159,10 @@ async function showDetail(id) {
       <div style="text-align:center;padding:10px;background:rgba(239,68,68,.08);border-radius:9px;"><div style="font-size:20px;font-weight:800;color:var(--red);">${r.wrong}</div><div style="font-size:11px;color:var(--text3);">Noto'g'ri</div></div>
       <div style="text-align:center;padding:10px;background:rgba(30,111,192,.08);border-radius:9px;"><div style="font-size:20px;font-weight:800;color:var(--blue-light);">${r.total}</div><div style="font-size:11px;color:var(--text3);">Jami</div></div>
     </div>
+    <div style="margin-bottom:13px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;">${icon('alert')} Qoidabuzarliklar</div>
+      ${violationReportHTML(r)}
+    </div>
     <div style="max-height:480px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;">
       ${r.detailed.map((d, i) => {
     const userText = d.opts && d.userAns && d.opts[d.userAns] ? `) ${d.opts[d.userAns]}` : '';
@@ -1904,6 +2219,14 @@ async function downloadPDF(id) {
       ${!ok ? `<br><span style="color:#16a34a;">To'g'ri: <b>${d.correctAns}</b>${correctText}</span>` : ''}
     </td></tr>`;
   });
+  const vs = violationSummary(r);
+  const vCell = 'border:1px solid #e5e7eb;padding:3px 7px;font-size:9px;';
+  const vRows = vs.legacy ? '' : r.violations.events.map(e => `<tr style="${e.short ? 'color:#9ca3af;' : ''}">
+    <td style="${vCell}width:60px;font-family:monospace;">${violationClock(r.violations, e.s)}</td>
+    <td style="${vCell}">${VIOL_LABELS[e.t] || e.t}</td>
+    <td style="${vCell}width:55px;">${e.q}-savol</td>
+    <td style="${vCell}width:70px;text-align:right;">${e.d != null ? fmtSec(e.d) + (e.short ? ' (qisqa)' : '') : ''}</td>
+  </tr>`).join('');
   const html = `<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8">
 <title>RailExam - ${r.name}</title><style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -1973,8 +2296,10 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
   <div class="sbox" style="border-color:#fecaca;background:#fff1f2;"><div class="snum" style="color:#dc2626;">${r.wrong}</div><div class="slbl">✗ Noto'g'ri</div></div>
   <div class="sbox" style="border-color:#bfdbfe;background:#eff6ff;"><div class="snum" style="color:#1e3a8a;">${r.total}</div><div class="slbl">Jami</div></div>
   <div class="sbox" style="border-color:#e5e7eb;background:#f9fafb;"><div class="snum" style="color:#374151;">${Math.floor(r.duration / 60)}m${r.duration % 60}s</div><div class="slbl">⏱ Vaqt</div></div>
-  ${r.tabs > 0 ? `<div class="sbox" style="border-color:#fed7aa;background:#fff7ed;"><div class="snum" style="color:#ea580c;">${r.tabs}</div><div class="slbl">⚠️ Tab</div></div>` : ''}
+  ${vs.level !== 'green' ? `<div class="sbox" style="border-color:#fed7aa;background:#fff7ed;"><div class="snum" style="color:#ea580c;">${vs.away}</div><div class="slbl">⚠️ Chiqish${vs.legacy ? '' : ' · ' + fmtSec(vs.awaySec)}</div></div>` : ''}
 </div>
+${vRows ? `<div class="stit" style="border-left-color:#ea580c;color:#9a3412;background:#fff7ed;">QOIDABUZARLIKLAR JURNALI (${r.violations.events.length} ta${vs.ext ? ' · ikkinchi monitor ulangan' : ''})</div>
+<table class="qt" style="margin-bottom:7px;"><tbody>${vRows}</tbody></table>` : ''}
 <div class="stit">SAVOL VA JAVOBLAR (${r.detailed.length} ta savol · ✓ To'g'ri · ✗ Noto'g'ri → To'g'ri javob)</div>
 <table class="qt"><tbody>${qRows}</tbody></table>
 <div class="signs">
@@ -1996,7 +2321,7 @@ body{font-family:Arial,sans-serif;font-size:10px;color:#111827;background:#fff;p
 
 function clearResults() {
   if (confirm('Barcha natijalarni o\'chirish? Bu amalni bekor qilib bo\'lmaydi!')) {
-    S.results = []; localStorage.removeItem('re_results');
+    S.results = [];
     syncResultsToFile();
     renderResults(); toast("O'chirildi", 'var(--red)');
   }
@@ -2006,7 +2331,6 @@ async function deleteResult(id) {
   if (confirm("Ushbu natijani o'chirishni xohlaysizmi?")) {
     // LocalStorage dan o'chirish
     S.results = S.results.filter(r => r.id !== id);
-    localStorage.setItem('re_results', JSON.stringify(S.results));
 
     // Supabase dan o'chirish
     if (window.deleteResultFromSupabase) {
@@ -2380,8 +2704,16 @@ function syncQuestionsToFile() {
 }
 function exportCSV() {
   if (!S.results.length) { toast('Natijalar yo\'q!', 'var(--amber)'); return; }
-  const rows = [['#', 'F.I.Sh', 'JSHSHIR', 'Lavozim', "Yo'nalish", "To'g'ri", "Noto'g'ri", 'Jami', 'Foiz', 'Natija', 'Tab', 'Davomiylik', 'Sana'], ...S.results.map((r, i) => [i + 1, r.name, r.jshir || '', r.pos, r.dir, r.correct, r.wrong, r.total, r.pct + '%', r.passed ? "O'tdi" : 'Yiqildi', r.tabs, Math.floor(r.duration / 60) + 'm' + r.duration % 60 + 's', r.date])];
-  const csv = rows.map(r => r.map(c => `"${String(c || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+  const levelText = { green: 'Toza', amber: 'Ogohlantirish', red: 'Shubhali' };
+  const rows = [['#', 'F.I.Sh', 'JSHSHIR', 'Lavozim', "Yo'nalish", "To'g'ri", "Noto'g'ri", 'Jami', 'Foiz', 'Natija', 'Chiqishlar', 'Qisqa (<2s)', 'Tashqarida jami', 'Eng uzun chiqish', "To'liq ekrandan chiqish", 'Taqiqlangan urinish', 'Ikkinchi monitor', 'Qoidabuzarlik darajasi', 'Davomiylik', 'Sana'], ...S.results.map((r, i) => {
+    const vs = violationSummary(r);
+    const na = vs.legacy ? "ma'lum emas" : null;
+    return [i + 1, r.name, r.jshir || '', r.pos, r.dir, r.correct, r.wrong, r.total, r.pct + '%', r.passed ? "O'tdi" : 'Yiqildi',
+      vs.away, na || vs.short, na || fmtSec(vs.awaySec), na || fmtSec(vs.longest), na || vs.fs, na || vs.blocked,
+      vs.ext ? 'Ha' : vs.ext === false ? "Yo'q" : '', levelText[vs.level],
+      Math.floor(r.duration / 60) + 'm' + r.duration % 60 + 's', r.date];
+  })];
+  const csv = rows.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = `railexam_${new Date().toISOString().slice(0, 10)}.csv`; a.click(); URL.revokeObjectURL(url);
@@ -2886,6 +3218,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.initializeSupabaseData) {
     initializeSupabaseData()
       .then(() => {
+        flushPendingResults();
         // custom_directions va phase2_questions yuklangach admin panelni qayta render qilamiz
         if (window.S && window.S.adminSection === 'phase2') renderAdminPhase2();
         if (window.S && window.S.adminSection === 'questions') renderQuestions();
