@@ -720,3 +720,7 @@ body.exam-locked #pg-exam { -webkit-user-select: none; user-select: none; }
   background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.45);
   color: var(--text); font-size: 13px;
 }
+
+/* Dashboard kartalari bosiladi va natijalarni ochadi */
+.stat-link { cursor: pointer; }
+.stat-link:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }

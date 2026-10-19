@@ -287,7 +287,7 @@ window.S = {
   phase2EnvelopeIndex: null,
   phase2TimeLeft: 40 * 60,
   phase2TimerInterval: null,
-  adminSection: 'dash', charts: {}, filterDir: '', filterDept: '', filterStatus: '', filterViol: '', qPage: 1, qFilterDir: '',
+  adminSection: 'dash', charts: {}, filterDir: '', filterDept: '', filterStatus: '', filterViol: '', resultsSort: '', qPage: 1, qFilterDir: '',
   phase2ResultsList: [], p2FilterDept: '', p2FilterStatus: ''
 };
 let S = window.S;
@@ -1639,6 +1639,14 @@ async function adminTab(tab) {
   else if (tab === 'phase2') renderAdminPhase2();
 }
 
+// Dashboard kartalari natijalar bo'limini tegishli filtr bilan ochadi
+function openResultsFiltered(status, sort) {
+  S.filterDir = ''; S.filterDept = ''; S.filterViol = '';
+  S.filterStatus = status || '';
+  S.resultsSort = sort || '';
+  adminTab('results');
+}
+
 function renderDash() {
   const rs = S.results, total = rs.length, passed = rs.filter(r => r.passed).length, failed = total - passed;
   const avg = total ? Math.round(rs.reduce((s, r) => s + r.pct, 0) / total) : 0;
@@ -1649,8 +1657,9 @@ function renderDash() {
   const worst10 = [...rs].sort((a, b) => a.pct - b.pct || a.correct - b.correct).slice(0, 10);
   $('adminContent').innerHTML = `
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-bottom:20px;">
-      ${[[icon('fileText',26), 'Jami imtihonlar', total, '#1e6fc0'], [icon(`checkCircle`,26), "O'tdi", passed, '#22c55e'], [icon('xCircle',26), 'Yiqildi', failed, '#ef4444'], [icon(`trendUp`,26), "O'rt. ball", avg + '%', '#f59e0b']].map(([ic, l, v, c]) => `
-        <div class="stat-card" style="--c:${c};">
+      ${[[icon('fileText',26), 'Jami imtihonlar', total, '#1e6fc0', "''"], [icon(`checkCircle`,26), "O'tdi", passed, '#22c55e', "'passed'"], [icon('xCircle',26), 'Yiqildi', failed, '#ef4444', "'failed'"], [icon(`trendUp`,26), "O'rt. ball", avg + '%', '#f59e0b', "'', 'pct-desc'"]].map(([ic, l, v, c, args]) => `
+        <div class="stat-card stat-link" style="--c:${c};" role="button" tabindex="0" title="Natijalarni ko'rish"
+          onclick="openResultsFiltered(${args})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openResultsFiltered(${args});}">
           <div style="color:${c};margin-bottom:9px;">${ic}</div>
           <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;">${v}</div>
           <div style="color:var(--text3);font-size:12px;margin-top:2px;">${l}</div>
@@ -1732,6 +1741,8 @@ function renderResults() {
   if (S.filterDept) rs = rs.filter(r => r.name && r.name.toLowerCase().includes(S.filterDept.toLowerCase()));
   if (S.filterStatus === 'passed') rs = rs.filter(r => r.passed);
   if (S.filterStatus === 'failed') rs = rs.filter(r => !r.passed);
+  if (S.resultsSort === 'pct-desc') rs.sort((a, b) => b.pct - a.pct || b.correct - a.correct);
+  if (S.resultsSort === 'pct-asc') rs.sort((a, b) => a.pct - b.pct || a.correct - b.correct);
   if (S.filterViol) rs = rs.filter(r => {
     const level = violationSummary(r).level;
     return S.filterViol === 'red' ? level === 'red' : S.filterViol === 'any' ? level !== 'green' : level === 'green';
@@ -1766,7 +1777,12 @@ function renderResults() {
           <option value="any" ${S.filterViol === 'any' ? 'selected' : ''}>Har qanday</option>
           <option value="clean" ${S.filterViol === 'clean' ? 'selected' : ''}>Toza</option>
         </select>
-        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';S.filterViol='';renderResults()">${icon('x',18)}</button>
+        <select class="filter-inp" onchange="S.resultsSort=this.value;renderResults()">
+          <option value="">Tartib: sana bo'yicha</option>
+          <option value="pct-desc" ${S.resultsSort === 'pct-desc' ? 'selected' : ''}>Ball: yuqoridan pastga</option>
+          <option value="pct-asc" ${S.resultsSort === 'pct-asc' ? 'selected' : ''}>Ball: pastdan yuqoriga</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="S.filterDir='';S.filterDept='';S.filterStatus='';S.filterViol='';S.resultsSort='';renderResults()">${icon('x',18)}</button>
       </div>
     </div>
     ${rs.length === 0 ? `<div class="card" style="text-align:center;padding:44px;"><div style="font-size:44px;margin-bottom:11px;">${icon('inbox',44)}</div><p style="color:var(--text3);">Natijalar topilmadi</p></div>` : `
