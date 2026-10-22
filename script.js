@@ -205,6 +205,18 @@ function empDisplayId(jshir) {
 }
 
 // Yo'nalish (dir) bo'yicha uning ota-xo'jaligini topadi
+// 2-bosqich (kanvertli og'zaki imtihon) faqat shu xo'jaliklarning barcha yo'nalishlari
+// uchun o'tkaziladi. Qolgan xo'jaliklarda imtihon bitta bosqichdan — testdan iborat.
+const PHASE2_DEPTS = ["Tashish va bekatlar ishlari xo'jaligi", "Yuk va tijorat ishlari xo'jaligi"];
+const normDeptName = d => (d || '').replace(/[ʻʼ‘’`]/g, "'").trim().toLowerCase();
+function isPhase2Dept(dept) {
+  return PHASE2_DEPTS.some(d => normDeptName(d) === normDeptName(dept));
+}
+// Natija yoki xodim 2-bosqichga tegishlimi (dir ba'zan xo'jalik, ba'zan uning yo'nalishi)
+function hasPhase2(dir) {
+  return isPhase2Dept(findDeptForDir(dir) || dir);
+}
+
 function findDeptForDir(dir) {
   for (const [dept, subs] of Object.entries(SUBDIRS)) {
     if (subs && subs.includes(dir)) return dept;
@@ -1507,7 +1519,7 @@ function showResult(r) {
   // 2-Bosqich tugmasini ko'rsatish yoki yashirish
   const p2c = $('phase2-btn-container');
   if (p2c) {
-    p2c.style.display = r.passed ? 'block' : 'none';
+    p2c.style.display = r.passed && hasPhase2(r.dir) ? 'block' : 'none';
   }
 }
 
@@ -1855,7 +1867,7 @@ async function refreshResults() {
 function renderPhase2Results() {
   const activeId = document.activeElement ? document.activeElement.id : null;
   const cursorStart = document.activeElement ? document.activeElement.selectionStart : null;
-  const passedEmployees = S.results.filter(r => r.passed);
+  const passedEmployees = S.results.filter(r => r.passed && hasPhase2(r.dir));
 
   let rs = [...passedEmployees];
   if (S.p2FilterDept) rs = rs.filter(r => r.name && r.name.toLowerCase().includes(S.p2FilterDept.toLowerCase()));
@@ -2919,8 +2931,8 @@ function removeImage() {
 
 // ===== 2-BOSQICH (PHASE 2) ADMIN =====
 function renderAdminPhase2() {
-  const depts = Object.keys(SUBDIRS);
-  if (!S.phase2AdminDept && depts.length > 0) S.phase2AdminDept = depts[0];
+  const depts = Object.keys(SUBDIRS).filter(isPhase2Dept);
+  if ((!S.phase2AdminDept || !depts.includes(S.phase2AdminDept)) && depts.length > 0) { S.phase2AdminDept = depts[0]; S.phase2AdminDir = ''; }
   const dirs = S.phase2AdminDept && SUBDIRS[S.phase2AdminDept] ? SUBDIRS[S.phase2AdminDept] : [];
   if (S.phase2AdminDept && !S.phase2AdminDir && dirs.length > 0) S.phase2AdminDir = dirs[0];
   if (S.phase2AdminDir && !dirs.includes(S.phase2AdminDir) && dirs.length > 0) S.phase2AdminDir = dirs[0];
@@ -3055,6 +3067,10 @@ async function deletePhase2Question(id) {
 
 // ===== 2-BOSQICH (PHASE 2) STUDENT =====
 async function startPhase2Envelopes() {
+  if (!hasPhase2(S.direction)) {
+    toast("Bu xo'jalikda imtihon faqat test bosqichidan iborat", "var(--amber)");
+    return;
+  }
   // Savollar hali yuklanmagan bo'lsa (masalan sahifa yangi ochilgan), Supabase'dan olamiz
   if ((S.phase2Questions || []).length === 0 && window.loadPhase2QuestionsFromSupabase) {
     toast('Savollar yuklanmoqda, bir lahza...', 'var(--blue-light)');
