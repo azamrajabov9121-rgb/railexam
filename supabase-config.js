@@ -11,7 +11,11 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Supabase client yaratish (global window obyektida)
 if (!window.supabaseClient && window.supabase) {
   try {
-    window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Admin sessiyasi sessionStorage'da: brauzer yopilganda admin avtomatik chiqadi.
+    // Imtihon kompyuterlari umumiy — keyingi xodim admin panelga kirib qolmasin.
+    window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { storage: window.sessionStorage, persistSession: true, autoRefreshToken: true }
+    });
     console.log('✅ Supabase client yaratildi');
   } catch(e) {
     console.error('Supabase client yaratishda xato:', e);
@@ -30,7 +34,43 @@ function isMissingViolationsColumn(error) {
   return /violations/i.test((error && (error.message || error.details)) || '');
 }
 
+// supabase_security.sql hali ishga tushirilmagan bo'lsa bazada RPC funksiyalar bo'lmaydi
+function isMissingFunction(error) {
+  return !!error && (error.code === 'PGRST202' || /could not find the function/i.test(error.message || ''));
+}
+
 const DB = {
+  // ===== ADMIN KIRISHI =====
+  // Parol kodda saqlanmaydi: Supabase Auth tekshiradi. Kim admin ekanini bazadagi
+  // admins jadvali va is_admin() funksiyasi belgilaydi.
+  async adminSignIn(email, password) {
+    const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) return { success: false, error: error.message };
+    const admin = await this.isAdmin();
+    if (!admin) {
+      await window.supabaseClient.auth.signOut();
+      return { success: false, error: 'not_admin' };
+    }
+    return { success: true };
+  },
+
+  async adminSignOut() {
+    try { await window.supabaseClient.auth.signOut(); } catch (e) { console.warn('signOut:', e); }
+  },
+
+  async hasAdminSession() {
+    const { data } = await window.supabaseClient.auth.getSession();
+    return !!(data && data.session) && await this.isAdmin();
+  },
+
+  async isAdmin() {
+    const { data, error } = await window.supabaseClient.rpc('is_admin');
+    // supabase_security.sql ishga tushirilgunga qadar funksiya yo'q — o'shanda Auth'dan
+    // o'tgan foydalanuvchi admin hisoblanadi (baza baribir hali yopilmagan bo'ladi)
+    if (error) return isMissingFunction(error);
+    return data === true;
+  },
+
   // ===== USERS =====
   async createUser(userData) {
     try {
@@ -52,6 +92,17 @@ const DB = {
       console.error('User yaratishda xato:', error);
       return { success: false, error: error.message };
     }
+  },
+
+  // Xodimni ro'yxatga oladi (JSHSHIR bo'yicha bor bo'lsa o'shani qaytaradi) va id sini beradi.
+  // Bazadagi register_user funksiyasi orqali: imtihon topshiruvchi users jadvalini o'qiy olmaydi.
+  async registerUser(userData) {
+    const { data, error } = await window.supabaseClient.rpc('register_user', {
+      p_name: userData.name, p_position: userData.position, p_jshir: userData.jshir,
+      p_phone: userData.phone, p_photo: userData.photo || null
+    });
+    if (error) return { success: false, error: error.message, missingFunction: isMissingFunction(error) };
+    return { success: true, data: { id: data } };
   },
 
   async getUserByJshir(jshir) {
@@ -203,7 +254,8 @@ const DB = {
         detailed_answers: resultData.detailed || [],
         violations: resultData.violations || null
       };
-      const insert = r => window.supabaseClient.from('exam_results').insert([r]).select().single();
+      // Qo'shilgan qatorni qaytarib o'qimaymiz: imtihon topshiruvchida natijalarni o'qish huquqi yo'q
+      const insert = r => window.supabaseClient.from('exam_results').insert([r]);
       let { data, error } = await insert(row);
       // Bazaga "violations" ustuni hali qo'shilmagan bo'lsa ham natija yo'qolmasin
       if (error && isMissingViolationsColumn(error)) {

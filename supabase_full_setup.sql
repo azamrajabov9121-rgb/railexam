@@ -106,47 +106,11 @@ ALTER TABLE exam_results ADD COLUMN IF NOT EXISTS sub_direction TEXT;
 ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT;
 
 -- ============================================================
--- Row Level Security (RLS) — xavfsiz qayta ishlatish uchun avval eski policy o'chiriladi
--- ============================================================
-
+-- Row Level Security (RLS): qoidalar supabase_security.sql faylida.
+-- Bu fayldan keyin albatta supabase_security.sql ni ham ishga tushiring —
+-- aks holda xodimlar va natijalar hammaga ochiq bo'lib qoladi.
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Users are viewable by everyone" ON users;
-CREATE POLICY "Users are viewable by everyone" ON users FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Users can be inserted by everyone" ON users;
-CREATE POLICY "Users can be inserted by everyone" ON users FOR INSERT WITH CHECK (true);
-
 ALTER TABLE questions ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Questions are viewable by everyone" ON questions;
-CREATE POLICY "Questions are viewable by everyone" ON questions FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Questions can be inserted by everyone" ON questions;
-CREATE POLICY "Questions can be inserted by everyone" ON questions FOR INSERT WITH CHECK (true);
-DROP POLICY IF EXISTS "Questions can be updated by everyone" ON questions;
-CREATE POLICY "Questions can be updated by everyone" ON questions FOR UPDATE USING (true);
-DROP POLICY IF EXISTS "Questions can be deleted by everyone" ON questions;
-CREATE POLICY "Questions can be deleted by everyone" ON questions FOR DELETE USING (true);
-
 ALTER TABLE exam_results ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Exam results are viewable by everyone" ON exam_results;
-CREATE POLICY "Exam results are viewable by everyone" ON exam_results FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Exam results can be inserted by everyone" ON exam_results;
-CREATE POLICY "Exam results can be inserted by everyone" ON exam_results FOR INSERT WITH CHECK (true);
-DROP POLICY IF EXISTS "Exam results can be deleted by everyone" ON exam_results;
-CREATE POLICY "Exam results can be deleted by everyone" ON exam_results FOR DELETE USING (true);
-
 ALTER TABLE phase2_questions ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Phase2 questions are viewable by everyone" ON phase2_questions;
-CREATE POLICY "Phase2 questions are viewable by everyone" ON phase2_questions FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Phase2 questions can be inserted by everyone" ON phase2_questions;
-CREATE POLICY "Phase2 questions can be inserted by everyone" ON phase2_questions FOR INSERT WITH CHECK (true);
-DROP POLICY IF EXISTS "Phase2 questions can be deleted by everyone" ON phase2_questions;
-CREATE POLICY "Phase2 questions can be deleted by everyone" ON phase2_questions FOR DELETE USING (true);
-
 ALTER TABLE phase2_results ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Phase2 results are viewable by everyone" ON phase2_results;
-CREATE POLICY "Phase2 results are viewable by everyone" ON phase2_results FOR SELECT USING (true);
-DROP POLICY IF EXISTS "Phase2 results can be inserted by everyone" ON phase2_results;
-CREATE POLICY "Phase2 results can be inserted by everyone" ON phase2_results FOR INSERT WITH CHECK (true);
-DROP POLICY IF EXISTS "Phase2 results can be updated by everyone" ON phase2_results;
-CREATE POLICY "Phase2 results can be updated by everyone" ON phase2_results FOR UPDATE USING (true);
-DROP POLICY IF EXISTS "Phase2 results can be deleted by everyone" ON phase2_results;
-CREATE POLICY "Phase2 results can be deleted by everyone" ON phase2_results FOR DELETE USING (true);

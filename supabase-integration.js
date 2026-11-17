@@ -11,7 +11,10 @@ async function saveOrGetUser(userData) {
   }
 
   try {
-    // Avval JSHSHIR bo'yicha tekshirish
+    const registered = await DB.registerUser(userData);
+    if (registered.success || !registered.missingFunction) return registered;
+
+    // Eski usul (supabase_security.sql ishga tushirilgunga qadar): JSHSHIR bo'yicha qidirish
     const existing = await DB.getUserByJshir(userData.jshir);
 
     if (existing.data) {
@@ -455,12 +458,7 @@ async function initializeSupabaseData() {
   // Natijalar (barcha xodimlarning rasmlari bilan) bu yerda yuklanmaydi: imtihon
   // topshiruvchiga ular kerak emas. Admin panel ochilganda adminTab o'zi yuklaydi.
 
-  const phase2Result = await loadPhase2ResultsFromSupabase();
-  if (phase2Result.success && phase2Result.data) {
-    if (window.S) {
-      window.S.phase2ResultsList = phase2Result.data;
-    }
-  }
+  // 2-bosqich natijalari ham faqat admin panelda (adminTab) yuklanadi.
 
   const phase2QResult = await loadPhase2QuestionsFromSupabase();
   if (phase2QResult.success && phase2QResult.data && phase2QResult.data.length > 0) {

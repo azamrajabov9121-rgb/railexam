@@ -1524,22 +1524,56 @@ function showResult(r) {
 }
 
 // ===== ADMIN =====
-function adminLogin() {
-  if ($('admin-email').value === 'admin@railexam.uz' && $('admin-pass').value === 'Admin@12345') {
-    // Sahifani DARHOL ochamiz — ma'lumotlar orqa fonda yuklanadi
-    $('admin-login-err').style.display = 'none';
-    localStorage.setItem('re_admin_logged', 'true');
+// Admin login va parolini Supabase Auth tekshiradi — kodda hech qanday parol yo'q.
+// Ma'lumotlarni himoyalash esa bazadagi RLS qoidalarida (supabase_security.sql).
+function showAdminLoginError(msg) {
+  const el = $('admin-login-err');
+  el.style.display = msg ? 'block' : 'none';
+  el.textContent = msg || '';
+}
+
+async function adminLogin() {
+  const email = $('admin-email').value.trim(), pass = $('admin-pass').value;
+  if (!email || !pass) { showAdminLoginError('Email va parolni kiriting'); return; }
+  if (!window.DB) { showAdminLoginError("Bazaga ulanib bo'lmadi. Internetni tekshiring."); return; }
+  const btn = $('admin-login-btn');
+  if (btn) btn.disabled = true;
+  showAdminLoginError('');
+  try {
+    const res = await DB.adminSignIn(email, pass);
+    if (!res.success) {
+      showAdminLoginError(res.error === 'not_admin' ? "Bu foydalanuvchida admin huquqi yo'q"
+        : /invalid login credentials/i.test(res.error) ? "Login yoki parol noto'g'ri!"
+        : 'Kirishda xato: ' + res.error);
+      return;
+    }
+    $('admin-pass').value = '';
+    S.resultsLoaded = false; // natijalar endi admin huquqi bilan qayta yuklanadi
+    showPage('pg-admin');
+    adminTab('dash');
+  } catch (e) {
+    showAdminLoginError("Bazaga ulanib bo'lmadi. Internetni tekshiring.");
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+// "Admin panel" tugmasi: sessiya ochiq bo'lsa to'g'ridan-to'g'ri panelga
+async function openAdmin() {
+  if (window.DB && await DB.hasAdminSession().catch(() => false)) {
     showPage('pg-admin');
     adminTab('dash');
   } else {
-    $('admin-login-err').style.display = 'block';
-    $('admin-login-err').textContent = 'Login yoki parol noto\'g\'ri!';
+    showPage('pg-admin-login');
   }
 }
-function adminLogout() {
-  localStorage.removeItem('re_admin_logged');
+
+async function adminLogout() {
+  if (window.DB) await DB.adminSignOut();
   localStorage.removeItem('re_current_page');
   localStorage.removeItem('re_admin_tab');
+  // Admin ko'rgan ma'lumotlar brauzerda qolmasin
+  S.results = []; S.resultsLoaded = false; S.phase2ResultsList = [];
   showPage('pg-admin-login');
 }
 
@@ -1552,6 +1586,12 @@ function showAdminLoader(msg) {
 }
 
 async function adminTab(tab) {
+  // Panelga faqat Supabase Auth orqali kirgan admin (konsoldan showPage chaqirilsa ham)
+  if (!window.DB || !(await DB.hasAdminSession().catch(() => false))) {
+    showPage('pg-admin-login');
+    showAdminLoginError('Avval tizimga kiring');
+    return;
+  }
   S.adminSection = tab;
   localStorage.setItem('re_admin_tab', tab);
   ['dash', 'results', 'phase2-results', 'questions', 'phase2'].forEach(x => { const n = $('nav-' + x); if (n) n.classList.remove('active'); });
