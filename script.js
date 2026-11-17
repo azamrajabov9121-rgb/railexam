@@ -241,7 +241,7 @@ const QUESTIONS = [];
 const L = {
   uz: {
     lang: "O'zbek tili", flag: "🇺🇿", sub: "Lotin", back: "Tilni o'zgartirish", reg: "Ro'yxatdan o'tish", name: "F.I.Sh (To'liq ism)", pos: "Lavozim", jshir: "JSHSHIR (14 raqam)", phone: "Telefon", camT: "Kamera", camD: "Imtihon uchun rasm oling", capture: "Rasm olish", retakeCam: "Qayta", camOk: "Tasdiqlash", skipCam: "Kamerasiz davom etish →", dirT: "Yo'nalishni tanlang", dirD: "Imtihon yo'nalishini belgilang", start: "Imtihonni boshlash", cont: "Davom etish", prev: "Oldingi", next: "Keyingisi", finish: "Tugatish", fin2: "Imtihonni tugatish", ansgiven: "javob", finQ: "Imtihonni tugatishni tasdiqlaysizmi?", cancel: "Bekor qilish", yesF: "Ha, tugatish", retake: "Qayta topshirish", home: "Bosh sahifa", tabW: "Boshqa tabga o'tdingiz! Bu qayd etildi.", passed: "O'TDINGIZ!", failed: "YIQILDINGIZ", passedMsg: "Tabriklaymiz! Imtihondan muvaffaqiyatli o'tdingiz.", failedMsg: "Afsuski, o'ta olmadingiz. Qayta urinib ko'ring.", correct: "To'g'ri javoblar", wrong: "Noto'g'ri javoblar", total: "Jami savollar", passScore: "O'tish bali: 71%",
-    errFill: "Barcha maydonlarni to'ldiring!", errJshir: "JSHSHIR 14 ta raqam bo'lishi kerak!", errDir: "Yo'nalishni tanlang!", errSub: "Mutaxassislikni tanlang!", errToifa: "Toifani tanlang (3-toifa yoki 4-toifa)!", errNoQ: "Bu yo'nalish uchun hali savollar qo'shilmagan!",
+    errFill: "Barcha maydonlarni to'ldiring!", errJshir: "JSHSHIR 14 ta raqam bo'lishi kerak!", errPhone: "Telefon raqamni to'liq kiriting: +998 XX XXX XX XX", errPhoneCode: "Operator kodi noto'g'ri (masalan: 90, 91, 93, 94, 97, 99, 33, 88)", errDir: "Yo'nalishni tanlang!", errSub: "Mutaxassislikni tanlang!", errToifa: "Toifani tanlang (3-toifa yoki 4-toifa)!", errNoQ: "Bu yo'nalish uchun hali savollar qo'shilmagan!",
     tabDesc: "Bu holat qayd etildi.", tabBtn: "Imtihonga qaytish", saveSaving: "Natija bazaga yuborilmoqda...", saveOk: "Natija bazaga saqlandi", saveFail: "Natija bazaga yuborilmadi. U shu kompyuterda saqlab qo'yildi va sayt qayta ochilganda avtomatik yuboriladi. Iltimos, mas'ul xodimga xabar bering.", saveLost: "Natija bazaga yuborilmadi. Sahifani yopmang va mas'ul xodimni chaqiring.", saveRetry: "Qayta yuborish", fsOff: "Imtihon to'liq ekran rejimida o'tkaziladi. Chiqish qayd etiladi.", fsBack: "To'liq ekranga o'tish", blocked: "Bu amal imtihon paytida taqiqlangan va qayd etildi", warnLeft: "ta savol javobsiz!", warnAll: "Barcha savollarga javob berildi.",
     detailTitle: "Savol-javoblar", yourAnsLbl: "Siz:", corrAnsLbl: "To'g'ri:",
     langHint: "Maslahat: tilni 1–3 raqamlari bilan tanlab, Enter bosishingiz mumkin",
@@ -250,7 +250,7 @@ const L = {
   },
   uzb: {
     lang: "Ўзбек тили", flag: "🇺🇿", sub: "Кирилл", back: "Тилни ўзгартириш", reg: "Рўйхатдан ўтиш", name: "Ф.И.Ш (Тўлиқ исм)", pos: "Лавозим", jshir: "ЖШШИР (14 рақам)", phone: "Телефон", camT: "Камера", camD: "Имтиҳон учун расм олинг", capture: "Расм олиш", retakeCam: "Қайта", camOk: "Тасдиқлаш", skipCam: "Камерасиз давом этиш →", dirT: "Йўналишни танланг", dirD: "Имтиҳон йўналишини белгиланг", start: "Имтиҳонни бошлаш", cont: "Давом этиш", prev: "Олдинги", next: "Кейингиси", finish: "Тугатиш", fin2: "Имтиҳонни тугатиш", ansgiven: "жавоб", finQ: "Имтиҳонни тугатишни тасдиқлайсизми?", cancel: "Бекор қилиш", yesF: "Ҳа, тугатиш", retake: "Қайта топшириш", home: "Бош саҳифа", tabW: "Бошқа табга ўтдингиз! Бу қайд этилди.", passed: "ЎТДИНГИЗ!", failed: "ЙИҚИЛДИНГИЗ", passedMsg: "Табриклаймиз! Имтиҳондан муваффақиятли ўтдингиз.", failedMsg: "Афсуски, ўта олмадингиз. Қайта уриниб кўринг.", correct: "Тўғри жавоблар", wrong: "Нотўғри жавоблар", total: "Жами саволлар", passScore: "Ўтиш бали: 71%",
-    errFill: "Барча майдонларни тўлдиринг!", errJshir: "ЖШШИР 14 та рақам бўлиши керак!", errDir: "Йўналишни танланг!", errSub: "Мутахассисликни танланг!", errToifa: "Тоифани танланг (3-тоифа ёки 4-тоифа)!", errNoQ: "Бу йўналиш учун ҳали саволлар қўшилмаган!",
+    errFill: "Барча майдонларни тўлдиринг!", errJshir: "ЖШШИР 14 та рақам бўлиши керак!", errPhone: "Телефон рақамни тўлиқ киритинг: +998 XX XXX XX XX", errPhoneCode: "Оператор коди нотўғри (масалан: 90, 91, 93, 94, 97, 99, 33, 88)", errDir: "Йўналишни танланг!", errSub: "Мутахассисликни танланг!", errToifa: "Тоифани танланг (3-тоифа ёки 4-тоифа)!", errNoQ: "Бу йўналиш учун ҳали саволлар қўшилмаган!",
     tabDesc: "Бу ҳолат қайд этилди.", tabBtn: "Имтиҳонга қайтиш", saveSaving: "Натижа базага юборилмоқда...", saveOk: "Натижа базага сақланди", saveFail: "Натижа базага юборилмади. У шу компьютерда сақлаб қўйилди ва сайт қайта очилганда автоматик юборилади. Илтимос, масъул ходимга хабар беринг.", saveLost: "Натижа базага юборилмади. Саҳифани ёпманг ва масъул ходимни чақиринг.", saveRetry: "Қайта юбориш", fsOff: "Имтиҳон тўлиқ экран режимида ўтказилади. Чиқиш қайд этилади.", fsBack: "Тўлиқ экранга ўтиш", blocked: "Бу амал имтиҳон пайтида тақиқланган ва қайд этилди", warnLeft: "та савол жавобсиз!", warnAll: "Барча саволларга жавоб берилди.",
     detailTitle: "Савол-жавоблар", yourAnsLbl: "Сиз:", corrAnsLbl: "Тўғри:",
     langHint: "Маслаҳат: тилни 1–3 рақамлари билан танлаб, Enter босишингиз мумкин",
@@ -259,7 +259,7 @@ const L = {
   },
   ru: {
     lang: "Русский язык", flag: "🇷🇺", sub: "Кириллица", back: "Сменить язык", reg: "Регистрация", name: "ФИО (Полное имя)", pos: "Должность", jshir: "ПИНФЛ (14 цифр)", phone: "Телефон", camT: "Камера", camD: "Сделайте фото для экзамена", capture: "Сделать фото", retakeCam: "Переснять", camOk: "Подтвердить", skipCam: "Продолжить без камеры →", dirT: "Выберите направление", dirD: "Укажите направление экзамена", start: "Начать экзамен", cont: "Продолжить", prev: "Предыдущий", next: "Следующий", finish: "Завершить", fin2: "Завершить экзамен", ansgiven: "ответов", finQ: "Вы уверены, что хотите завершить?", cancel: "Отмена", yesF: "Да, завершить", retake: "Пересдать", home: "На главную", tabW: "Вы переключили вкладку! Это зафиксировано.", passed: "СДАЛИ!", failed: "НЕ СДАЛИ", passedMsg: "Поздравляем! Вы успешно сдали экзамен.", failedMsg: "К сожалению, вы не сдали. Попробуйте ещё раз.", correct: "Правильных ответов", wrong: "Неправильных ответов", total: "Всего вопросов", passScore: "Проходной балл: 71%",
-    errFill: "Заполните все поля!", errJshir: "ПИНФЛ должен состоять из 14 цифр!", errDir: "Выберите направление!", errSub: "Выберите специальность!", errToifa: "Выберите категорию (3-я или 4-я категория)!", errNoQ: "Для этого направления вопросы еще не добавлены!",
+    errFill: "Заполните все поля!", errJshir: "ПИНФЛ должен состоять из 14 цифр!", errPhone: "Введите номер полностью: +998 XX XXX XX XX", errPhoneCode: "Неверный код оператора (например: 90, 91, 93, 94, 97, 99, 33, 88)", errDir: "Выберите направление!", errSub: "Выберите специальность!", errToifa: "Выберите категорию (3-я или 4-я категория)!", errNoQ: "Для этого направления вопросы еще не добавлены!",
     tabDesc: "Это было зафиксировано.", tabBtn: "Вернуться к экзамену", saveSaving: "Результат отправляется в базу...", saveOk: "Результат сохранён в базе", saveFail: "Результат не отправлен в базу. Он сохранён на этом компьютере и будет отправлен автоматически при следующем открытии сайта. Пожалуйста, сообщите ответственному сотруднику.", saveLost: "Результат не отправлен в базу. Не закрывайте страницу и позовите ответственного сотрудника.", saveRetry: "Отправить снова", fsOff: "Экзамен проходит в полноэкранном режиме. Выход фиксируется.", fsBack: "Включить полноэкранный режим", blocked: "Это действие запрещено во время экзамена и зафиксировано", warnLeft: "вопросов осталось без ответа!", warnAll: "На все вопросы даны ответы.",
     detailTitle: "Вопросы и ответы", yourAnsLbl: "Вы:", corrAnsLbl: "Правильно:",
     langHint: "Подсказка: язык можно выбрать клавишами 1–3 и нажать Enter",
@@ -527,11 +527,43 @@ function updateStepBar(a) {
     ${s < total ? `<div style="width:24px;height:2px;background:${a > s ? 'var(--blue)' : 'var(--border)'};transition:background .3s;"></div>` : ''}`).join('');
 }
 // ===== 1-QADAM: MAYDONLARNI TEKSHIRISH =====
+// ===== TELEFON RAQAM =====
+// Faqat O'zbekiston raqami: +998 va 9 xonali raqam. Mobil operatorlar va
+// shahar (statsionar) kodlari qabul qilinadi, boshqasi xato hisoblanadi.
+const UZ_PHONE_CODES = ['20', '33', '50', '55', '77', '88', '90', '91', '93', '94', '95', '97', '98', '99',
+  '61', '62', '65', '66', '67', '69', '71', '72', '73', '74', '75', '76', '79'];
+
+// Kiritilgan matndan +998 dan keyingi 9 ta raqamni ajratadi
+function phoneLocalDigits(value) {
+  let d = (value || '').replace(/\D/g, '');
+  if (d.startsWith('998')) d = d.slice(3);
+  return d.slice(0, 9);
+}
+
+function formatUzPhone(local) {
+  const parts = [local.slice(0, 2), local.slice(2, 5), local.slice(5, 7), local.slice(7, 9)].filter(Boolean);
+  return '+998 ' + parts.join(' ');
+}
+
+// Yozish paytida raqamni o'zi formatlaydi: faqat raqam, +998 doim boshida
+function formatPhoneInput(el) {
+  el.value = formatUzPhone(phoneLocalDigits(el.value)).trimEnd();
+}
+
+function phoneError(value) {
+  const d = phoneLocalDigits(value);
+  if (!d) return t('reqField');
+  if (d.length < 9) return t('errPhone');
+  if (!UZ_PHONE_CODES.includes(d.slice(0, 2))) return t('errPhoneCode');
+  if (/^(\d)\1+$/.test(d.slice(2))) return t('errPhone'); // 90 000 00 00 kabi soxta raqam
+  return '';
+}
+
 const STEP1_FIELDS = {
   name: v => v ? '' : t('reqField'),
   pos: v => v ? '' : t('reqField'),
   jshir: v => !v ? t('reqField') : (v.length !== 14 ? t('errJshir') : ''),
-  phone: v => v ? '' : t('reqField')
+  phone: v => phoneError(v)
 };
 
 function step1FieldError(id) {
@@ -582,7 +614,7 @@ function goStep2() {
   S.userName = $('inp-name').value.trim();
   S.userPos = $('inp-pos').value.trim();
   S.userJshir = $('inp-jshir').value.trim();
-  S.userPhone = $('inp-phone').value.trim();
+  S.userPhone = formatUzPhone(phoneLocalDigits($('inp-phone').value));
   showStep(2);
 }
 function goStep3() { stopCamera(); showStep(3); }

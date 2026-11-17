@@ -289,7 +289,9 @@
           </div>
           <div>
             <label class="lbl" id="lbl-phone">Telefon</label>
-            <input class="inp" id="inp-phone" placeholder="+998 90 123 45 67" type="tel" autocomplete="tel" />
+            <input class="inp" id="inp-phone" placeholder="+998 90 123 45 67" type="tel" inputmode="numeric" autocomplete="tel"
+              maxlength="17" oninput="formatPhoneInput(this)" onfocus="if(!this.value)this.value='+998 '"
+              onblur="if(this.value.trim()==='+998')this.value=''" />
             <div class="field-err" id="err-phone"></div>
           </div>
           <button class="btn btn-primary" id="btn-step1" onclick="goStep2()" style="width:100%;margin-top:3px;"><span
