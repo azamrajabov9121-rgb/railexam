@@ -217,6 +217,11 @@ function hasPhase2(dir) {
   return isPhase2Dept(findDeptForDir(dir) || dir);
 }
 
+// Matnni HTML ichiga xavfsiz qo'yish (qo'shtirnoq yoki < belgisi maydonni buzmasin)
+function escHtml(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 function findDeptForDir(dir) {
   for (const [dept, subs] of Object.entries(SUBDIRS)) {
     if (subs && subs.includes(dir)) return dept;
@@ -2540,58 +2545,89 @@ function showAddQ(editId) {
   if (!curDept && customDirs.includes(curDir)) curDept = '__custom__';
 
   const el = document.createElement('div'); el.className = 'modal-overlay';
-  el.innerHTML = `<div class="modal" style="max-width:560px;max-height:92vh;overflow-y:auto;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+  const ans = q?.ans || 'A', dif = q?.dif || 'medium';
+  el.innerHTML = `<div class="modal qmodal">
+    <div class="qm-head">
       <h3 style="font-family:'Syne',sans-serif;font-weight:700;">${q ? 'Tahrirlash' : 'Yangi savol'}</h3>
       <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x',18)}</button>
     </div>
-    <div style="display:flex;flex-direction:column;gap:11px;">
-      <div>
-        <label class="lbl">Xo'jalik (Bo'lim) *</label>
-        <select class="inp" id="qd-dept" onchange="adminUpdateSubdirList(this.value,'${curSubdir}')">
-          <option value="">— Xo'jalikni tanlang —</option>
-          ${deptKeys.map(d => `<option value="${d}" ${curDept === d ? 'selected' : ''}>${d}</option>`).join('')}
-          ${customDirs.map(d => `<option value="__custom__:${d}" ${curDept === '__custom__' && curDir === d ? 'selected' : ''}>${d}</option>`).join('')}
-          <option value="__new__">+ Yangi xo'jalik/yo'nalish</option>
-        </select>
-      </div>
-      <div id="qd-subdir-wrap" style="display:${curDept && SUBDIRS[curDept] && SUBDIRS[curDept].length > 0 ? 'block' : 'none'}">
-        <label class="lbl">Yo'nalish (Mutaxassislik) *</label>
-        <select class="inp" id="qd-subdir">
-          <option value="">— Yo'nalishni tanlang —</option>
-          ${curDept && SUBDIRS[curDept] ? SUBDIRS[curDept].map(s => `<option value="${s}" ${curSubdir === s ? 'selected' : ''}>${s}</option>`).join('') : ''}
-        </select>
-      </div>
-      <div id="ndw" style="display:${curDept === '' ? 'none' : (deptKeys.includes(curDept) ? 'none' : 'block')}">
-        <label class="lbl">Yangi yo'nalish nomi *</label>
-        <input class="inp" id="qd-newdir" placeholder="Yangi yo'nalish nomi..." value="${curDept === '__custom__' ? curDir : ''}"/>
-      </div>
-      <div><label class="lbl">Savol matni *</label><textarea class="inp" id="qd-q" rows="3" style="resize:vertical;">${q?.q || ''}</textarea></div>
-      <div>
-        <label class="lbl">Rasm yuklash (ixtiyoriy)</label>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <input type="file" class="inp" id="qd-image" accept="image/*" onchange="handleImageUpload(event)" style="padding: 5px; flex:1;">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="removeImage()" style="display:${q?.image ? 'block' : 'none'};" id="qd-img-remove">O'chirish</button>
+    <div class="qm-grid">
+      <div class="qm-col">
+        <div>
+          <label class="lbl">Xo'jalik (Bo'lim) *</label>
+          <select class="inp" id="qd-dept" onchange="adminUpdateSubdirList(this.value,'${curSubdir}')">
+            <option value="">— Xo'jalikni tanlang —</option>
+            ${deptKeys.map(d => `<option value="${escHtml(d)}" ${curDept === d ? 'selected' : ''}>${escHtml(d)}</option>`).join('')}
+            ${customDirs.map(d => `<option value="__custom__:${escHtml(d)}" ${curDept === '__custom__' && curDir === d ? 'selected' : ''}>${escHtml(d)}</option>`).join('')}
+            <option value="__new__">+ Yangi xo'jalik/yo'nalish</option>
+          </select>
         </div>
-        <img id="qd-img-preview" src="${q?.image || ''}" style="max-width:100%; max-height:150px; margin-top:10px; border-radius:8px; display:${q?.image ? 'block' : 'none'};">
+        <div id="qd-subdir-wrap" style="display:${curDept && SUBDIRS[curDept] && SUBDIRS[curDept].length > 0 ? 'block' : 'none'}">
+          <label class="lbl">Yo'nalish (Mutaxassislik) *</label>
+          <select class="inp" id="qd-subdir">
+            <option value="">— Yo'nalishni tanlang —</option>
+            ${curDept && SUBDIRS[curDept] ? SUBDIRS[curDept].map(s => `<option value="${escHtml(s)}" ${curSubdir === s ? 'selected' : ''}>${escHtml(s)}</option>`).join('') : ''}
+          </select>
+        </div>
+        <div id="ndw" style="display:${curDept === '' ? 'none' : (deptKeys.includes(curDept) ? 'none' : 'block')}">
+          <label class="lbl">Yangi yo'nalish nomi *</label>
+          <input class="inp" id="qd-newdir" placeholder="Yangi yo'nalish nomi..." value="${curDept === '__custom__' ? escHtml(curDir) : ''}"/>
+        </div>
+        <div><label class="lbl">Savol matni *</label><textarea class="inp qm-qtext" id="qd-q" rows="4">${escHtml(q?.q)}</textarea></div>
+        <div>
+          <label class="lbl">Rasm (ixtiyoriy)</label>
+          <input type="file" id="qd-image" accept="image/*" onchange="handleImageUpload(event)" hidden>
+          <div class="qm-img-box" id="qd-img-box">
+            <img id="qd-img-preview" src="${q?.image || ''}" alt="" style="display:${q?.image ? 'block' : 'none'};">
+            <label for="qd-image" class="qm-img-empty" id="qd-img-empty" style="display:${q?.image ? 'none' : 'flex'};">${icon('camera', 22)}<span>Rasm tanlash</span></label>
+          </div>
+          <div class="qm-img-actions" id="qd-img-actions" style="display:${q?.image ? 'flex' : 'none'};">
+            <label for="qd-image" class="btn btn-secondary btn-sm">${icon('refresh', 15)} Almashtirish</label>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="removeImage()" id="qd-img-remove" style="color:var(--red);">${icon('trash', 15)} O'chirish</button>
+          </div>
+        </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-        ${['A', 'B', 'C', 'D'].map(k => `<div><label class="lbl">${k} variant</label><input class="inp" id="qd-${k}" value="${q?.opts?.[k] || ''}"/></div>`).join('')}
+      <div class="qm-col">
+        <div>
+          <label class="lbl">Javob variantlari * <span style="color:var(--text3);font-weight:400;">— to'g'ri javobning harfini bosing</span></label>
+          <input type="hidden" id="qd-ans" value="${ans}">
+          <div class="qv-list">
+            ${['A', 'B', 'C', 'D'].map(k => `<div class="qv-card ${ans === k ? 'correct' : ''}" data-k="${k}">
+              <button type="button" class="qv-letter" onclick="setCorrectVariant('${k}')" title="${k} — to'g'ri javob">${k}</button>
+              <textarea class="inp qv-text" id="qd-${k}" rows="2" placeholder="${k} variant matni">${escHtml(q?.opts?.[k])}</textarea>
+              <span class="qv-badge">${icon('check', 13)} To'g'ri</span>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <label class="lbl">Qiyinlik</label>
+          <input type="hidden" id="qd-dif" value="${dif}">
+          <div class="qm-seg">
+            ${[['easy', 'Oson'], ['medium', "O'rta"], ['hard', 'Qiyin']].map(([v, l]) => `<button type="button" data-v="${v}" class="${dif === v ? 'active' : ''}" onclick="setQDifficulty('${v}')">${l}</button>`).join('')}
+          </div>
+        </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
-        <div><label class="lbl">To'g'ri javob *</label><select class="inp" id="qd-ans">${['A', 'B', 'C', 'D'].map(k => `<option value="${k}" ${q?.ans === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div>
-        <div><label class="lbl">Qiyinlik</label><select class="inp" id="qd-dif"><option value="easy" ${q?.dif === 'easy' ? 'selected' : ''}>Oson</option><option value="medium" ${!q?.dif || q?.dif === 'medium' ? 'selected' : ''}>O'rta</option><option value="hard" ${q?.dif === 'hard' ? 'selected' : ''}>Qiyin</option></select></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:3px;">
-        <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">Bekor qilish</button>
-        <button class="btn btn-primary" onclick="saveQ(${editId || 'null'})">${icon('download')} ${q ? 'Saqlash' : "Qo'shish"}</button>
-      </div>
+    </div>
+    <div class="qm-foot">
+      <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">Bekor qilish</button>
+      <button class="btn btn-primary" onclick="saveQ(${editId || 'null'})">${icon('download')} ${q ? 'Saqlash' : "Qo'shish"}</button>
     </div>
   </div>`;
   el.onclick = e => { if (e.target === el) el.remove(); };
   document.body.appendChild(el);
   // Trigger subdir list if dept already selected
   if (curDept && SUBDIRS[curDept]) adminUpdateSubdirList(curDept, curSubdir);
+}
+
+// Savol oynasi: to'g'ri javob variant harfini bosib belgilanadi
+function setCorrectVariant(k) {
+  $('qd-ans').value = k;
+  document.querySelectorAll('.qv-card').forEach(c => c.classList.toggle('correct', c.dataset.k === k));
+}
+
+function setQDifficulty(v) {
+  $('qd-dif').value = v;
+  document.querySelectorAll('.qm-seg button').forEach(b => b.classList.toggle('active', b.dataset.v === v));
 }
 
 function adminUpdateSubdirList(dept, preselect) {
@@ -3003,8 +3039,7 @@ function handleImageUpload(e) {
       if (input) input.dataset.b64 = dataUrl;
       const preview = document.getElementById('qd-img-preview');
       if (preview) { preview.src = dataUrl; preview.style.display = 'block'; }
-      const removeBtn = document.getElementById('qd-img-remove');
-      if (removeBtn) removeBtn.style.display = 'block';
+      setQImageState(true);
     };
     img.src = evt.target.result;
   };
@@ -3016,8 +3051,13 @@ function removeImage() {
   if (input) { input.value = ''; input.dataset.b64 = 'removed'; }
   const preview = document.getElementById('qd-img-preview');
   if (preview) { preview.src = ''; preview.style.display = 'none'; }
-  const removeBtn = document.getElementById('qd-img-remove');
-  if (removeBtn) removeBtn.style.display = 'none';
+  setQImageState(false);
+}
+
+function setQImageState(hasImage) {
+  const empty = document.getElementById('qd-img-empty'), actions = document.getElementById('qd-img-actions');
+  if (empty) empty.style.display = hasImage ? 'none' : 'flex';
+  if (actions) actions.style.display = hasImage ? 'flex' : 'none';
 }
 
 // ===== 2-BOSQICH (PHASE 2) ADMIN =====

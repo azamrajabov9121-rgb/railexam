@@ -737,3 +737,67 @@ body.exam-locked #pg-exam { -webkit-user-select: none; user-select: none; }
 .pass-eye:hover { color: var(--text); background: var(--surface2); }
 .pass-eye:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 1px; }
 .pass-eye .ic { width: 19px; height: 19px; }
+
+/* ===== SAVOL TAHRIRLASH OYNASI ===== */
+/* Keng, ikki ustunli: chapda savol va rasm, o'ngda variantlar — oddiy ekranda aylantirishsiz */
+.modal.qmodal {
+  max-width: min(1180px, 96vw); padding: var(--sp-6);
+  max-height: 96vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.qm-head { display: flex; justify-content: space-between; align-items: center; }
+.qm-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 22px; }
+.qm-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.qmodal .lbl { margin-bottom: 5px; }
+.qm-qtext { resize: vertical; min-height: 96px; line-height: 1.5; }
+
+.qm-img-box {
+  height: 190px; border-radius: var(--r-md); overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.qm-img-box img { width: 100%; height: 100%; object-fit: contain; }
+.qm-img-empty {
+  width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: var(--text3); font-size: 13px; cursor: pointer; border: 1.5px dashed var(--border2); border-radius: var(--r-md);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.qm-img-empty:hover { color: var(--blue-light); border-color: var(--blue-light); background: rgba(96,165,250,.05); }
+.qm-img-actions { gap: 8px; margin-top: 8px; }
+.qm-img-actions .btn { cursor: pointer; }
+
+.qv-list { display: flex; flex-direction: column; gap: 9px; }
+.qv-card {
+  position: relative; display: flex; gap: 10px; align-items: stretch;
+  padding: 8px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface);
+  transition: border-color .2s, background .2s;
+}
+.qv-letter {
+  flex-shrink: 0; width: 38px; border-radius: 9px; border: 1px solid var(--border2);
+  background: var(--surface2); color: var(--text2); font-weight: 800; font-size: 15px; cursor: pointer;
+  transition: all .2s;
+}
+.qv-letter:hover { border-color: var(--green); color: var(--green); }
+.qv-text { flex: 1; min-width: 0; resize: vertical; min-height: 58px; line-height: 1.45; padding: 8px 11px; font-size: 13.5px; }
+.qv-badge {
+  position: absolute; top: -9px; right: 12px; display: none; align-items: center; gap: 3px;
+  font-size: 10.5px; font-weight: 700; color: #fff; background: var(--green); padding: 2px 8px; border-radius: 99px;
+}
+.qv-card.correct { border-color: rgba(34,197,94,.6); background: rgba(34,197,94,.06); }
+.qv-card.correct .qv-letter { background: var(--green); border-color: var(--green); color: #fff; }
+.qv-card.correct .qv-badge { display: inline-flex; }
+
+.qm-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--border); }
+.qm-seg button {
+  border: none; background: none; color: var(--text2); font-size: 13px; font-weight: 600;
+  padding: 7px 18px; border-radius: 8px; cursor: pointer; transition: all .2s;
+}
+.qm-seg button.active { background: var(--blue); color: #fff; }
+
+.qm-foot { display: flex; justify-content: flex-end; gap: 10px; padding-top: 4px; border-top: 1px solid var(--border); padding-top: 14px; }
+.qm-foot .btn { min-width: 150px; }
+
+@media (max-width: 860px) {
+  .qm-grid { grid-template-columns: 1fr; }
+  .qm-foot .btn { flex: 1; min-width: 0; }
+}
