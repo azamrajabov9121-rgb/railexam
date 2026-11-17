@@ -724,3 +724,16 @@ body.exam-locked #pg-exam { -webkit-user-select: none; user-select: none; }
 /* Dashboard kartalari bosiladi va natijalarni ochadi */
 .stat-link { cursor: pointer; }
 .stat-link:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+
+/* Parol maydonidagi ko'z tugmasi */
+.pass-wrap { position: relative; }
+.pass-wrap .inp { padding-right: 48px; }
+.pass-eye {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  background: none; border: none; border-radius: var(--r-sm, 8px); color: var(--text3); cursor: pointer;
+  transition: color .2s, background .2s;
+}
+.pass-eye:hover { color: var(--text); background: var(--surface2); }
+.pass-eye:focus-visible { outline: 2px solid var(--blue-light); outline-offset: 1px; }
+.pass-eye .ic { width: 19px; height: 19px; }

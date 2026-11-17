@@ -1580,6 +1580,7 @@ async function adminLogin() {
       return;
     }
     $('admin-pass').value = '';
+    hideAdminPassword(); // keyingi safar parol ochiq ko'rinib qolmasin
     S.resultsLoaded = false; // natijalar endi admin huquqi bilan qayta yuklanadi
     showPage('pg-admin');
     adminTab('dash');
@@ -1588,6 +1589,24 @@ async function adminLogin() {
   } finally {
     if (btn) btn.disabled = false;
   }
+}
+
+// Parol maydonidagi ko'z: parolni ko'rsatish / yashirish
+function togglePasswordVisibility(inputId, btn) {
+  const inp = $(inputId);
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  const label = show ? "Parolni yashirish" : "Parolni ko'rsatish";
+  btn.title = label;
+  btn.setAttribute('aria-label', label);
+  btn.setAttribute('aria-pressed', String(show));
+  btn.querySelector('use').setAttribute('href', show ? '#ic-eyeOff' : '#ic-eye');
+  inp.focus();
+}
+
+function hideAdminPassword() {
+  const inp = $('admin-pass'), btn = $('admin-pass-eye');
+  if (inp && inp.type === 'text' && btn) togglePasswordVisibility('admin-pass', btn);
 }
 
 // "Admin panel" tugmasi: sessiya ochiq bo'lsa to'g'ridan-to'g'ri panelga
