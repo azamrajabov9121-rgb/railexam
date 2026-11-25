@@ -801,3 +801,20 @@ body.exam-locked #pg-exam { -webkit-user-select: none; user-select: none; }
   .qm-grid { grid-template-columns: 1fr; }
   .qm-foot .btn { flex: 1; min-width: 0; }
 }
+
+/* ===== QOIDABUZARLIK TAHLILI ===== */
+.vrow { border-bottom: 1px solid var(--border); font-size: 12px; }
+.vrow:last-child { border-bottom: none; }
+.vrow-main { display: flex; align-items: center; gap: 10px; padding: 8px 12px; }
+.vrow-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.vrow-red { background: rgba(239,68,68,.06); }
+.vrow-amber { background: rgba(245,158,11,.05); }
+.vrow-detail {
+  margin: -2px 12px 9px 30px; padding: 8px 11px; border-radius: 8px;
+  background: var(--surface2); color: var(--text2); line-height: 1.55;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.vd-k { color: var(--text3); }
+.vd-verdict { font-weight: 700; display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+.vd-red { color: var(--red); }
+.vd-amber { color: var(--amber); }

@@ -1018,6 +1018,7 @@ function renderQ() {
   const hint = $('exam-kbd-hint'); if (hint) hint.textContent = t('examHint');
 
   buildQNav();
+  qtOnRender();
 }
 
 // Imtihonda klaviatura: A-D javobni belgilaydi, ← → savollar orasida yuradi
@@ -1042,6 +1043,14 @@ document.addEventListener('keydown', e => {
 function selectAnswer(k) {
   if (S.answers[S.currentQ] !== undefined) return; // Prevent changing answer once selected
   S.answers[S.currentQ] = k;
+  if (guardActive) {
+    qtFlush();
+    S.ansTime[S.currentQ] = round1(S.qTime[S.currentQ] || 0);
+    if (lastReturn) {
+      lastReturn.ev.ra = { q: S.currentQ + 1, s: round1((Date.now() - lastReturn.at) / 1000), k };
+      lastReturn = null;
+    }
+  }
   renderQ();
 
   // Kutish davomida imtihon tugagan, almashgan yoki xodim o'zi boshqa savolga
@@ -1129,6 +1138,25 @@ function updateTimer() {
 const SHORT_AWAY_SEC = 2;
 const MAX_VIOLATION_EVENTS = 200;
 let guardActive = false, awayEvent = null, fsEvent = null, fsWasActive = false, lastBlocked = {};
+// Oxirgi qaytish: undan keyingi birinchi javob shu chiqishga bog'lanadi
+let lastReturn = null;
+
+// Har bir savolda sahifada bo'lgan (tashqarida emas) vaqt, soniyada.
+// S.qView — hozir ko'rilayotgan savol va qachondan beri (tashqarida bo'lsa since = null)
+function qtFlush() {
+  const v = S.qView;
+  if (!v || v.idx == null || !v.since) return;
+  const now = Date.now();
+  S.qTime[v.idx] = (S.qTime[v.idx] || 0) + (now - v.since) / 1000;
+  v.since = now;
+}
+function qtOnRender() {
+  if (!guardActive || !S.qView) return;
+  if (S.qView.idx === S.currentQ) return;
+  qtFlush();
+  S.qView = { idx: S.currentQ, since: awayEvent ? null : Date.now() };
+}
+const round1 = x => Math.round(x * 10) / 10;
 
 function examSec() { return Math.round((Date.now() - S.startTime) / 100) / 10; }
 
@@ -1148,7 +1176,14 @@ function closeViolation(ev) {
 function setAway(away) {
   if (!guardActive || S.examDone) return;
   if (away && !awayEvent) {
-    awayEvent = pushViolation({ t: document.hidden ? 'tab' : 'win', s: examSec(), q: S.currentQ + 1 });
+    qtFlush();
+    if (S.qView) S.qView.since = null;
+    lastReturn = null;
+    awayEvent = pushViolation({
+      t: document.hidden ? 'tab' : 'win', s: examSec(), q: S.currentQ + 1,
+      qs: round1(S.qTime[S.currentQ] || 0),          // chiqishdan oldin shu savolda o'tirgan vaqt
+      ans: S.answers[S.currentQ] !== undefined       // savolga allaqachon javob berganmi
+    });
     S.tabSwitches++;
     $('tab-warn-badge').style.display = 'flex';
     $('tab-count-txt').textContent = S.tabSwitches;
@@ -1157,6 +1192,8 @@ function setAway(away) {
   } else if (!away && awayEvent) {
     const ev = closeViolation(awayEvent);
     awayEvent = null;
+    if (S.qView) S.qView.since = Date.now();
+    lastReturn = { ev, at: Date.now() };
     if (ev.d < SHORT_AWAY_SEC) {
       ev.short = true;
     } else {
@@ -1237,7 +1274,9 @@ function startExamGuard() {
     ext: typeof screen.isExtended === 'boolean' ? screen.isExtended : null,
     events: []
   };
-  awayEvent = null; fsEvent = null; lastBlocked = {};
+  awayEvent = null; fsEvent = null; lastBlocked = {}; lastReturn = null;
+  S.qTime = []; S.ansTime = [];
+  S.qView = { idx: S.currentQ, since: Date.now() };
   fsWasActive = !!document.fullscreenElement;
   guardActive = true;
   GUARD_LISTENERS.forEach(([target, type, fn]) => target.addEventListener(type, fn));
@@ -1252,6 +1291,8 @@ function stopExamGuard() {
   // Vaqt tugaganda xodim hali tashqarida bo'lsa ham chiqish davomiyligi yoziladi
   if (awayEvent) { const ev = closeViolation(awayEvent); if (ev.d < SHORT_AWAY_SEC) ev.short = true; awayEvent = null; }
   if (fsEvent) { closeViolation(fsEvent); fsEvent = null; }
+  qtFlush();
+  lastReturn = null;
   document.body.classList.remove('exam-locked');
   showFsBanner(false);
   if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
@@ -1272,6 +1313,36 @@ function fmtSec(sec) {
   sec = Math.round(sec || 0);
   return sec < 60 ? sec + 's' : Math.floor(sec / 60) + 'd ' + sec % 60 + 's';
 }
+// Hodisa davomiyligi: qisqa chiqishlar o'nli kasr bilan (1.6s), aks holda "2s qisqa" chalkash ko'rinadi
+const fmtEventDur = e => e.short ? (e.d || 0).toFixed(1) + 's' : fmtSec(e.d);
+
+// Imtihon oxirida chiqishlarga javob natijasi va xodimning odatdagi javob vaqti qo'shiladi
+function finalizeViolations(detailed) {
+  const v = S.violations;
+  if (!v || !Array.isArray(v.events)) return;
+  v.events.forEach(e => {
+    if (e.ra && detailed[e.ra.q - 1]) e.ra.ok = !!detailed[e.ra.q - 1].ok;
+  });
+  const times = (S.ansTime || []).filter(x => typeof x === 'number').sort((a, b) => a - b);
+  if (times.length) v.med = round1(times[Math.floor(times.length / 2)]);
+}
+
+const QUICK_ANSWER_SEC = 15;   // qaytgach shu vaqt ichida javob — "tez"
+const LONG_AWAY_SEC = 30;
+
+// Bitta chiqishning tahlili: { level: 'red' | 'amber' | null, reason }
+function analyzeAway(e) {
+  if (!isAwayType(e.t) || e.short) return { level: null };
+  const ra = e.ra;
+  const sameQ = ra && ra.q === e.q, quick = ra && ra.s <= QUICK_ANSWER_SEC;
+  if (sameQ && !e.ans && quick && ra.ok === true)
+    return { level: 'red', reason: `Savolga javob bermay chiqib ketdi, qaytgach ${ra.s.toFixed(1)}s ichida to'g'ri javobni belgiladi` };
+  if (sameQ && !e.ans && quick)
+    return { level: 'amber', reason: `Savolga javob bermay chiqib ketdi, qaytgach ${ra.s.toFixed(1)}s ichida javob belgiladi (noto'g'ri)` };
+  if ((e.d || 0) >= LONG_AWAY_SEC)
+    return { level: 'amber', reason: `Uzoq vaqt tashqarida bo'ldi (${fmtSec(e.d)})` };
+  return { level: null };
+}
 
 // green — toza; amber — bir oz chiqish yoki urinish bor; red — shubhali
 function violationSummary(r) {
@@ -1281,9 +1352,10 @@ function violationSummary(r) {
     const n = (r && r.tabs) || 0;
     return { legacy: true, leaves: n, away: n, short: 0, awaySec: 0, longest: 0, fs: 0, blocked: 0, ext: null, dropped: 0, level: n >= 3 ? 'red' : n > 0 ? 'amber' : 'green' };
   }
-  const s = { legacy: false, leaves: 0, away: 0, short: 0, awaySec: 0, longest: 0, fs: 0, blocked: 0, ext: v.ext, dropped: v.dropped || 0 };
+  const s = { legacy: false, leaves: 0, away: 0, short: 0, awaySec: 0, longest: 0, fs: 0, blocked: 0, ext: v.ext, dropped: v.dropped || 0, suspicious: 0 };
   v.events.forEach(e => {
     if (isAwayType(e.t)) {
+      if (analyzeAway(e).level === 'red') s.suspicious++;
       s.leaves++;
       if (e.short) s.short++; else s.away++;
       s.awaySec += e.d || 0;
@@ -1291,7 +1363,7 @@ function violationSummary(r) {
     } else if (e.t === 'fs') s.fs++;
     else s.blocked++;
   });
-  s.level = (s.away >= 3 || s.awaySec >= 60) ? 'red'
+  s.level = (s.suspicious || s.away >= 3 || s.awaySec >= 60) ? 'red'
     : (s.leaves || s.fs || s.blocked || s.ext || s.dropped) ? 'amber' : 'green';
   return s;
 }
@@ -1319,6 +1391,7 @@ function violationReportHTML(r) {
     return `<p style="font-size:12px;color:var(--text3);padding:10px 12px;background:var(--surface2);border-radius:9px;">${s.leaves ? `Sahifadan ${s.leaves} marta chiqilgan.` : "Sahifadan chiqilmagan."} Bu natija eski usulda saqlangan — vaqti va davomiyligi ma'lum emas.</p>`;
   }
   const tiles = [
+    ['Shubhali holat', s.suspicious, s.suspicious ? 'var(--red)' : 'var(--text)'],
     ['Chiqishlar', s.away, s.away ? 'var(--red)' : 'var(--text)'],
     ['Qisqa (<2s)', s.short, 'var(--text2)'],
     ['Tashqarida jami', fmtSec(s.awaySec), s.awaySec >= 60 ? 'var(--red)' : 'var(--text)'],
@@ -1327,29 +1400,63 @@ function violationReportHTML(r) {
     ['Taqiqlangan urinish', s.blocked, s.blocked ? 'var(--amber)' : 'var(--text)']
   ].map(([l, n, c]) => `<div style="text-align:center;padding:9px 6px;background:var(--surface2);border-radius:9px;"><div style="font-size:17px;font-weight:800;color:${c};">${n}</div><div style="font-size:10.5px;color:var(--text3);margin-top:2px;">${l}</div></div>`).join('');
   const notes = [
+    v.med != null ? `${icon('clock', 13)} Xodim odatda bitta savolga <b>${v.med.toFixed(1)}s</b> sarflagan (o'rtacha qiymat) — chiqishdan keyingi javob vaqtini shu bilan solishtiring.` : '',
     s.ext ? `${icon('alert', 13)} Imtihon boshida kompyuterga ikkinchi monitor ulangan edi.` : '',
     s.dropped ? `${icon('alert', 13)} Yana ${s.dropped} ta hodisa yozilmay qoldi (chegara ${MAX_VIOLATION_EVENTS} ta).` : ''
-  ].filter(Boolean).map(n => `<div style="font-size:12px;color:var(--amber);margin-top:6px;">${n}</div>`).join('');
+  ].filter(Boolean).map(n => `<div style="font-size:12px;color:${n.includes('odatda') ? 'var(--text2)' : 'var(--amber)'};margin-top:6px;">${n}</div>`).join('');
   const rows = v.events.map(e => {
-    const color = isAwayType(e.t) ? (e.short ? 'var(--text3)' : 'var(--red)') : 'var(--amber)';
-    const dur = e.d != null ? `<span style="font-weight:700;color:${color};">${fmtSec(e.d)}</span>${e.short ? ' <span style="font-size:10px;color:var(--text3);">qisqa</span>' : ''}` : '';
-    return `<div style="display:flex;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid var(--border);font-size:12px;${e.short ? 'opacity:.65;' : ''}">
-      <span style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0;"></span>
-      <span style="font-family:monospace;color:var(--text2);">${violationClock(v, e.s)}</span>
-      <span style="flex:1;min-width:0;">${VIOL_LABELS[e.t] || e.t}</span>
-      <span style="color:var(--text3);white-space:nowrap;">${e.q}-savol</span>
-      <span style="min-width:62px;text-align:right;white-space:nowrap;">${dur}</span>
+    const an = analyzeAway(e);
+    const color = an.level === 'red' ? 'var(--red)' : an.level === 'amber' ? 'var(--amber)'
+      : isAwayType(e.t) ? (e.short ? 'var(--text3)' : 'var(--red)') : 'var(--amber)';
+    const dur = e.d != null ? `<span style="font-weight:700;color:${color};">${fmtEventDur(e)}</span>${e.short ? ' <span style="font-size:10px;color:var(--text3);">qisqa</span>' : ''}` : '';
+    return `<div class="vrow ${an.level ? 'vrow-' + an.level : ''}" style="${e.short ? 'opacity:.65;' : ''}">
+      <div class="vrow-main">
+        <span class="vrow-dot" style="background:${color};"></span>
+        <span style="font-family:monospace;color:var(--text2);">${violationClock(v, e.s)}</span>
+        <span style="flex:1;min-width:0;">${VIOL_LABELS[e.t] || e.t}</span>
+        <span style="color:var(--text3);white-space:nowrap;">${e.q}-savol</span>
+        <span style="min-width:62px;text-align:right;white-space:nowrap;">${dur}</span>
+      </div>
+      ${violationDetailHTML(e, r, an)}
     </div>`;
   }).join('');
   return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px;">${tiles}</div>${notes}
-    ${v.events.length ? `<div style="margin-top:10px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;">${rows}</div>`
+    ${v.events.length ? `<div style="margin-top:10px;max-height:min(460px,55vh);overflow-y:auto;border:1px solid var(--border);border-radius:10px;">${rows}</div>`
       : `<p style="font-size:12px;color:var(--green);margin-top:10px;">${icon('checkCircle', 14)} Imtihon davomida qoidabuzarlik qayd etilmadi.</p>`}`;
 }
 
-function showViolations(id) {
+// Chiqish qatori ostidagi tahlil: savol matni, chiqishdan oldingi va qaytgandan keyingi holat
+function violationDetailHTML(e, r, an) {
+  if (!isAwayType(e.t) || e.short) return '';
+  const lines = [];
+  const qText = r.detailed && r.detailed[e.q - 1] ? r.detailed[e.q - 1].q : '';
+  if (qText) lines.push(`<span class="vd-k">Savol:</span> ${escHtml(qText.length > 140 ? qText.slice(0, 140) + '…' : qText)}`);
+  if (e.qs != null) {
+    lines.push(`<span class="vd-k">Chiqishdan oldin:</span> shu savolda ${e.qs.toFixed(1)}s o'tirgan, ${e.ans ? 'javob <b>bergan</b> edi' : 'javob <b>bermagan</b> edi'}`);
+  }
+  if (e.ra) {
+    const res = e.ra.ok === true ? `<span style="color:var(--green);font-weight:700;">✓ to'g'ri</span>`
+      : e.ra.ok === false ? `<span style="color:var(--red);font-weight:700;">✗ noto'g'ri</span>` : '';
+    lines.push(`<span class="vd-k">Qaytgach:</span> ${e.ra.s.toFixed(1)}s dan keyin ${e.ra.q === e.q ? '<b>shu savolga</b>' : e.ra.q + '-savolga'} «${e.ra.k}» javobini belgiladi ${res}`);
+  } else if (e.qs != null) {
+    lines.push(`<span class="vd-k">Qaytgach:</span> keyingi chiqishgacha javob belgilamadi`);
+  }
+  if (!lines.length && !an.level) return '';
+  return `<div class="vrow-detail">
+    ${an.level ? `<div class="vd-verdict vd-${an.level}">${icon('alert', 13)} ${an.reason}</div>` : ''}
+    ${lines.map(l => `<div>${l}</div>`).join('')}
+  </div>`;
+}
+
+async function showViolations(id) {
   const r = S.results.find(x => x.id === id); if (!r) return;
+  // Savol matnlari (detailed) ro'yxatda yuklanmaydi — tahlil uchun to'liq natijani olamiz
+  if ((!r.detailed || r.detailed.length === 0) && window.loadFullResultFromSupabase) {
+    const full = await loadFullResultFromSupabase(id);
+    if (full.success) Object.assign(r, full.data);
+  }
   const el = document.createElement('div'); el.className = 'modal-overlay';
-  el.innerHTML = `<div class="modal" style="max-width:640px;width:94%;max-height:88vh;overflow-y:auto;">
+  el.innerHTML = `<div class="modal" style="max-width:820px;width:94%;max-height:92vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
       <h3 style="font-family:'Syne',sans-serif;font-weight:700;">${icon('alert')} Qoidabuzarliklar</h3>
       <button onclick="this.closest('.modal-overlay').remove()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">${icon('x', 18)}</button>
@@ -1386,6 +1493,7 @@ async function submitExam() {
     const ua = S.answers[i] || null; const ok = ua === q.correctMapped; if (ok) correct++;
     return { q: q.q, userAns: ua, correctAns: q.correctMapped, opts: q.opts, ok, dir: q.dir };
   });
+  finalizeViolations(detailed);
   const total = S.examQuestions.length, pct = Math.round(correct / total * 100), passed = pct >= 71; // o'tish bali: 71% (savollar soni turlicha bo'lsa ham adolatli)
   const elapsed = Math.round((Date.now() - S.startTime) / 1000);
   const randomUserId = Math.floor(100000 + Math.random() * 900000);
@@ -2347,9 +2455,13 @@ async function downloadPDF(id) {
   const vCell = 'border:1px solid #e5e7eb;padding:3px 7px;font-size:9px;';
   const vRows = vs.legacy ? '' : r.violations.events.map(e => `<tr style="${e.short ? 'color:#9ca3af;' : ''}">
     <td style="${vCell}width:60px;font-family:monospace;">${violationClock(r.violations, e.s)}</td>
-    <td style="${vCell}">${VIOL_LABELS[e.t] || e.t}</td>
+    <td style="${vCell}">${VIOL_LABELS[e.t] || e.t}${(() => {
+      const an = analyzeAway(e);
+      const ra = e.ra ? `<br><span style="color:#6b7280;">Qaytgach ${e.ra.s.toFixed(1)}s da ${e.ra.q === e.q ? 'shu savolga' : e.ra.q + '-savolga'} «${e.ra.k}» javobi${e.ra.ok === true ? ' — to\'g\'ri' : e.ra.ok === false ? ' — noto\'g\'ri' : ''}</span>` : '';
+      return ra + (an.level ? `<br><b style="color:${an.level === 'red' ? '#dc2626' : '#d97706'};">⚠ ${an.reason}</b>` : '');
+    })()}</td>
     <td style="${vCell}width:55px;">${e.q}-savol</td>
-    <td style="${vCell}width:70px;text-align:right;">${e.d != null ? fmtSec(e.d) + (e.short ? ' (qisqa)' : '') : ''}</td>
+    <td style="${vCell}width:70px;text-align:right;">${e.d != null ? fmtEventDur(e) + (e.short ? ' (qisqa)' : '') : ''}</td>
   </tr>`).join('');
   const html = `<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8">
 <title>RailExam - ${r.name}</title><style>
@@ -2860,11 +2972,11 @@ function syncQuestionsToFile() {
 function exportCSV() {
   if (!S.results.length) { toast('Natijalar yo\'q!', 'var(--amber)'); return; }
   const levelText = { green: 'Toza', amber: 'Ogohlantirish', red: 'Shubhali' };
-  const rows = [['#', 'F.I.Sh', 'JSHSHIR', 'Lavozim', "Yo'nalish", "To'g'ri", "Noto'g'ri", 'Jami', 'Foiz', 'Natija', 'Chiqishlar', 'Qisqa (<2s)', 'Tashqarida jami', 'Eng uzun chiqish', "To'liq ekrandan chiqish", 'Taqiqlangan urinish', 'Ikkinchi monitor', 'Qoidabuzarlik darajasi', 'Davomiylik', 'Sana'], ...S.results.map((r, i) => {
+  const rows = [['#', 'F.I.Sh', 'JSHSHIR', 'Lavozim', "Yo'nalish", "To'g'ri", "Noto'g'ri", 'Jami', 'Foiz', 'Natija', 'Chiqishlar', 'Qisqa (<2s)', 'Tashqarida jami', 'Eng uzun chiqish', "To'liq ekrandan chiqish", 'Taqiqlangan urinish', 'Shubhali holat', 'Ikkinchi monitor', 'Qoidabuzarlik darajasi', 'Davomiylik', 'Sana'], ...S.results.map((r, i) => {
     const vs = violationSummary(r);
     const na = vs.legacy ? "ma'lum emas" : null;
     return [i + 1, r.name, r.jshir || '', r.pos, r.dir, r.correct, r.wrong, r.total, r.pct + '%', r.passed ? "O'tdi" : 'Yiqildi',
-      vs.away, na || vs.short, na || fmtSec(vs.awaySec), na || fmtSec(vs.longest), na || vs.fs, na || vs.blocked,
+      vs.away, na || vs.short, na || fmtSec(vs.awaySec), na || fmtSec(vs.longest), na || vs.fs, na || vs.blocked, na || vs.suspicious,
       vs.ext ? 'Ha' : vs.ext === false ? "Yo'q" : '', levelText[vs.level],
       Math.floor(r.duration / 60) + 'm' + r.duration % 60 + 's', r.date];
   })];
